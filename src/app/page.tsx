@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import Card from "./components/card";
 
 export default function Home() {
   return (
@@ -24,19 +25,7 @@ export default function Home() {
         Software Developer
       </motion.p>
       
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.6 }}
-        className="mt-8"
-      >
-        <Image 
-          src="/vercel.svg" 
-          alt="Vercel Logo" 
-          width={72} 
-          height={16} 
-        />
-      </motion.div>
+      <Card />
     </div>
   );
 }
