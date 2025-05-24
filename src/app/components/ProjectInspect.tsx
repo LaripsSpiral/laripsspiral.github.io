@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import BackBtn from "./BackBtn";
 
 interface ProjectInspectProps {
   project: {
@@ -25,9 +26,7 @@ export default function ProjectInspect({ project }: ProjectInspectProps) {
         animate={{ opacity: 1, y: 0 }}
         className="max-w-4xl mx-auto bg-white/10 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg p-8"
       >
-        <Link href="/projects" className="text-blue-500 hover:text-blue-600 mb-4 block">
-          ← Back to Projects
-        </Link>
+        <BackBtn/>
         
         <Image
           src={project.image}
