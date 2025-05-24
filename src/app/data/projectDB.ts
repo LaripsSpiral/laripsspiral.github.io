@@ -1,6 +1,6 @@
 import { ProjectInterface } from "@/app/lib/project/Interface";
 
-export const Projects: ProjectInterface[] = [
+const projects: ProjectInterface[] = [
   {
     title: "Sample Project 1",
     description: "A brief description of the first project",
@@ -17,3 +17,15 @@ export const Projects: ProjectInterface[] = [
     date: "2023-11-15"
   }
 ];
+
+export const Projects: ProjectInterface[] = projects.map((p) => ({
+  ...p,
+  slug: createSlug(p.title),
+}));
+
+function createSlug(title: string) {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-') // Replace non-alphanumerics with -
+    .replace(/^-+|-+$/g, '');     // Trim starting/ending dashes
+}
