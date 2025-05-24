@@ -1,8 +1,15 @@
 import { ProjectInterface } from './Interface';
 
+const getBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_VERCEL_URL) {
+    return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`;
+  }
+  return 'http://localhost:3000';
+};
+
 export const getProjects = async (): Promise<ProjectInterface[]> => {
   try {
-    const res = await fetch('/api/projects', {
+    const res = await fetch(`${getBaseUrl()}/api/projects`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
