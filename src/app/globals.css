@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
 :root {
   --background: #ffffff;
@@ -33,3 +34,4 @@ body {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
+
