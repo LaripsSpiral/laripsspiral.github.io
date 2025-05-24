@@ -2,23 +2,11 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
 import BackBtn from "./BackBtn";
 
-interface ProjectInspectProps {
-  project: {
-    title: string;
-    description: string;
-    image: string;
-    organize?: string[];
-    platform?: string[];
-    github?: string;
-    demo?: string;
-    date: string;
-  };
-}
+import { ProjectInterface } from "../lib/project/Interface";
 
-export default function ProjectInspect({ project }: ProjectInspectProps) {
+export default function ProjectInspect(project : ProjectInterface) {
   return (
     <div className="min-h-screen p-8">
       <motion.div
@@ -29,7 +17,7 @@ export default function ProjectInspect({ project }: ProjectInspectProps) {
         <BackBtn/>
         
         <Image
-          src={project.image}
+          src={'/Default_image.svg'}
           alt={project.title}
           width={1200}
           height={600}
@@ -38,21 +26,6 @@ export default function ProjectInspect({ project }: ProjectInspectProps) {
 
         <h1 className="text-4xl font-bold mb-4">{project.title}</h1>
         <p className="text-gray-400 mb-6">{project.date}</p>
-
-        <div className="flex gap-4 mb-8">
-          {project.github && (
-            <Link href={project.github} target="_blank" 
-              className="px-4 py-2 bg-neutral-800 rounded-lg hover:bg-neutral-700">
-              View on GitHub
-            </Link>
-          )}
-          {project.demo && (
-            <Link href={project.demo} target="_blank"
-              className="px-4 py-2 bg-neutral-800 rounded-lg hover:bg-neutral-700">
-              Live Demo
-            </Link>
-          )}
-        </div>
 
         <div className="prose prose-invert max-w-none">
           <p>{project.description}</p>

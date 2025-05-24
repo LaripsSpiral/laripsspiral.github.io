@@ -24,8 +24,9 @@ export default function ProjectCard({ title, description, image, organize, platf
         animate={{ opacity: 1, y: 0 }}
         className="bg-white/10 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg"
       >
+        
         <Image
-          src={image}
+          src={image || '/Default_image.svg'}
           alt={title}
           width={400}
           height={200}

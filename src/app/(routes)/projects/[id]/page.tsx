@@ -1,5 +1,18 @@
-import ProjectView from "@/app/components/ProjectView";
+'use client';
 
-export default function ProjectPage() {
-  return <ProjectView />;
+import { useParams } from "next/navigation";
+import { Projects } from "@/app/data/projectDB";
+import ProjectInspect from "@/app/components/ProjectInspect";
+
+export default function ProjectView() {
+  const { id } = useParams();
+
+  let inspectingProject = Projects.find(p => p.title === decodeURIComponent(String(id)));
+  if (!inspectingProject) return null;
+
+  return (
+    <div className="min-h-screen p-8">
+      <ProjectInspect {...inspectingProject}/>
+    </div>
+  );
 }
