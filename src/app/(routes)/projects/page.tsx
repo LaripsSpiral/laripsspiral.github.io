@@ -2,15 +2,18 @@
 
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
+
 import ProjectCard from "@/app/components/ProjectCard";
+
 import SearchBar from "@/app/components/SearchBar";
-import { filterProjects, sortProjects } from "@/app/utils/projectUtils";
-import { Project } from "@/app/utils/projectUtils";
+
+import { ProjectInterface } from "@/app/lib/project/Interface";
+import { filterProjects, sortProjects } from "@/app/lib/project/Queuery";
 
 export default function Projects() {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<"name" | "latest">("latest");
-  const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
+  const [filteredProjects, setFilteredProjects] = useState<ProjectInterface[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

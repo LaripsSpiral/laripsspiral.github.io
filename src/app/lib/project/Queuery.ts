@@ -1,18 +1,7 @@
-export interface Project {
-  title: string;
-  description: string;
-  image: string;
-  organize?: string[];
-  platform?: string[];
-  link?: string;
-  date: string;
-}
-
-export const projects: Project[] = [];
+import { ProjectInterface } from './Interface';
 
 type SortOption = 'name' | 'latest';
-
-export const getProjects = async (): Promise<Project[]> => {
+export const getProjects = async (): Promise<ProjectInterface[]> => {
   try {
     const res = await fetch('/api/projects', {
       method: 'GET',
@@ -31,7 +20,7 @@ export const getProjects = async (): Promise<Project[]> => {
   }
 };
 
-export const filterProjects = async (searchQuery: string): Promise<Project[]> => {
+export const filterProjects = async (searchQuery: string): Promise<ProjectInterface[]> => {
   const projects = await getProjects();
   const query = searchQuery.toLowerCase();
   
@@ -43,7 +32,7 @@ export const filterProjects = async (searchQuery: string): Promise<Project[]> =>
   );
 };
 
-export const sortProjects = (projects: Project[]): Project[] => {
+export const sortProjects = (projects: ProjectInterface[]): ProjectInterface[] => {
   if (!Array.isArray(projects)) return [];
   return [...projects];
 };
