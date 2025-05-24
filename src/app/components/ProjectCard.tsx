@@ -13,7 +13,7 @@ interface ProjectCardProps {
   link?: string;
 }
 
-export default function ProjectCard({ title, description, image, organize, platform, link}: ProjectCardProps) {
+export default function ProjectCard({ title, description, image, organize, platform}: ProjectCardProps) {
   return (
     <Link 
       href={`/projects/${encodeURIComponent(title)}`} 

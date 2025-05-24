@@ -1,6 +1,5 @@
 import { ProjectInterface } from './Interface';
 
-type SortOption = 'name' | 'latest';
 export const getProjects = async (): Promise<ProjectInterface[]> => {
   try {
     const res = await fetch('/api/projects', {

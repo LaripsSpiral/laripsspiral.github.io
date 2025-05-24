@@ -1,13 +1,17 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/app/data/projectDB';
 
-export async function GET(request: Request) {
+interface ProjectRecord {
+  organize: string;
+  platform: string;
+  image?: string;
+  [key: string]: unknown;
+}
+
+export async function GET() {
   try {
-    const { searchParams } = new URL(request.url);
-    const query = searchParams.get('query');
-    
     const db = getDb();
-    const projects = db.prepare('SELECT * FROM projects').all() as Record<string, any>[];
+    const projects = db.prepare('SELECT * FROM projects').all() as ProjectRecord[];
     
     const mappedProjects = projects.map(project => ({
       ...project,
