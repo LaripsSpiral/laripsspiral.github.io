@@ -1,0 +1,38 @@
+import Database from 'better-sqlite3';
+import path from 'path';
+import { Project } from './types';
+
+let db: Database.Database | null = null;
+
+export function getDb() {
+  if (!db) {
+    const dbPath = path.join(process.cwd(), 'src', 'app', 'data');
+    db = new Database(path.join(dbPath, 'app.sqlite3'));
+    
+    db.exec(`
+      CREATE TABLE IF NOT EXISTS projects (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        description TEXT,
+        image TEXT,
+        organize TEXT,
+        platform TEXT,
+        link TEXT,
+        date TEXT
+      )
+    `);
+  }
+  return db;
+}
+
+export const projectQueries = {
+  getAll: () => {
+    const db = getDb();
+    return db.prepare('SELECT * FROM projects ORDER BY date DESC').all();
+  },
+  
+  getById: (title: string) => {
+    const db = getDb();
+    return db.prepare('SELECT * FROM projects WHERE title = ?').get(title);
+  }
+};
