@@ -2,7 +2,7 @@ export const projects = [
   {
     title: "School of Survival",
     description: "----------",
-    image: "/projects/weatherapp.png",
+    image: "/images/projects/sos.png",
     organize: ["CoSI", "Dentsu"],
     platform: ["Roblox"],
     link: "https://www.roblox.com/games",
@@ -11,7 +11,7 @@ export const projects = [
   {
     title: "Portfolio Website",
     description: "Personal portfolio website built with Next.js and Tailwind CSS",
-    image: "/projects/portfolio.png",
+    image: "/images/projects/portfolio.png",
     platform: ["Roblox"],
     link: "https://www.roblox.com/games",
     date: "2024-02",

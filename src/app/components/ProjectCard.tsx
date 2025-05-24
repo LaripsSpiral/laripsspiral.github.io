@@ -10,13 +10,15 @@ interface ProjectCardProps {
   image: string;
   organize?: string[];
   platform?: string[];
-  github?: string;
-  demo?: string;
+  link?: string;
 }
 
-export default function ProjectCard({ title, description, image, organize, platform, github, demo }: ProjectCardProps) {
+export default function ProjectCard({ title, description, image, organize, platform, link}: ProjectCardProps) {
   return (
-    <Link href={`/projects/${encodeURIComponent(title)}`}>
+    <Link 
+      href={`/projects/${encodeURIComponent(title)}`} 
+      className="block hover:scale-[1.02] transition-transform duration-200"
+    >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -43,18 +45,6 @@ export default function ProjectCard({ title, description, image, organize, platf
                 {tag}
               </span>
             ))}
-          </div>
-          <div className="flex gap-4">
-            {github && (
-              <Link href={github} target="_blank" className="text-blue-500 hover:text-blue-600">
-                GitHub
-              </Link>
-            )}
-            {demo && (
-              <Link href={demo} target="_blank" className="text-green-500 hover:text-green-600">
-                Live Demo
-              </Link>
-            )}
           </div>
         </div>
       </motion.div>
