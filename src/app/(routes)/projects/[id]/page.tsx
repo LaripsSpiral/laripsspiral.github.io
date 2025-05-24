@@ -7,7 +7,7 @@ import ProjectInspect from "@/app/components/ProjectInspect";
 export default function ProjectView() {
   const { id } = useParams();
 
-  let inspectingProject = Projects.find(p => p.title === decodeURIComponent(String(id)));
+  const inspectingProject = Projects.find(p => p.title === decodeURIComponent(String(id)));
   if (!inspectingProject) return null;
 
   return (
