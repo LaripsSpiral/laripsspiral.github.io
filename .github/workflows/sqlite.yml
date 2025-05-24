@@ -1,0 +1,11 @@
+name: sqlite
+run-name: Setting up SQLite database
+on: [push]
+jobs:
+    connect-remote: 
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - name: Show database
+              run: mysql -h hosename --port 3307 -uusername -ppassword -e "SHOW DATABASES";
+    
