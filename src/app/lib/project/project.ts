@@ -4,9 +4,11 @@ export interface Project {
   image: string;
   organize?: string[];
   platform?: string[];
-  link: string;  // renamed from url to match data structure
+  link?: string;
   date: string;
 }
+
+export const projects: Project[] = [];
 
 type SortOption = 'name' | 'latest';
 
@@ -19,8 +21,8 @@ export const getProjects = async (): Promise<Project[]> => {
       },
       cache: 'no-store'
     });
-    
-    if (!res.ok) throw new Error('Failed to fetch projects');
+
+    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
     const data = await res.json();
     return Array.isArray(data) ? data : [];
   } catch (error) {
