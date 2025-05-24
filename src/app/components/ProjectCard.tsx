@@ -4,16 +4,9 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
-interface ProjectCardProps {
-  title: string;
-  description: string;
-  image: string;
-  organize?: string[];
-  platform?: string[];
-  link?: string;
-}
+import { ProjectInterface } from "../lib/project/Interface";
 
-export default function ProjectCard({ title, description, image, organize, platform}: ProjectCardProps) {
+export default function ProjectCard({ title, description, image, organize, platform}: ProjectInterface) {
   return (
     <Link 
       href={`/projects/${encodeURIComponent(title)}`} 
