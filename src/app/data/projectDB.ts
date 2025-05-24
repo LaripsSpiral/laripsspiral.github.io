@@ -1,26 +1,21 @@
-import Database from 'better-sqlite3';
-import type { Database as SQLiteDatabase } from 'better-sqlite3';
-import path from 'path';
+import { ProjectInterface } from "@/app/lib/project/Interface";
 
-let db: SQLiteDatabase | null = null;
-
-export function getDb() {
-  if (!db) {
-    const dbPath = path.join(process.cwd(), 'src', 'app', 'data');
-    db = new Database(path.join(dbPath, 'app.sqlite3'));
-    
-    db.exec(`
-      CREATE TABLE IF NOT EXISTS projects (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        description TEXT,
-        image TEXT,
-        organize TEXT,
-        platform TEXT,
-        link TEXT,
-        date TEXT
-      )
-    `);
+export const Projects: ProjectInterface[] = [
+  {
+    title: "Sample Project 1",
+    description: "A brief description of the first project",
+    image: "/path/to/image1.jpg",
+    organize: ["Frontend", "Backend"],
+    platform: ["Web", "Mobile"],
+    link: "https://github.com/sample/project1",
+    date: "2023-12-01"
+  },
+  {
+    title: "Sample Project 2",
+    description: "Description of the second project",
+    image: "/path/to/image2.jpg",
+    organize: ["Frontend"],
+    platform: ["Web"],
+    date: "2023-11-15"
   }
-  return db;
-};
+];

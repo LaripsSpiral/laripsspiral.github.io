@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { notFound } from "next/navigation";
-import { getProjects } from "@/app/lib/project/Queuery";
+import { Projects } from "@/app/data/projectDB";
 import { ProjectInterface } from "@/app/lib/project/Interface";
 import ProjectInspect from "./ProjectInspect";
 
@@ -13,8 +13,7 @@ export default function ProjectView() {
 
   useEffect(() => {
     const loadProject = async () => {
-      const projects = await getProjects();
-      const found = projects.find(p => p.title === decodeURIComponent(String(id)));
+      const found = Projects.find(p => p.title === decodeURIComponent(String(id)));
       if (!found) return notFound();
       setProject(found);
     };
