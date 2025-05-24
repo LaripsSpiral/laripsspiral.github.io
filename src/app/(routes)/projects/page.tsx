@@ -8,7 +8,7 @@ import ProjectCard from "@/app/components/ProjectCard";
 import SearchBar from "@/app/components/SearchBar";
 
 import { ProjectInterface } from "@/app/lib/project/Interface";
-import { filterProjects, sortProjects } from "@/app/lib/project/Queuery";
+import { filterProjects } from "@/app/lib/project/Queuery";
 
 export default function Projects() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -57,7 +57,7 @@ export default function Projects() {
         <div>Loading...</div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProjects.map((project, index) => (
+          {filteredProjects.map((project) => (
             <ProjectCard key={project.title} {...project} />
           ))}
         </div>
