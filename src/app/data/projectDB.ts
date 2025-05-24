@@ -1,6 +1,5 @@
 import Database from 'better-sqlite3';
 import path from 'path';
-import { Project } from './types';
 
 let db: Database.Database | null = null;
 
@@ -23,16 +22,4 @@ export function getDb() {
     `);
   }
   return db;
-}
-
-export const projectQueries = {
-  getAll: () => {
-    const db = getDb();
-    return db.prepare('SELECT * FROM projects ORDER BY date DESC').all();
-  },
-  
-  getById: (title: string) => {
-    const db = getDb();
-    return db.prepare('SELECT * FROM projects WHERE title = ?').get(title);
-  }
 };
