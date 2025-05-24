@@ -12,6 +12,7 @@ function FrontCard() {
       width={1016} 
       height={638}
       className="w-full h-full object-cover backface-hidden"
+      draggable={false} // Disable dragging
     />
   )
 }
@@ -24,16 +25,20 @@ function BackCard() {
       width={1016} 
       height={638}
       className="w-full h-full object-cover backface-hidden"
+      draggable={false} // Disable dragging
     />
   )
 }
 
-export default function Card() {
+export default function Card({ width = 300 }) {
   const [isFlipped, setIsFlipped] = useState(false);
+  const aspectRatio = 1016 / 638;
+  const height = width / aspectRatio;
 
   return (
     <div 
-      className="w-[300px] h-[188px] cursor-pointer perspective-1000"
+      className="cursor-pointer perspective-1000"
+      style={{ width: `${width}px`, height: `${height}px` }}
       onClick={() => setIsFlipped(!isFlipped)}
     >
       <motion.div
