@@ -1,7 +1,8 @@
 import Database from 'better-sqlite3';
+import type { Database as SQLiteDatabase } from 'better-sqlite3';
 import path from 'path';
 
-let db: Database.Database | null = null;
+let db: SQLiteDatabase | null = null;
 
 export function getDb() {
   if (!db) {
