@@ -9,8 +9,8 @@ export function generateStaticParams() {
 }
 
 // Dynamic route page component
-export default async function ProjectPage({ params }: { params: { slug: string } }) {
-  const { slug } = await params;
+export default function ProjectPage({ params }: { params: { slug: string } }) {
+  const { slug } = params; // No need to await
   const project = Projects.find((p) => p.slug === slug);
 
   if (!project) {
