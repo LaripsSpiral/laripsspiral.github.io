@@ -6,10 +6,10 @@ import Link from "next/link";
 
 import { ProjectInterface } from "../lib/project/Interface";
 
-export default function ProjectCard({ title, description, image, organize, platform}: ProjectInterface) {
+export default function ProjectCard(project: ProjectInterface) {
   return (
     <Link 
-      href={`/projects/${encodeURIComponent(title)}`} 
+      href={`/projects/${project.slug}`} 
       className="block hover:scale-[1.02] transition-transform duration-200"
     >
       <motion.div
@@ -19,22 +19,22 @@ export default function ProjectCard({ title, description, image, organize, platf
       >
         
         <Image
-          src={image || '/Default_image.svg'}
-          alt={title}
+          src={project.image || '/Default_image.svg'}
+          alt={project.title}
           width={400}
           height={200}
           className="w-full h-48 object-cover"
         />
         <div className="p-6">
-          <h3 className="text-xl font-bold mb-2">{title}</h3>
-          <p className="text-gray-600 mb-4">{description}</p>
+          <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+          <p className="text-gray-600 mb-4">{project.description}</p>
           <div className="flex flex-wrap gap-1 text-black bolder">
-              {organize?.map((tag) => (
+              {project.organize?.map((tag) => (
               <span key={tag} className="px-3 py-1 bg-gray-200 rounded-full text-sm mr-2">
                 {tag}
               </span>
               ))}
-              {platform?.map((tag) => (
+              {project.platform?.map((tag) => (
               <span key={tag} className="px-3 py-1 bg-blue-200 rounded-full text-sm">
                 {tag}
               </span>
