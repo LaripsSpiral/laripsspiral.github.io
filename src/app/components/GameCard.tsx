@@ -1,6 +1,15 @@
 'use client';
 
+import Link from 'next/link';
 import { Calendar, Star, Trophy, GraduationCap, Users, Handshake } from 'lucide-react';
+import { createSlug } from '@/app/lib/project/slug';
+
+export interface GameMedia {
+  type: 'video' | 'image' | 'gif';
+  url: string;
+  thumbnail?: string;
+  title?: string;
+}
 
 export interface Game {
   id: string;
@@ -12,8 +21,13 @@ export interface Game {
   imageUrl: string;
   tags: string[];
   role?: string;
+  roleDetails?: string;
   status?: string;
   starred?: boolean;
+  features?: string[];
+  awards?: string[];
+  client?: string;
+  media?: GameMedia[];
   badges?: {
     star?: boolean;
     trophy?: boolean;
@@ -30,11 +44,21 @@ interface GameCardProps {
 }
 
 export function GameCard({ game, onClick, isSelected = false }: GameCardProps) {
+  const slug = createSlug(game.title);
+  
+  const handleClick = (e: React.MouseEvent) => {
+    if (onClick) {
+      e.preventDefault();
+      onClick();
+    }
+  };
+  
   return (
-    <div
-      className="group relative cursor-pointer overflow-hidden rounded-lg bg-gray-900 shadow-lg transition-transform duration-300 hover:shadow-2xl"
-      onClick={onClick}
-    >
+    <Link href={`/projects/${slug}`} className="block">
+      <div
+        className="group relative cursor-pointer overflow-hidden rounded-lg bg-gray-900 shadow-lg transition-transform duration-300 hover:shadow-2xl"
+        onClick={handleClick}
+      >
       <div className="relative h-64 w-full overflow-hidden">
         <img
           src={game.imageUrl}
@@ -91,6 +115,7 @@ export function GameCard({ game, onClick, isSelected = false }: GameCardProps) {
         </div>
       </div>
     </div>
+    </Link>
   );
 }
 

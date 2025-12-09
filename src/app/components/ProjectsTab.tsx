@@ -3,7 +3,6 @@
 import { useMemo, useState } from 'react';
 import { Search, SortAsc } from 'lucide-react';
 import { Game, GameCard } from './GameCard';
-import { GameDetailModal } from './GameDetailModal';
 
 interface ProjectsTabProps {
   games: Game[];
@@ -12,7 +11,6 @@ interface ProjectsTabProps {
 export function ProjectsTab({ games }: ProjectsTabProps) {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [sortBy, setSortBy] = useState<string>('newest');
-  const [selectedGame, setSelectedGame] = useState<Game | null>(null);
 
   const filteredAndSortedGames = useMemo(() => {
     let filtered = games;
@@ -76,9 +74,9 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
         {filteredAndSortedGames.length === 1 ? 'game' : 'games'}
       </div>
 
-      <div className="space-y-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {filteredAndSortedGames.map((game) => (
-          <GameCard key={game.id} game={game} onClick={() => setSelectedGame(game)} />
+          <GameCard key={game.id} game={game} />
         ))}
       </div>
 
@@ -87,8 +85,6 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
           <p className="text-gray-400">No games found matching your search.</p>
         </div>
       )}
-
-      {selectedGame && <GameDetailModal game={selectedGame} onClose={() => setSelectedGame(null)} />}
     </div>
   );
 }

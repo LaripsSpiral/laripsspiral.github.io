@@ -1,9 +1,12 @@
 'use client';
 
+import { PageLayout } from '@/app/components/PageLayout';
+import { AboutTab } from '@/app/components/AboutTab';
+
 export default function About() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-8">
-      ...existing about page content...
-    </div>
+    <PageLayout>
+      <AboutTab />
+    </PageLayout>
   );
 }

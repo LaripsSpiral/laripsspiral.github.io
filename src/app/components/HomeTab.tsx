@@ -1,9 +1,11 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import { Star, Calendar, Trophy, GraduationCap, Users, Handshake } from 'lucide-react';
 import { Game } from './GameCard';
 import { GameDetailModal } from './GameDetailModal';
+import { createSlug } from '@/app/lib/project/slug';
 
 interface HomeTabProps {
   games: Game[];
@@ -134,9 +136,9 @@ export function HomeTab({ games }: HomeTabProps) {
       <div className="mx-auto max-w-7xl px-4 pt-4 sm:px-6 lg:px-8">
         {/* Main Preview */}
         <div className="mb-0 px-6 py-6">
-          <div 
-            onClick={() => setSelectedGame(currentGame)}
-            className="group relative overflow-hidden rounded-xl bg-gray-900 shadow-2xl transition-transform duration-300 hover:shadow-purple-500/20 cursor-pointer"
+          <Link 
+            href={`/projects/${createSlug(currentGame.title)}`}
+            className="group relative overflow-hidden rounded-xl bg-gray-900 shadow-2xl transition-transform duration-300 hover:shadow-purple-500/20 cursor-pointer block"
           >
             <div className="relative h-[400px] w-full overflow-hidden">
               <img
@@ -208,7 +210,7 @@ export function HomeTab({ games }: HomeTabProps) {
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
           
           {/* Auto-scroll Progress Bar */}
           <div className="mt-4">
@@ -274,7 +276,15 @@ export function HomeTab({ games }: HomeTabProps) {
         </div>
       </div>
 
-      {selectedGame && <GameDetailModal game={selectedGame} onClose={() => setSelectedGame(null)} />}
+      {selectedGame && (
+        <GameDetailModal
+          game={selectedGame}
+          games={games}
+          currentIndex={games.findIndex((g) => g.id === selectedGame.id)}
+          onClose={() => setSelectedGame(null)}
+          onNavigate={(index) => setSelectedGame(games[index])}
+        />
+      )}
     </>
   );
 }
