@@ -82,7 +82,6 @@ export function HomeTab({ games }: HomeTabProps) {
       const itemWidth = 280; // Width of each item
       const gap = 16; // Gap between items
       const itemTotalWidth = itemWidth + gap;
-      const containerPadding = 64; // px-16 = 4rem = 64px
       const spacerWidth = container.clientWidth / 2 - itemWidth / 2; // Width of spacer
       
       // Calculate scroll position to center the active item
@@ -111,20 +110,6 @@ export function HomeTab({ games }: HomeTabProps) {
       setIsAutoPlaying(true);
       setProgress(0);
     }, RESUME_AUTO_PLAY_DELAY);
-  };
-
-  const goToPrevious = () => {
-    setIsAutoPlaying(false);
-    setProgress(0);
-    setCurrentIndex((prev) => (prev - 1 + games.length) % games.length);
-    scheduleResumeAutoPlay();
-  };
-
-  const goToNext = () => {
-    setIsAutoPlaying(false);
-    setProgress(0);
-    setCurrentIndex((prev) => (prev + 1) % games.length);
-    scheduleResumeAutoPlay();
   };
 
   const handleProjectClick = (index: number) => {

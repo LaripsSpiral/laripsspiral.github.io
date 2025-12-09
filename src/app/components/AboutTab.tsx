@@ -1,6 +1,6 @@
 'use client';
 
-import { Code, Cpu, Zap, Users, GraduationCap, Award, Globe } from 'lucide-react';
+import { Code, Cpu, Zap, Users, GraduationCap, Award } from 'lucide-react';
 
 export function AboutTab() {
   const skills = [
@@ -138,7 +138,7 @@ export function AboutTab() {
         </div>
         <div className="mx-auto max-w-3xl space-y-4 text-gray-400">
           <p className="text-lg font-medium text-white">Bangkok University</p>
-          <p>Bachelor's Degree in Information Technology</p>
+          <p>Bachelor&apos;s Degree in Information Technology</p>
           <p>Majoring in Game and Interactive Media</p>
           <p className="text-purple-400">June 2023 - Ongoing</p>
         </div>
@@ -161,7 +161,7 @@ export function AboutTab() {
               <li className="flex items-start gap-2">
                 <span className="text-purple-400">•</span>
                 <span>
-                  Developed and implemented gameplay 'Run Hide Fight' events with quick time events
+                  Developed and implemented gameplay &apos;Run Hide Fight&apos; events with quick time events
                   using IK animation
                 </span>
               </li>
