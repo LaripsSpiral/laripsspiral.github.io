@@ -5,7 +5,6 @@ import {
   Monitor,
   Star,
   Trophy,
-  GraduationCap,
   Users,
   Handshake,
   CheckCircle,
