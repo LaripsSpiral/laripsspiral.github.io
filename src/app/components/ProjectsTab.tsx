@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import { Search, SortAsc } from 'lucide-react';
 import { Game, GameCard } from './GameCard';
+import { THEME_PRIMARY_BORDER } from '../theme/palette';
 
 interface ProjectsTabProps {
   games: Game[];
@@ -48,7 +49,8 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
             placeholder="Search projects..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full rounded-lg border border-gray-700 bg-gray-800 py-3 pl-12 pr-4 text-gray-300 placeholder-gray-500 transition-colors focus:border-purple-600 focus:outline-none"
+            className="w-full rounded-lg border bg-[#0d1117] py-3 pl-12 pr-4 text-gray-300 placeholder-gray-500 transition-colors focus:outline-none"
+            style={{ borderColor: THEME_PRIMARY_BORDER }}
           />
         </div>
 
@@ -60,7 +62,8 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-sm text-gray-300 transition-colors hover:border-purple-600 focus:border-purple-600 focus:outline-none"
+            className="rounded-lg border bg-[#0d1117] px-4 py-3 text-sm text-gray-300 transition-colors focus:outline-none"
+            style={{ borderColor: THEME_PRIMARY_BORDER }}
           >
             <option value="newest">Newest First</option>
             <option value="oldest">Oldest First</option>

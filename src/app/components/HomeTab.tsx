@@ -2,10 +2,17 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Star, Calendar, Trophy, GraduationCap, Users, Handshake } from 'lucide-react';
+import Image from 'next/image';
+import { Star, Calendar, Trophy, GraduationCap, Users, Handshake, Building2 } from 'lucide-react';
 import { Game } from './GameCard';
-import { GameDetailModal } from './GameDetailModal';
 import { createSlug } from '@/app/lib/project/slug';
+import {
+  THEME_PRIMARY,
+  THEME_PRIMARY_BORDER as THEME_BORDER,
+  THEME_PRIMARY_TINT as THEME_TINT,
+  THEME_COMPLEMENT_TINT as THEME_COMP_TINT,
+} from '../theme/palette';
+import { ThemeBadge } from './ThemeBox';
 
 interface HomeTabProps {
   games: Game[];
@@ -13,7 +20,6 @@ interface HomeTabProps {
 
 export function HomeTab({ games }: HomeTabProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [progress, setProgress] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -138,72 +144,76 @@ export function HomeTab({ games }: HomeTabProps) {
         <div className="mb-0 px-6 py-6">
           <Link 
             href={`/projects/${createSlug(currentGame.title)}`}
-            className="group relative overflow-hidden rounded-xl bg-gray-900 shadow-2xl transition-transform duration-300 hover:shadow-purple-500/20 cursor-pointer block"
+            className="group relative overflow-hidden rounded-xl shadow-2xl transition-transform duration-300 cursor-pointer block"
+            style={{
+              border: `1px solid ${THEME_BORDER}`,
+              background: `linear-gradient(180deg, ${THEME_TINT} 0%, ${THEME_COMP_TINT} 100%)`,
+            }}
           >
             <div className="relative h-[400px] w-full overflow-hidden">
-              <img
+              <Image
                 src={currentGame.imageUrl}
                 alt={currentGame.title}
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1280px"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
 
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/80 to-transparent px-6 pt-12 pb-4">
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6 pt-12">
                 <div className="flex items-end justify-between gap-4">
-                  <div className="flex-1 min-w-0">
+                  <div className="flex-1">
                     {currentGame.status && (
                       <div className="mb-2 flex items-center gap-2 text-white/90">
-                        <Calendar className="h-4 w-4 flex-shrink-0" />
+                        <Calendar className="h-4 w-4" />
                         <span className="text-sm">{currentGame.status}</span>
                       </div>
                     )}
 
-                    <h2 className="mb-2 text-xl sm:text-2xl font-bold text-white line-clamp-2">{currentGame.title}</h2>
-                    <p className="mb-3 text-sm sm:text-base text-gray-300 line-clamp-2">{currentGame.description}</p>
-
-                    <div className="mb-3 flex flex-wrap gap-2">
-                      {currentGame.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-full bg-purple-600/30 px-2 py-1 text-xs text-purple-200"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    {currentGame.role && (
-                      <p className="text-xs text-gray-400">Role: {currentGame.role}</p>
+                    <h2 className="text-white text-xl sm:text-2xl font-bold">{currentGame.title}</h2>
+                    
+                    {currentGame.badges?.partner && (
+                      <div className="mt-2 flex items-center gap-2 text-white/70 text-xs">
+                        <Handshake className="h-3 w-3" />
+                        <span>{currentGame.badges.partner}</span>
+                      </div>
                     )}
+                    
+                    <div className="mt-2 flex items-center gap-3 flex-wrap">
+                      {(currentGame.client || currentGame.badges?.school) && (
+                        <div className="flex items-center gap-2 text-white/70 text-xs">
+                          <Building2 className="h-3 w-3" />
+                          <span>
+                            {currentGame.badges?.school || currentGame.client === 'Academic Project'
+                              ? 'Bangkok University'
+                              : currentGame.client}
+                          </span>
+                        </div>
+                      )}
+                      {currentGame.role && (
+                        <div className="flex items-center gap-2 text-white/70 text-xs">
+                          <Users className="h-3 w-3" />
+                          <span>{currentGame.role}</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
 
                   {currentGame.badges && (
-                    <div className="flex flex-wrap items-end justify-end gap-1.5">
+                    <div className="flex flex-wrap items-end justify-end gap-2">
                       {currentGame.badges.star && (
-                        <div className="flex items-center gap-1 rounded-full bg-yellow-500/20 px-2 py-1 text-xs text-yellow-300">
+                        <ThemeBadge tone="star">
                           <Star className="h-3 w-3" fill="currentColor" />
-                        </div>
+                        </ThemeBadge>
                       )}
                       {currentGame.badges.trophy && (
-                        <div className="flex items-center gap-1 rounded-full bg-purple-500/20 px-2 py-1 text-xs text-purple-300">
+                        <ThemeBadge tone="trophy">
                           <Trophy className="h-3 w-3" />
-                        </div>
+                        </ThemeBadge>
                       )}
                       {currentGame.badges.school && (
-                        <div className="flex items-center gap-1 rounded-full bg-blue-500/20 px-2 py-1 text-xs text-blue-300">
+                        <ThemeBadge tone="school">
                           <GraduationCap className="h-3 w-3" />
-                        </div>
-                      )}
-                      {currentGame.badges.teamSize && (
-                        <div className="flex items-center gap-1 rounded-full bg-green-500/20 px-2 py-1 text-xs text-green-300">
-                          <Users className="h-3 w-3" />
-                          <span className="text-xs">{currentGame.badges.teamSize}</span>
-                        </div>
-                      )}
-                      {currentGame.badges.partner && (
-                        <div className="flex items-center gap-1 rounded-full bg-orange-500/20 px-2 py-1 text-xs text-orange-300">
-                          <Handshake className="h-3 w-3" />
-                          <span className="ml-1 text-xs">{currentGame.badges.partner}</span>
-                        </div>
+                        </ThemeBadge>
                       )}
                     </div>
                   )}
@@ -214,12 +224,16 @@ export function HomeTab({ games }: HomeTabProps) {
           
           {/* Auto-scroll Progress Bar */}
           <div className="mt-4">
-            <div className="h-1 w-full bg-gray-700 rounded-full overflow-hidden">
+            <div
+              className="h-1 w-full rounded-full overflow-hidden"
+              style={{ backgroundColor: 'rgba(255,255,255,0.08)' }}
+            >
               <div
-                className={`h-full bg-purple-500 transition-all ${isAutoPlaying ? 'ease-linear' : ''}`}
+                className={`h-full transition-all ${isAutoPlaying ? 'ease-linear' : ''}`}
                 style={{
                   width: `${progress}%`,
-                  transition: isAutoPlaying ? 'width 0.05s linear' : 'none'
+                  transition: isAutoPlaying ? 'width 0.05s linear' : 'none',
+                  backgroundColor: THEME_PRIMARY,
                 }}
               />
             </div>
@@ -246,7 +260,7 @@ export function HomeTab({ games }: HomeTabProps) {
               onClick={() => handleProjectClick(index)}
               className={`flex-shrink-0 cursor-pointer transition-all duration-300 ${
                 index === currentIndex
-                  ? 'ring-4 ring-purple-500 scale-105'
+                  ? 'scale-105'
                   : 'opacity-60 hover:opacity-100 hover:scale-[1.02]'
               }`}
               style={{ 
@@ -255,17 +269,29 @@ export function HomeTab({ games }: HomeTabProps) {
                 scrollSnapAlign: 'center'
               }}
             >
-              <div className="relative h-40 w-full overflow-hidden rounded-lg bg-gray-900 shadow-lg">
-                <img
+              <div
+                className="relative h-40 w-full overflow-hidden rounded-lg shadow-lg"
+                style={{
+                  border: `1px solid ${THEME_BORDER}`,
+                  background: `linear-gradient(180deg, ${THEME_TINT} 0%, ${THEME_COMP_TINT} 100%)`,
+                  boxShadow: index === currentIndex ? `0 0 0 3px ${THEME_PRIMARY}33` : undefined,
+                }}
+              >
+                <Image
                   src={game.imageUrl}
                   alt={game.title}
-                  className="h-full w-full object-cover transition-transform duration-300 hover:scale-110"
+                  fill
+                  sizes="280px"
+                  className="object-cover transition-transform duration-300 hover:scale-110"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-3">
                   <h4 className="text-sm font-semibold text-white line-clamp-1">{game.title}</h4>
                 </div>
                 {index === currentIndex && (
-                  <div className="absolute inset-0 border-2 border-purple-500 rounded-lg" />
+                  <div
+                    className="absolute inset-0 rounded-lg"
+                    style={{ border: `2px solid ${THEME_PRIMARY}` }}
+                  />
                 )}
               </div>
             </div>
@@ -275,16 +301,6 @@ export function HomeTab({ games }: HomeTabProps) {
           <div style={{ width: 'calc(50% - 140px)', flexShrink: 0 }} />
         </div>
       </div>
-
-      {selectedGame && (
-        <GameDetailModal
-          game={selectedGame}
-          games={games}
-          currentIndex={games.findIndex((g) => g.id === selectedGame.id)}
-          onClose={() => setSelectedGame(null)}
-          onNavigate={(index) => setSelectedGame(games[index])}
-        />
-      )}
     </>
   );
 }

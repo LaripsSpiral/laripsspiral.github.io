@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { THEME_PRIMARY, THEME_PRIMARY_BORDER } from '../theme/palette';
 
 export function TabNavigation() {
   const pathname = usePathname();
@@ -20,7 +21,10 @@ export function TabNavigation() {
   };
 
   return (
-    <nav className="border-b border-gray-700 bg-gray-900">
+    <nav
+      className="border-b"
+      style={{ borderColor: THEME_PRIMARY_BORDER, backgroundColor: 'rgba(10,13,17,0.9)' }}
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex gap-8">
           {tabs.map((tab) => {
@@ -30,12 +34,16 @@ export function TabNavigation() {
                 key={tab.id}
                 href={tab.href}
                 className={`relative py-4 transition-colors ${
-                  active ? 'text-purple-400' : 'text-gray-400 hover:text-gray-200'
+                  active ? 'text-white' : 'text-gray-400 hover:text-gray-200'
                 }`}
+                style={{ color: active ? THEME_PRIMARY : undefined }}
               >
                 {tab.label}
                 {active && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-purple-400" />
+                  <div
+                    className="absolute bottom-0 left-0 right-0 h-0.5"
+                    style={{ backgroundColor: THEME_PRIMARY }}
+                  />
                 )}
               </Link>
             );

@@ -3,6 +3,13 @@
 import { useState } from 'react';
 import { Gamepad2, Github, Linkedin, Mail } from 'lucide-react';
 import { TabNavigation } from './TabNavigation';
+import {
+  THEME_PRIMARY,
+  THEME_PRIMARY_BORDER,
+  THEME_PRIMARY_TINT,
+  THEME_COMPLEMENT_TINT,
+  THEME_HEADER_BG,
+} from '../theme/palette';
 
 interface PageLayoutProps {
   children: React.ReactNode;
@@ -22,17 +29,33 @@ export function PageLayout({ children }: PageLayoutProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black">
-      <header className="border-b border-gray-700 bg-gray-900/80 backdrop-blur-sm">
+    <div
+      className="min-h-screen"
+      style={{
+        background: `radial-gradient(circle at 20% 20%, ${THEME_PRIMARY_TINT} 0, transparent 25%), radial-gradient(circle at 80% 10%, ${THEME_COMPLEMENT_TINT} 0, transparent 22%), linear-gradient(180deg, #0b0f14 0%, #0a0d11 60%, #06080c 100%)`,
+      }}
+    >
+      <header
+        className="backdrop-blur-sm"
+        style={{
+          borderBottom: `1px solid ${THEME_PRIMARY_BORDER}`,
+          backgroundColor: THEME_HEADER_BG,
+        }}
+      >
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="rounded-full bg-purple-600 p-2">
-                <Gamepad2 className="h-6 w-6 text-white" />
+              <div
+                className="rounded-full p-2"
+                style={{ background: THEME_PRIMARY_TINT, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
+              >
+                <Gamepad2 className="h-6 w-6" style={{ color: THEME_PRIMARY }} />
               </div>
               <div>
                 <h1 className="text-white">Sirasit Tumvijit</h1>
-                <p className="text-sm text-gray-400">Game Developer</p>
+                <p className="text-sm" style={{ color: THEME_PRIMARY }}>
+                  Game Developer
+                </p>
               </div>
             </div>
 
@@ -41,7 +64,8 @@ export function PageLayout({ children }: PageLayoutProps) {
                 href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-800 hover:text-purple-400"
+                className="rounded-full p-2 transition-colors"
+                style={{ color: THEME_PRIMARY }}
                 aria-label="GitHub"
               >
                 <Github className="h-5 w-5" />
@@ -50,7 +74,8 @@ export function PageLayout({ children }: PageLayoutProps) {
                 href="https://www.linkedin.com/in/sirasit-tumvijit-894716343/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-800 hover:text-purple-400"
+                className="rounded-full p-2 transition-colors"
+                style={{ color: THEME_PRIMARY }}
                 aria-label="LinkedIn"
               >
                 <Linkedin className="h-5 w-5" />
@@ -59,7 +84,8 @@ export function PageLayout({ children }: PageLayoutProps) {
                 href="https://laripsspiral.itch.io"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-800 hover:text-purple-400"
+                className="rounded-full p-2 transition-colors"
+                style={{ color: THEME_PRIMARY }}
                 aria-label="itch.io"
               >
                 <svg 
@@ -73,7 +99,12 @@ export function PageLayout({ children }: PageLayoutProps) {
               <div className="relative">
                 <button
                   onClick={copyEmailToClipboard}
-                  className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-gray-400 transition-colors hover:bg-gray-800 hover:text-purple-400"
+                  className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors"
+                  style={{
+                    color: THEME_PRIMARY,
+                    border: `1px solid ${THEME_PRIMARY_BORDER}`,
+                    backgroundColor: 'rgba(0,0,0,0.25)',
+                  }}
                   aria-label="Copy email address"
                   title="Click to copy email"
                 >
@@ -81,7 +112,10 @@ export function PageLayout({ children }: PageLayoutProps) {
                 </button>
                 {emailCopied && (
                   <div className="absolute right-0 top-full mt-2 z-50 animate-fade-in">
-                    <div className="rounded-lg bg-purple-600 px-4 py-2 text-sm text-white shadow-lg">
+                    <div
+                      className="rounded-lg px-4 py-2 text-sm text-white shadow-lg"
+                      style={{ backgroundColor: THEME_PRIMARY }}
+                    >
                       <div className="flex items-center gap-2">
                         <svg
                           className="h-4 w-4"

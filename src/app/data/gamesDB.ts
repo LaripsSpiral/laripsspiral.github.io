@@ -54,6 +54,8 @@ export const games: Game[] = [
       star: true,
       trophy: true,
       partner: 'Dentsu',
+      teamSize: 10,
+      school: true,
     },
   },
   {
@@ -101,6 +103,7 @@ export const games: Game[] = [
     ],
     badges: {
       star: true,
+      teamSize: 4,
     },
   },
   {
@@ -149,6 +152,7 @@ export const games: Game[] = [
     ],
     badges: {
       school: true,
+      teamSize: 7,
     },
   },
   {
@@ -203,6 +207,7 @@ export const games: Game[] = [
     ],
     badges: {
       school: true,
+      teamSize: 8,
     },
   },
 ];

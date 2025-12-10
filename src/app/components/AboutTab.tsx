@@ -1,6 +1,12 @@
 'use client';
 
 import { Code, Cpu, Zap, Users, GraduationCap, Award } from 'lucide-react';
+import {
+  THEME_PRIMARY,
+  THEME_PRIMARY_BORDER,
+  THEME_PRIMARY_TINT,
+  THEME_COMPLEMENT_TINT,
+} from '../theme/palette';
 
 export function AboutTab() {
   const skills = [
@@ -51,13 +57,23 @@ export function AboutTab() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
       <div className="mb-20 text-center">
-        <div className="mx-auto mb-8 h-32 w-32 overflow-hidden rounded-full bg-gradient-to-br from-purple-600 to-blue-600 p-1">
-          <div className="flex h-full w-full items-center justify-center rounded-full bg-gray-900">
-            <span className="text-purple-400 text-2xl font-bold">ST</span>
+        <div
+          className="mx-auto mb-8 h-32 w-32 overflow-hidden rounded-full p-1"
+          style={{
+            background: `linear-gradient(135deg, ${THEME_PRIMARY_TINT}, ${THEME_COMPLEMENT_TINT})`,
+            border: `1px solid ${THEME_PRIMARY_BORDER}`,
+          }}
+        >
+          <div className="flex h-full w-full items-center justify-center rounded-full bg-[#0d1117]">
+            <span className="text-2xl font-bold" style={{ color: THEME_PRIMARY }}>
+              ST
+            </span>
           </div>
         </div>
         <h2 className="mb-2 text-white">Sirasit Tumvijit</h2>
-        <p className="mb-4 text-purple-400">Game Developer</p>
+        <p className="mb-4" style={{ color: THEME_PRIMARY }}>
+          Game Developer
+        </p>
         <p className="mx-auto max-w-3xl text-gray-400">
           Unity Game Programmer with hands-on experience in research, rapid prototyping and
           collaborative development, specializing in optimization. Strong responsibility,
@@ -71,10 +87,14 @@ export function AboutTab() {
           {skills.map((skill) => (
             <div
               key={skill.title}
-              className="rounded-lg bg-gray-800 p-6 shadow-lg transition-transform hover:-translate-y-1"
+              className="rounded-lg p-6 shadow-lg transition-transform hover:-translate-y-1"
+              style={{ backgroundColor: THEME_PRIMARY_TINT, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
             >
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-purple-600/20">
-                <skill.icon className="h-6 w-6 text-purple-400" />
+              <div
+                className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg"
+                style={{ backgroundColor: THEME_COMPLEMENT_TINT, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
+              >
+                <skill.icon className="h-6 w-6" style={{ color: THEME_PRIMARY }} />
               </div>
               <h4 className="mb-2 text-white">{skill.title}</h4>
               <p className="text-sm text-gray-400">{skill.description}</p>
@@ -84,13 +104,21 @@ export function AboutTab() {
       </div>
 
       <div className="mb-20 grid gap-8 sm:grid-cols-2">
-        <div className="rounded-lg bg-gray-800 p-6 shadow-lg">
+        <div
+          className="rounded-lg p-6 shadow-lg"
+          style={{ backgroundColor: THEME_PRIMARY_TINT, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
+        >
           <h3 className="mb-4 text-white">Strengths</h3>
           <div className="flex flex-wrap gap-2">
             {strengths.map((strength) => (
               <span
                 key={strength}
-                className="rounded-full bg-purple-600/20 px-4 py-2 text-sm text-purple-300"
+                className="rounded-full px-4 py-2 text-sm"
+                style={{
+                  backgroundColor: THEME_COMPLEMENT_TINT,
+                  border: `1px solid ${THEME_PRIMARY_BORDER}`,
+                  color: THEME_PRIMARY,
+                }}
               >
                 {strength}
               </span>
@@ -98,13 +126,21 @@ export function AboutTab() {
           </div>
         </div>
 
-        <div className="rounded-lg bg-gray-800 p-6 shadow-lg">
+        <div
+          className="rounded-lg p-6 shadow-lg"
+          style={{ backgroundColor: THEME_PRIMARY_TINT, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
+        >
           <h3 className="mb-4 text-white">Languages</h3>
           <div className="flex flex-wrap gap-2">
             {languages.map((lang) => (
               <span
                 key={lang}
-                className="rounded-full bg-blue-600/20 px-4 py-2 text-sm text-blue-300"
+                className="rounded-full px-4 py-2 text-sm"
+                style={{
+                  backgroundColor: THEME_COMPLEMENT_TINT,
+                  border: `1px solid ${THEME_PRIMARY_BORDER}`,
+                  color: THEME_PRIMARY,
+                }}
               >
                 {lang}
               </span>
@@ -119,10 +155,14 @@ export function AboutTab() {
           {achievements.map((achievement) => (
             <div
               key={achievement.title}
-              className="rounded-lg bg-gray-800 p-6 shadow-lg transition-transform hover:-translate-y-1"
+              className="rounded-lg p-6 shadow-lg transition-transform hover:-translate-y-1"
+              style={{ backgroundColor: THEME_PRIMARY_TINT, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
             >
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-yellow-600/20">
-                <achievement.icon className="h-6 w-6 text-yellow-400" />
+              <div
+                className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg"
+                style={{ backgroundColor: THEME_COMPLEMENT_TINT, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
+              >
+                <achievement.icon className="h-6 w-6" style={{ color: THEME_PRIMARY }} />
               </div>
               <h4 className="mb-2 text-white">{achievement.title}</h4>
               <p className="text-sm text-gray-400">{achievement.description}</p>
@@ -131,49 +171,57 @@ export function AboutTab() {
         </div>
       </div>
 
-      <div className="rounded-2xl bg-gray-800 p-12 shadow-lg">
+      <div
+        className="rounded-2xl p-12 shadow-lg"
+        style={{ backgroundColor: THEME_PRIMARY_TINT, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
+      >
         <div className="mb-6 flex items-center justify-center gap-3">
-          <GraduationCap className="h-6 w-6 text-purple-400" />
+          <GraduationCap className="h-6 w-6" style={{ color: THEME_PRIMARY }} />
           <h3 className="text-white">Education</h3>
         </div>
         <div className="mx-auto max-w-3xl space-y-4 text-gray-400">
           <p className="text-lg font-medium text-white">Bangkok University</p>
           <p>Bachelor&apos;s Degree in Information Technology</p>
           <p>Majoring in Game and Interactive Media</p>
-          <p className="text-purple-400">June 2023 - Ongoing</p>
+          <p style={{ color: THEME_PRIMARY }}>June 2023 - Ongoing</p>
         </div>
       </div>
 
-      <div className="mt-20 rounded-2xl bg-gray-800 p-12 shadow-lg">
+      <div
+        className="mt-20 rounded-2xl p-12 shadow-lg"
+        style={{ backgroundColor: THEME_PRIMARY_TINT, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
+      >
         <h3 className="mb-6 text-center text-white">Experience</h3>
         <div className="mx-auto max-w-3xl space-y-6">
           <div>
             <h4 className="mb-2 text-lg font-medium text-white">CoSI | Center of Specialty Innovation</h4>
-            <p className="mb-4 text-purple-400">Research Assistant</p>
+            <p className="mb-4" style={{ color: THEME_PRIMARY }}>
+              Research Assistant
+            </p>
             <ul className="space-y-2 text-gray-400">
               <li className="flex items-start gap-2">
-                <span className="text-purple-400">•</span>
+                <span style={{ color: THEME_PRIMARY }}>•</span>
                 <span>
                   <strong>Roblox School of Survival | อยู่รอดวิทยา</strong> (Game Programmer) -
                   Collaborated with Dentsu team in development
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-purple-400">•</span>
+                <span style={{ color: THEME_PRIMARY }}>•</span>
                 <span>
                   Developed and implemented gameplay &apos;Run Hide Fight&apos; events with quick time events
                   using IK animation
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-purple-400">•</span>
+                <span style={{ color: THEME_PRIMARY }}>•</span>
                 <span>
                   <strong>Unity Project Medicals Mobile AR</strong> (Optimizer) - Improved
                   performance and compatibility for mobiles
                 </span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-purple-400">•</span>
+                <span style={{ color: THEME_PRIMARY }}>•</span>
                 <span>
                   <strong>Prototype Lead Programmer</strong> - Unity Medicals VR & Mobile, Unity
                   Multiplayer VR with Match Making, Voice Chat, Webcam and avatar/environments

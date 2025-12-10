@@ -1,8 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { Calendar, Star, Trophy, GraduationCap, Users, Handshake } from 'lucide-react';
+import Image from 'next/image';
+import { Calendar, Star, Trophy, GraduationCap, Users, Handshake, Building2 } from 'lucide-react';
 import { createSlug } from '@/app/lib/project/slug';
+import { ThemeBadge } from './ThemeBox';
 
 export interface GameMedia {
   type: 'video' | 'image' | 'gif';
@@ -25,6 +27,7 @@ export interface Game {
   status?: string;
   starred?: boolean;
   features?: string[];
+  featureDetails?: string[];
   awards?: string[];
   client?: string;
   media?: GameMedia[];
@@ -60,10 +63,12 @@ export function GameCard({ game, onClick, isSelected = false }: GameCardProps) {
         onClick={handleClick}
       >
       <div className="relative h-64 w-full overflow-hidden">
-        <img
+        <Image
           src={game.imageUrl}
           alt={game.title}
-          className={`h-full w-full object-cover transition-all duration-300 group-hover:scale-105 ${
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className={`object-cover transition-all duration-300 group-hover:scale-105 ${
             !isSelected ? 'grayscale group-hover:grayscale-0' : ''
           }`}
         />
@@ -79,35 +84,50 @@ export function GameCard({ game, onClick, isSelected = false }: GameCardProps) {
               )}
 
               <h3 className="text-white">{game.title}</h3>
+              
+              {game.badges?.partner && (
+                <div className="mt-2 flex items-center gap-2 text-white/70 text-xs">
+                  <Handshake className="h-3 w-3" />
+                  <span>{game.badges.partner}</span>
+                </div>
+              )}
+              
+              <div className="mt-2 flex items-center gap-3 flex-wrap">
+                {(game.client || game.badges?.school) && (
+                  <div className="flex items-center gap-2 text-white/70 text-xs">
+                    <Building2 className="h-3 w-3" />
+                    <span>
+                      {game.badges?.school || game.client === 'Academic Project'
+                        ? 'Bangkok University'
+                        : game.client}
+                    </span>
+                  </div>
+                )}
+                {game.role && (
+                  <div className="flex items-center gap-2 text-white/70 text-xs">
+                    <Users className="h-3 w-3" />
+                    <span>{game.role}</span>
+                  </div>
+                )}
+              </div>
             </div>
 
             {game.badges && (
               <div className="flex flex-wrap items-end justify-end gap-2">
                 {game.badges.star && (
-                  <div className="flex items-center gap-1 rounded-full bg-yellow-500/20 px-2 py-1 text-xs text-yellow-300">
+                  <ThemeBadge tone="star">
                     <Star className="h-3 w-3" fill="currentColor" />
-                  </div>
+                  </ThemeBadge>
                 )}
                 {game.badges.trophy && (
-                  <div className="flex items-center gap-1 rounded-full bg-purple-500/20 px-2 py-1 text-xs text-purple-300">
+                  <ThemeBadge tone="trophy">
                     <Trophy className="h-3 w-3" />
-                  </div>
+                  </ThemeBadge>
                 )}
                 {game.badges.school && (
-                  <div className="flex items-center gap-1 rounded-full bg-blue-500/20 px-2 py-1 text-xs text-blue-300">
+                  <ThemeBadge tone="school">
                     <GraduationCap className="h-3 w-3" />
-                  </div>
-                )}
-                {game.badges.teamSize && (
-                  <div className="flex items-center gap-1 rounded-full bg-green-500/20 px-2 py-1 text-xs text-green-300">
-                    <Users className="h-3 w-3" />
-                    <span>{game.badges.teamSize}</span>
-                  </div>
-                )}
-                {game.badges.partner && (
-                  <div className="flex items-center gap-1 rounded-full bg-orange-500/20 px-2 py-1 text-xs text-orange-300">
-                    <Handshake className="h-3 w-3" />
-                  </div>
+                  </ThemeBadge>
                 )}
               </div>
             )}
