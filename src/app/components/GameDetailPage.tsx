@@ -14,7 +14,7 @@ import {
   ArrowLeft,
   X,
 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Game } from './GameCard';
@@ -49,12 +49,12 @@ const generateMockupMedia = (game: Game) => {
     },
     {
       type: 'image' as const,
-      url: 'https://images.unsplash.com/photo-1550745165-9bf0e0d3e4a5?auto=format&fit=crop&w=800&q=80',
+      url: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80',
       title: `${game.title} - Gameplay Screenshot`,
     },
     {
       type: 'image' as const,
-      url: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=800&q=80',
+      url: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80',
       title: `${game.title} - Feature Showcase`,
     },
   ];
@@ -64,9 +64,21 @@ const generateMockupMedia = (game: Game) => {
 export function GameDetailPage({ game }: GameDetailPageProps) {
   const [selectedMediaIndex, setSelectedMediaIndex] = useState<number | null>(null);
   const [mainMediaIndex, setMainMediaIndex] = useState<number>(0);
+  const [isVideoPlaying, setIsVideoPlaying] = useState<boolean>(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
   
   // Use mockup media if no media is provided
   const displayMedia = game.media && game.media.length > 0 ? game.media : generateMockupMedia(game);
+
+  // Reset video when main media changes
+  useEffect(() => {
+    setIsVideoPlaying(false);
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  }, [mainMediaIndex]);
 
   return (
     <PageLayout>
@@ -95,60 +107,97 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
           {/* Left Column - Main Video/Image */}
           <div className="lg:col-span-2">
             {/* Main Hero Video/Image */}
-            <div
-              className="relative aspect-video w-full cursor-pointer overflow-hidden rounded-lg bg-gray-900 mb-4"
-              onClick={() => setSelectedMediaIndex(mainMediaIndex)}
-            >
+            <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-gray-900 mb-4 group">
               {displayMedia[mainMediaIndex].type === 'video' ? (
                 <>
-                  {displayMedia[mainMediaIndex].thumbnail ? (
-                    <Image
-                      src={displayMedia[mainMediaIndex].thumbnail}
-                      alt={displayMedia[mainMediaIndex].title || game.title}
-                      fill
-                      sizes="(max-width: 1200px) 100vw, 66vw"
-                      className="object-cover"
-                    />
-                  ) : (
-                    <Image
-                      src={game.imageUrl}
-                      alt={game.title}
-                      fill
-                      sizes="(max-width: 1200px) 100vw, 66vw"
-                      className="object-cover"
-                    />
-                  )}
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                    <div className="rounded-full bg-white/90 p-6 shadow-2xl">
-                      <Play className="h-16 w-16 text-gray-900" fill="currentColor" />
+                  <video
+                    ref={videoRef}
+                    src={displayMedia[mainMediaIndex].url}
+                    controls
+                    className="h-full w-full object-cover"
+                    onPlay={() => setIsVideoPlaying(true)}
+                    onPause={() => setIsVideoPlaying(false)}
+                    onEnded={() => setIsVideoPlaying(false)}
+                    onClick={(e) => {
+                      // Prevent default click behavior, let video controls handle it
+                      e.stopPropagation();
+                    }}
+                  >
+                    Your browser does not support the video tag.
+                  </video>
+                  {!isVideoPlaying && (
+                    <div 
+                      className="absolute inset-0 flex items-center justify-center bg-black/30 cursor-pointer z-10"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        videoRef.current?.play();
+                      }}
+                    >
+                      <div className="rounded-full bg-white/90 p-6 shadow-2xl">
+                        <Play className="h-16 w-16 text-gray-900" fill="currentColor" />
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </>
               ) : (
-                <Image
-                  src={displayMedia[mainMediaIndex].url}
-                  alt={displayMedia[mainMediaIndex].title || game.title}
-                  fill
-                  sizes="(max-width: 1200px) 100vw, 66vw"
-                  className="object-cover"
-                />
+                <div
+                  className="relative w-full h-full cursor-pointer"
+                  onClick={() => setSelectedMediaIndex(mainMediaIndex)}
+                >
+                  <Image
+                    src={displayMedia[mainMediaIndex].url}
+                    alt={displayMedia[mainMediaIndex].title || game.title}
+                    fill
+                    sizes="(max-width: 1200px) 100vw, 66vw"
+                    className="object-cover"
+                  />
+                </div>
+              )}
+
+              {/* Navigation Arrows - Show on Hover */}
+              {displayMedia.length > 1 && (
+                <>
+                  {/* Left Arrow */}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const newIndex = mainMediaIndex > 0 ? mainMediaIndex - 1 : displayMedia.length - 1;
+                      setMainMediaIndex(newIndex);
+                    }}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 z-20 rounded-full bg-gray-800/90 p-3 text-white hover:bg-gray-700 transition-all shadow-lg opacity-0 group-hover:opacity-100"
+                  >
+                    <ChevronLeft className="h-6 w-6" />
+                  </button>
+
+                  {/* Right Arrow */}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const newIndex = mainMediaIndex < displayMedia.length - 1 ? mainMediaIndex + 1 : 0;
+                      setMainMediaIndex(newIndex);
+                    }}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 z-20 rounded-full bg-gray-800/90 p-3 text-white hover:bg-gray-700 transition-all shadow-lg opacity-0 group-hover:opacity-100"
+                  >
+                    <ChevronRight className="h-6 w-6" />
+                  </button>
+                </>
               )}
             </div>
 
             {/* Thumbnail Carousel Below Main Video */}
             {displayMedia.length > 1 && (
-              <div className="relative">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    const carousel = e.currentTarget.nextElementSibling as HTMLElement;
-                    if (carousel) carousel.scrollBy({ left: -150, behavior: 'smooth' });
+              <div className="w-full mt-4">
+                {/* Scrollable Carousel */}
+                <div 
+                  ref={carouselRef}
+                  className="flex gap-2 overflow-x-auto scrollbar-hide scroll-smooth py-2"
+                  style={{ 
+                    scrollbarWidth: 'none',
+                    msOverflowStyle: 'none'
                   }}
-                  className="absolute left-0 top-1/2 -translate-y-1/2 z-10 rounded-full bg-gray-800/90 p-2 text-white hover:bg-gray-700 transition-colors"
                 >
-                  <ChevronLeft className="h-5 w-5" />
-                </button>
-                <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-2 px-8">
                   {displayMedia.map((media, index) => (
                     <div
                       key={index}
@@ -194,16 +243,6 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                     </div>
                   ))}
                 </div>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    const carousel = e.currentTarget.previousElementSibling as HTMLElement;
-                    if (carousel) carousel.scrollBy({ left: 150, behavior: 'smooth' });
-                  }}
-                  className="absolute right-0 top-1/2 -translate-y-1/2 z-10 rounded-full bg-gray-800/90 p-2 text-white hover:bg-gray-700 transition-colors"
-                >
-                  <ChevronRight className="h-5 w-5" />
-                </button>
               </div>
             )}
           </div>
@@ -435,60 +474,92 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
           className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 p-4"
           onClick={() => setSelectedMediaIndex(null)}
         >
-          <button
-            onClick={() => setSelectedMediaIndex(null)}
-            className="absolute right-4 top-4 z-10 rounded-full bg-gray-800 p-2 text-white transition-colors hover:bg-gray-700"
+          {/* Content container */}
+          <div 
+            className="relative w-[90vw] max-w-6xl rounded-lg bg-gray-900/50 backdrop-blur-sm shadow-2xl overflow-hidden flex flex-col" 
+            onClick={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
           >
-            <X className="h-6 w-6" />
-          </button>
-          <div className="relative w-[90vw] max-w-6xl aspect-video rounded-lg bg-gray-900/50 backdrop-blur-sm shadow-2xl overflow-hidden flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
-            <div className="w-full h-full flex items-center justify-center bg-transparent">
+            {/* Title bar at top */}
+            {displayMedia[selectedMediaIndex].title && (
+              <div className="relative bg-gray-800/95 px-4 py-3 flex items-center justify-center border-b border-gray-700/50">
+                <p className="text-white font-semibold text-center">{displayMedia[selectedMediaIndex].title}</p>
+                {/* Close button - centered in top panel */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedMediaIndex(null);
+                  }}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 z-[70] rounded-full bg-gray-800 p-2 text-white transition-colors hover:bg-gray-700"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+              </div>
+            )}
+
+            {/* Content area - 16:9 aspect ratio */}
+            <div className="relative w-full aspect-video flex items-center justify-center pointer-events-none bg-black/20">
               {displayMedia[selectedMediaIndex].type === 'video' ? (
                 <video
                   src={displayMedia[selectedMediaIndex].url}
                   controls
                   autoPlay
-                  className="max-h-full max-w-full object-contain"
+                  className="w-full h-full object-contain pointer-events-auto"
+                  onClick={(e) => e.stopPropagation()}
                 >
                   Your browser does not support the video tag.
                 </video>
               ) : (
-                <Image
-                  src={displayMedia[selectedMediaIndex].url}
-                  alt={displayMedia[selectedMediaIndex].title || 'Media'}
-                  fill
-                  sizes="90vw"
-                  className="object-contain"
-                />
+                <div className="relative w-full h-full">
+                  <Image
+                    src={displayMedia[selectedMediaIndex].url}
+                    alt={displayMedia[selectedMediaIndex].title || 'Media'}
+                    fill
+                    sizes="90vw"
+                    className="object-contain"
+                    style={{ pointerEvents: 'none' }}
+                  />
+                </div>
               )}
             </div>
-            {displayMedia[selectedMediaIndex].title && (
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-                <p className="text-white">{displayMedia[selectedMediaIndex].title}</p>
+
+            {/* Bottom bar with position indicator */}
+            {displayMedia.length > 1 && (
+              <div className="relative bg-gray-800/95 px-4 py-3 flex items-center justify-center border-t border-gray-700/50">
+                <p className="text-gray-300 text-sm">
+                  {selectedMediaIndex !== null ? selectedMediaIndex + 1 : 1} of {displayMedia.length}
+                </p>
               </div>
             )}
-            {/* Navigation arrows */}
+
+            {/* Navigation arrows - positioned at border of modal container with gap */}
             {displayMedia.length > 1 && (
               <>
                 <button
+                  type="button"
                   onClick={(e) => {
                     e.stopPropagation();
-                    setSelectedMediaIndex(
-                      selectedMediaIndex > 0 ? selectedMediaIndex - 1 : displayMedia.length - 1
-                    );
+                    const newIndex = selectedMediaIndex !== null && selectedMediaIndex > 0 
+                      ? selectedMediaIndex - 1 
+                      : displayMedia.length - 1;
+                    setSelectedMediaIndex(newIndex);
                   }}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-gray-800/80 p-3 text-white transition-colors hover:bg-gray-700"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 z-[70] rounded-full bg-gray-800/90 p-3 text-white transition-colors hover:bg-gray-700 shadow-lg"
+                  style={{ pointerEvents: 'auto' }}
                 >
                   <ChevronLeft className="h-6 w-6" />
                 </button>
                 <button
+                  type="button"
                   onClick={(e) => {
                     e.stopPropagation();
-                    setSelectedMediaIndex(
-                      selectedMediaIndex < displayMedia.length - 1 ? selectedMediaIndex + 1 : 0
-                    );
+                    const newIndex = selectedMediaIndex !== null && selectedMediaIndex < displayMedia.length - 1 
+                      ? selectedMediaIndex + 1 
+                      : 0;
+                    setSelectedMediaIndex(newIndex);
                   }}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-gray-800/80 p-3 text-white transition-colors hover:bg-gray-700"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 z-[70] rounded-full bg-gray-800/90 p-3 text-white transition-colors hover:bg-gray-700 shadow-lg"
+                  style={{ pointerEvents: 'auto' }}
                 >
                   <ChevronRight className="h-6 w-6" />
                 </button>

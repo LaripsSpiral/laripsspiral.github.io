@@ -36,7 +36,7 @@ export const games: Game[] = [
       },
       {
         type: 'image',
-        url: 'https://images.unsplash.com/photo-1550745165-9bf0e0d3e4a5?auto=format&fit=crop&w=800&q=80',
+        url: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80',
         title: 'Combat System',
       },
       {
@@ -46,7 +46,7 @@ export const games: Game[] = [
       },
       {
         type: 'image',
-        url: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=800&q=80',
+        url: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80',
         title: 'Multiplayer Action',
       },
     ],
@@ -196,7 +196,7 @@ export const games: Game[] = [
       },
       {
         type: 'image',
-        url: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=800&q=80',
+        url: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=800&q=80',
         title: 'Matchmaking System',
       },
       {

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Calendar, Star, Trophy, GraduationCap, Users, Handshake, Building2 } from 'lucide-react';
 import { createSlug } from '@/app/lib/project/slug';
 import { ThemeBadge } from './ThemeBox';
+import { THEME_FONT_PRIMARY } from '../theme/palette';
 
 export interface GameMedia {
   type: 'video' | 'image' | 'gif';
@@ -61,6 +62,7 @@ export function GameCard({ game, onClick, isSelected = false }: GameCardProps) {
       <div
         className="group relative cursor-pointer overflow-hidden rounded-lg bg-gray-900 shadow-lg transition-transform duration-300 hover:shadow-2xl"
         onClick={handleClick}
+        style={{ fontFamily: THEME_FONT_PRIMARY }}
       >
       <div className="relative h-64 w-full overflow-hidden">
         <Image

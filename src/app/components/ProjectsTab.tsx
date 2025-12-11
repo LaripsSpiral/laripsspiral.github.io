@@ -1,17 +1,36 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { Search, SortAsc } from 'lucide-react';
 import { Game, GameCard } from './GameCard';
-import { THEME_PRIMARY_BORDER } from '../theme/palette';
+import { THEME_PRIMARY_BORDER, THEME_FONT_PRIMARY } from '../theme/palette';
 
 interface ProjectsTabProps {
   games: Game[];
 }
 
 export function ProjectsTab({ games }: ProjectsTabProps) {
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [sortBy, setSortBy] = useState<string>('newest');
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+  
+  const [searchQuery, setSearchQuery] = useState<string>(searchParams.get('q') || '');
+  const [sortBy, setSortBy] = useState<string>(searchParams.get('sort') || 'newest');
+
+  // Update URL when search or sort changes
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (searchQuery.trim()) {
+      params.set('q', searchQuery.trim());
+    }
+    if (sortBy !== 'newest') {
+      params.set('sort', sortBy);
+    }
+    
+    const newUrl = params.toString() ? `${pathname}?${params.toString()}` : pathname;
+    router.replace(newUrl, { scroll: false });
+  }, [searchQuery, sortBy, pathname, router]);
 
   const filteredAndSortedGames = useMemo(() => {
     let filtered = games;
@@ -40,7 +59,7 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
   }, [games, searchQuery, sortBy]);
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8" style={{ fontFamily: THEME_FONT_PRIMARY }}>
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative flex-1 max-w-md">
           <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />

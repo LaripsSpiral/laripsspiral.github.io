@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { THEME_PRIMARY, THEME_PRIMARY_BORDER } from '../theme/palette';
+import { THEME_PRIMARY, THEME_PRIMARY_BORDER, THEME_FONT_PRIMARY } from '../theme/palette';
 
 export function TabNavigation() {
   const pathname = usePathname();
@@ -23,7 +23,7 @@ export function TabNavigation() {
   return (
     <nav
       className="border-b"
-      style={{ borderColor: THEME_PRIMARY_BORDER, backgroundColor: 'rgba(10,13,17,0.9)' }}
+      style={{ borderColor: THEME_PRIMARY_BORDER, backgroundColor: 'rgba(10,13,17,0.9)', fontFamily: THEME_FONT_PRIMARY }}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex gap-8">

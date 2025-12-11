@@ -1,1 +1,5 @@
-export { default } from './(routes)/home/page';
+import { redirect } from 'next/navigation';
+
+export default function RootPage() {
+  redirect('/home');
+}

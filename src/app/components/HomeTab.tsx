@@ -11,6 +11,7 @@ import {
   THEME_PRIMARY_BORDER as THEME_BORDER,
   THEME_PRIMARY_TINT as THEME_TINT,
   THEME_COMPLEMENT_TINT as THEME_COMP_TINT,
+  THEME_FONT_PRIMARY,
 } from '../theme/palette';
 import { ThemeBadge } from './ThemeBox';
 
@@ -139,7 +140,7 @@ export function HomeTab({ games }: HomeTabProps) {
 
   return (
     <>
-      <div className="mx-auto max-w-7xl px-4 pt-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 pt-4 sm:px-6 lg:px-8" style={{ fontFamily: THEME_FONT_PRIMARY }}>
         {/* Main Preview */}
         <div className="mb-0 px-6 py-6">
           <Link 

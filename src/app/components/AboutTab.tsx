@@ -1,238 +1,586 @@
 'use client';
 
-import { Code, Cpu, Zap, Users, GraduationCap, Award } from 'lucide-react';
+import Image from 'next/image';
+import { Code, Zap, Heart, GraduationCap, User, Trophy, Briefcase, Calendar, Users } from 'lucide-react';
+import {
+  ThemeCard,
+  ThemeCardHeader,
+  ThemeCardBody,
+  ThemeTitle,
+  ThemeHeading,
+  ThemeDetail,
+} from './ThemeBox';
 import {
   THEME_PRIMARY,
   THEME_PRIMARY_BORDER,
   THEME_PRIMARY_TINT,
-  THEME_COMPLEMENT_TINT,
+  THEME_FONT_PRIMARY,
+  THEME_CATEGORY_SKILLS_BG,
+  THEME_CATEGORY_SKILLS_TEXT,
+  THEME_CATEGORY_STRENGTHS_BG,
+  THEME_CATEGORY_STRENGTHS_TEXT,
+  THEME_CATEGORY_INTERESTS_BG,
+  THEME_CATEGORY_INTERESTS_TEXT,
+  THEME_CATEGORY_EDUCATION_BG,
+  THEME_CATEGORY_EDUCATION_TEXT,
+  THEME_CATEGORY_EXPERIENCE_BG,
+  THEME_CATEGORY_EXPERIENCE_TEXT,
+  THEME_CATEGORY_ACHIEVEMENTS_BG,
+  THEME_CATEGORY_ACHIEVEMENTS_TEXT,
+  THEME_CATEGORY_SUMMARY_BG,
+  THEME_CATEGORY_SUMMARY_TEXT,
 } from '../theme/palette';
+import { personalInfo } from '../data/personalInfo';
 
 export function AboutTab() {
-  const skills = [
-    {
-      icon: Code,
-      title: 'Programming',
-      description: 'C#, C, Python - Building robust game systems and mechanics.',
-    },
-    {
-      icon: Cpu,
-      title: 'Game Engines',
-      description: 'Unity, Unreal Engine - Creating immersive interactive experiences.',
-    },
-    {
-      icon: Zap,
-      title: 'Optimization',
-      description: 'Specializing in performance optimization for mobile and VR platforms.',
-    },
-    {
-      icon: Users,
-      title: 'Collaboration',
-      description: 'Experienced in team development and rapid prototyping.',
-    },
-  ];
-
-  const strengths = [
-    'Responsibility',
-    'Quick Learner',
-    'Resourceful',
-    'Proactive Developer',
-  ];
-
-  const languages = ['Thai', 'English'];
-
-  const achievements = [
-    {
-      icon: Award,
-      title: 'School of Survival | อยู่รอดวิทยา',
-      description: 'CoSI x Dentsu - ADPEOPLE 2024 (8 Awards), ADFEST 2025 (1 Award)',
-    },
-    {
-      icon: Award,
-      title: 'IEEE 2nd ChatGPT4PCG Competition 2024',
-      description: 'Third Place Winner',
-    },
-  ];
-
   return (
     <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-      <div className="mb-20 text-center">
-        <div
-          className="mx-auto mb-8 h-32 w-32 overflow-hidden rounded-full p-1"
-          style={{
-            background: `linear-gradient(135deg, ${THEME_PRIMARY_TINT}, ${THEME_COMPLEMENT_TINT})`,
-            border: `1px solid ${THEME_PRIMARY_BORDER}`,
-          }}
-        >
-          <div className="flex h-full w-full items-center justify-center rounded-full bg-[#0d1117]">
-            <span className="text-2xl font-bold" style={{ color: THEME_PRIMARY }}>
-              ST
-            </span>
-          </div>
-        </div>
-        <h2 className="mb-2 text-white">Sirasit Tumvijit</h2>
-        <p className="mb-4" style={{ color: THEME_PRIMARY }}>
-          Game Developer
-        </p>
-        <p className="mx-auto max-w-3xl text-gray-400">
-          Unity Game Programmer with hands-on experience in research, rapid prototyping and
-          collaborative development, specializing in optimization. Strong responsibility,
-          problem-solving skills and a highly receptive approach to the team.
-        </p>
-      </div>
-
-      <div className="mb-20">
-        <h3 className="mb-8 text-center text-white">Skills & Expertise</h3>
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {skills.map((skill) => (
-            <div
-              key={skill.title}
-              className="rounded-lg p-6 shadow-lg transition-transform hover:-translate-y-1"
-              style={{ backgroundColor: THEME_PRIMARY_TINT, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
-            >
-              <div
-                className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg"
-                style={{ backgroundColor: THEME_COMPLEMENT_TINT, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
-              >
-                <skill.icon className="h-6 w-6" style={{ color: THEME_PRIMARY }} />
-              </div>
-              <h4 className="mb-2 text-white">{skill.title}</h4>
-              <p className="text-sm text-gray-400">{skill.description}</p>
+      {/* Header */}
+      <div className="mb-12 flex items-center justify-between border-b pb-6" style={{ borderColor: THEME_PRIMARY_BORDER }}>
+        <div className="flex items-center gap-4">
+          {/* Profile Image Space */}
+          <div
+            className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-full"
+            style={{
+              background: THEME_PRIMARY_TINT,
+              border: `2px solid ${THEME_PRIMARY_BORDER}`,
+            }}
+          >
+            {/* Placeholder - replace with actual image */}
+            <div className="flex h-full w-full items-center justify-center bg-gray-800">
+              <span className="text-2xl font-bold" style={{ color: THEME_PRIMARY }}>
+                ST
+              </span>
             </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="mb-20 grid gap-8 sm:grid-cols-2">
-        <div
-          className="rounded-lg p-6 shadow-lg"
-          style={{ backgroundColor: THEME_PRIMARY_TINT, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
-        >
-          <h3 className="mb-4 text-white">Strengths</h3>
-          <div className="flex flex-wrap gap-2">
-            {strengths.map((strength) => (
-              <span
-                key={strength}
-                className="rounded-full px-4 py-2 text-sm"
-                style={{
-                  backgroundColor: THEME_COMPLEMENT_TINT,
-                  border: `1px solid ${THEME_PRIMARY_BORDER}`,
-                  color: THEME_PRIMARY,
-                }}
-              >
-                {strength}
-              </span>
-            ))}
+            {/* Uncomment and add your image path when ready:
+            <Image
+              src="/path-to-your-profile-image.jpg"
+              alt="Sirasit Tumvijit"
+              fill
+              className="object-cover"
+            />
+            */}
+          </div>
+          <div style={{ fontFamily: THEME_FONT_PRIMARY }}>
+            <h1 className="mb-1 text-3xl font-bold uppercase text-white">{personalInfo.name}</h1>
+            <p className="text-lg" style={{ color: THEME_PRIMARY }}>{personalInfo.title}</p>
           </div>
         </div>
-
-        <div
-          className="rounded-lg p-6 shadow-lg"
-          style={{ backgroundColor: THEME_PRIMARY_TINT, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
-        >
-          <h3 className="mb-4 text-white">Languages</h3>
-          <div className="flex flex-wrap gap-2">
-            {languages.map((lang) => (
-              <span
-                key={lang}
-                className="rounded-full px-4 py-2 text-sm"
-                style={{
-                  backgroundColor: THEME_COMPLEMENT_TINT,
-                  border: `1px solid ${THEME_PRIMARY_BORDER}`,
-                  color: THEME_PRIMARY,
-                }}
-              >
-                {lang}
-              </span>
+        <div className="flex flex-col items-end gap-2" style={{ fontFamily: THEME_FONT_PRIMARY }}>
+          <p className="text-sm font-semibold uppercase" style={{ color: THEME_PRIMARY }}>Languages:</p>
+          <div className="flex gap-4">
+            {personalInfo.languages.map((lang) => (
+              <span key={lang} className="text-sm" style={{ color: THEME_PRIMARY }}>{lang}</span>
             ))}
           </div>
         </div>
       </div>
 
-      <div className="mb-20">
-        <h3 className="mb-8 text-center text-white">Key Achievements</h3>
-        <div className="grid gap-6 sm:grid-cols-2">
-          {achievements.map((achievement) => (
-            <div
-              key={achievement.title}
-              className="rounded-lg p-6 shadow-lg transition-transform hover:-translate-y-1"
-              style={{ backgroundColor: THEME_PRIMARY_TINT, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
-            >
-              <div
-                className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg"
-                style={{ backgroundColor: THEME_COMPLEMENT_TINT, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
-              >
-                <achievement.icon className="h-6 w-6" style={{ color: THEME_PRIMARY }} />
+      {/* Two Column Layout */}
+      <div className="flex flex-col gap-6 lg:flex-row">
+        {/* Left Column */}
+        <div className="space-y-6 flex-shrink-0 lg:w-80">
+          {/* SKILLS */}
+          <ThemeCard>
+            <ThemeCardHeader style={{ backgroundColor: THEME_CATEGORY_SKILLS_BG }}>
+              <div className="flex items-center gap-2">
+                <Code className="h-4 w-4" style={{ color: THEME_CATEGORY_SKILLS_TEXT }} />
+                <ThemeTitle style={{ color: THEME_CATEGORY_SKILLS_TEXT, fontSize: '0.875rem', fontWeight: '700' }}>SKILLS</ThemeTitle>
               </div>
-              <h4 className="mb-2 text-white">{achievement.title}</h4>
-              <p className="text-sm text-gray-400">{achievement.description}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+            </ThemeCardHeader>
+            <ThemeCardBody style={{ backgroundColor: 'rgba(255, 193, 7, 0.05)' }}>
+              <div className="space-y-4">
+                <div>
+                  <h3 className="mb-2 text-sm font-bold uppercase" style={{ color: THEME_PRIMARY, letterSpacing: '0.05em' }}>
+                    Programming:
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {personalInfo.skills.programming.map((skill) => (
+                      <span
+                        key={skill}
+                        className="rounded-md px-3 py-1 text-sm"
+                        style={{
+                          backgroundColor: THEME_PRIMARY_TINT,
+                          border: `1px solid ${THEME_PRIMARY_BORDER}`,
+                          color: THEME_PRIMARY,
+                        }}
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <h3 className="mb-2 text-sm font-bold uppercase" style={{ color: THEME_PRIMARY, letterSpacing: '0.05em', fontFamily: THEME_FONT_PRIMARY }}>
+                    Tools:
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {personalInfo.skills.tools.map((tool) => (
+                      <span
+                        key={tool}
+                        className="rounded-md px-3 py-1 text-sm"
+                        style={{
+                          backgroundColor: THEME_PRIMARY_TINT,
+                          border: `1px solid ${THEME_PRIMARY_BORDER}`,
+                          color: THEME_PRIMARY,
+                        }}
+                      >
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </ThemeCardBody>
+          </ThemeCard>
 
-      <div
-        className="rounded-2xl p-12 shadow-lg"
-        style={{ backgroundColor: THEME_PRIMARY_TINT, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
-      >
-        <div className="mb-6 flex items-center justify-center gap-3">
-          <GraduationCap className="h-6 w-6" style={{ color: THEME_PRIMARY }} />
-          <h3 className="text-white">Education</h3>
-        </div>
-        <div className="mx-auto max-w-3xl space-y-4 text-gray-400">
-          <p className="text-lg font-medium text-white">Bangkok University</p>
-          <p>Bachelor&apos;s Degree in Information Technology</p>
-          <p>Majoring in Game and Interactive Media</p>
-          <p style={{ color: THEME_PRIMARY }}>June 2023 - Ongoing</p>
-        </div>
-      </div>
+          {/* STRENGTHS */}
+          <ThemeCard>
+            <ThemeCardHeader style={{ backgroundColor: THEME_CATEGORY_STRENGTHS_BG }}>
+              <div className="flex items-center gap-2">
+                <Zap className="h-4 w-4" style={{ color: THEME_CATEGORY_STRENGTHS_TEXT }} />
+                <ThemeTitle style={{ color: THEME_CATEGORY_STRENGTHS_TEXT, fontSize: '0.875rem', fontWeight: '700' }}>STRENGTHS</ThemeTitle>
+              </div>
+            </ThemeCardHeader>
+            <ThemeCardBody style={{ backgroundColor: 'rgba(255, 87, 34, 0.05)' }}>
+              <div className="space-y-2">
+                {personalInfo.strengths.map((strength) => (
+                  <ThemeDetail key={strength}>{strength}</ThemeDetail>
+                ))}
+              </div>
+            </ThemeCardBody>
+          </ThemeCard>
 
-      <div
-        className="mt-20 rounded-2xl p-12 shadow-lg"
-        style={{ backgroundColor: THEME_PRIMARY_TINT, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
-      >
-        <h3 className="mb-6 text-center text-white">Experience</h3>
-        <div className="mx-auto max-w-3xl space-y-6">
-          <div>
-            <h4 className="mb-2 text-lg font-medium text-white">CoSI | Center of Specialty Innovation</h4>
-            <p className="mb-4" style={{ color: THEME_PRIMARY }}>
-              Research Assistant
-            </p>
-            <ul className="space-y-2 text-gray-400">
-              <li className="flex items-start gap-2">
-                <span style={{ color: THEME_PRIMARY }}>•</span>
-                <span>
-                  <strong>Roblox School of Survival | อยู่รอดวิทยา</strong> (Game Programmer) -
-                  Collaborated with Dentsu team in development
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span style={{ color: THEME_PRIMARY }}>•</span>
-                <span>
-                  Developed and implemented gameplay &apos;Run Hide Fight&apos; events with quick time events
-                  using IK animation
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span style={{ color: THEME_PRIMARY }}>•</span>
-                <span>
-                  <strong>Unity Project Medicals Mobile AR</strong> (Optimizer) - Improved
-                  performance and compatibility for mobiles
-                </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span style={{ color: THEME_PRIMARY }}>•</span>
-                <span>
-                  <strong>Prototype Lead Programmer</strong> - Unity Medicals VR & Mobile, Unity
-                  Multiplayer VR with Match Making, Voice Chat, Webcam and avatar/environments
-                  changes
-                </span>
-              </li>
-            </ul>
-          </div>
+          {/* INTERESTS */}
+          <ThemeCard>
+            <ThemeCardHeader style={{ backgroundColor: THEME_CATEGORY_INTERESTS_BG }}>
+              <div className="flex items-center gap-2">
+                <Heart className="h-4 w-4" style={{ color: THEME_CATEGORY_INTERESTS_TEXT }} />
+                <ThemeTitle style={{ color: THEME_CATEGORY_INTERESTS_TEXT, fontSize: '0.875rem', fontWeight: '700' }}>INTERESTS</ThemeTitle>
+              </div>
+            </ThemeCardHeader>
+            <ThemeCardBody style={{ backgroundColor: 'rgba(0, 188, 212, 0.05)' }}>
+              <div className="space-y-2">
+                {personalInfo.interests.map((interest) => (
+                  <ThemeDetail key={interest}>{interest}</ThemeDetail>
+                ))}
+              </div>
+            </ThemeCardBody>
+          </ThemeCard>
+
+          {/* EDUCATION */}
+          <ThemeCard>
+            <ThemeCardHeader style={{ backgroundColor: THEME_CATEGORY_EDUCATION_BG }}>
+              <div className="flex items-center gap-2">
+                <GraduationCap className="h-4 w-4" style={{ color: THEME_CATEGORY_EDUCATION_TEXT }} />
+                <ThemeTitle style={{ color: THEME_CATEGORY_EDUCATION_TEXT, fontSize: '0.875rem', fontWeight: '700' }}>EDUCATION</ThemeTitle>
+              </div>
+            </ThemeCardHeader>
+            <ThemeCardBody style={{ backgroundColor: 'rgba(100, 181, 246, 0.05)' }}>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4" style={{ color: THEME_PRIMARY }} />
+                  <p className="text-sm" style={{ color: THEME_PRIMARY }}>{personalInfo.education.period}</p>
+                </div>
+                <ThemeHeading as="p" className="text-lg">
+                  <a
+                    href="https://www.bu.ac.th/th"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:opacity-80 transition-opacity"
+                    style={{ color: 'inherit' }}
+                  >
+                    Bangkok University
+                  </a>
+                  {' 3\'rd year'}
+                </ThemeHeading>
+                <ThemeDetail>{personalInfo.education.degree}</ThemeDetail>
+                <ThemeDetail>{personalInfo.education.major}</ThemeDetail>
+              </div>
+            </ThemeCardBody>
+          </ThemeCard>
+        </div>
+
+        {/* Right Column */}
+        <div className="space-y-6 flex-1 min-w-0">
+          {/* PROFESSIONAL SUMMARY */}
+          <ThemeCard>
+            <ThemeCardHeader style={{ backgroundColor: THEME_CATEGORY_SUMMARY_BG }}>
+              <div className="flex items-center gap-2">
+                <User className="h-4 w-4" style={{ color: THEME_CATEGORY_SUMMARY_TEXT }} />
+                <ThemeTitle style={{ color: THEME_CATEGORY_SUMMARY_TEXT, fontSize: '0.875rem', fontWeight: '700' }}>PROFESSIONAL SUMMARY</ThemeTitle>
+              </div>
+            </ThemeCardHeader>
+            <ThemeCardBody style={{ backgroundColor: 'rgba(171, 71, 188, 0.05)' }}>
+              <div
+                className="text-sm leading-relaxed"
+                style={{
+                  color: '#dfe6ea',
+                  fontFamily: THEME_FONT_PRIMARY,
+                }}
+                dangerouslySetInnerHTML={{
+                  __html: personalInfo.professionalSummary.replace(
+                    /\*\*(.*?)\*\*/g,
+                    '<strong class="text-white">$1</strong>'
+                  ),
+                }}
+              />
+            </ThemeCardBody>
+          </ThemeCard>
+
+          {/* KEY ACHIEVEMENTS */}
+          <ThemeCard>
+            <ThemeCardHeader style={{ backgroundColor: THEME_CATEGORY_ACHIEVEMENTS_BG }}>
+              <div className="flex items-center gap-2">
+                <Trophy className="h-4 w-4" style={{ color: THEME_CATEGORY_ACHIEVEMENTS_TEXT }} />
+                <ThemeTitle style={{ color: THEME_CATEGORY_ACHIEVEMENTS_TEXT, fontSize: '0.875rem', fontWeight: '700' }}>KEY ACHIEVEMENTS</ThemeTitle>
+              </div>
+            </ThemeCardHeader>
+            <ThemeCardBody style={{ backgroundColor: 'rgba(255, 193, 7, 0.05)' }}>
+              <div className="space-y-4">
+                {personalInfo.achievements.map((achievement, index) => (
+                  <div key={index}>
+                    <ThemeHeading as="p" className="text-base mb-1">
+                      {achievement.titleLinks && achievement.titleLinks.length > 0 ? (
+                        (() => {
+                          const text = achievement.title;
+                          const elements: React.ReactNode[] = [];
+                          const linkMap = new Map<number, { text: string; link: string; length: number }>();
+                          
+                          // Find all link positions
+                          achievement.titleLinks.forEach((linkItem) => {
+                            const index = text.indexOf(linkItem.text);
+                            if (index !== -1) {
+                              linkMap.set(index, {
+                                text: linkItem.text,
+                                link: linkItem.link,
+                                length: linkItem.text.length,
+                              });
+                            }
+                          });
+                          
+                          // Sort by position
+                          const sortedPositions = Array.from(linkMap.keys()).sort((a, b) => a - b);
+                          
+                          let lastIndex = 0;
+                          sortedPositions.forEach((pos, idx) => {
+                            const linkData = linkMap.get(pos)!;
+                            
+                            // Add text before the link
+                            if (pos > lastIndex) {
+                              elements.push(text.substring(lastIndex, pos));
+                            }
+                            
+                            // Add the link
+                            elements.push(
+                              <a
+                                key={`link-${idx}`}
+                                href={linkData.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="underline hover:opacity-80 transition-opacity"
+                                style={{ color: 'inherit' }}
+                              >
+                                {linkData.text}
+                              </a>
+                            );
+                            
+                            lastIndex = pos + linkData.length;
+                          });
+                          
+                          // Add remaining text
+                          if (lastIndex < text.length) {
+                            elements.push(text.substring(lastIndex));
+                          }
+                          
+                          return elements.length > 0 ? elements : achievement.title;
+                        })()
+                      ) : (
+                        achievement.title
+                      )}
+                    </ThemeHeading>
+                    {achievement.awards?.map((award, awardIndex) => (
+                      <ThemeDetail key={awardIndex}>
+                        {award.link ? (
+                          <a
+                            href={award.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="underline hover:opacity-80 transition-opacity"
+                            style={{ color: 'inherit' }}
+                          >
+                            {award.text}
+                          </a>
+                        ) : (
+                          award.text
+                        )}
+                      </ThemeDetail>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </ThemeCardBody>
+          </ThemeCard>
+
+          {/* EXPERIENCE */}
+          <ThemeCard>
+            <ThemeCardHeader style={{ backgroundColor: THEME_CATEGORY_EXPERIENCE_BG }}>
+              <div className="flex items-center gap-2">
+                <Briefcase className="h-4 w-4" style={{ color: THEME_CATEGORY_EXPERIENCE_TEXT }} />
+                <ThemeTitle style={{ color: THEME_CATEGORY_EXPERIENCE_TEXT, fontSize: '0.875rem', fontWeight: '700' }}>EXPERIENCE</ThemeTitle>
+              </div>
+            </ThemeCardHeader>
+            <ThemeCardBody style={{ backgroundColor: 'rgba(255, 152, 0, 0.05)' }}>
+              <div className="space-y-4">
+                {personalInfo.experience.map((exp, expIndex) => (
+                  <div key={expIndex}>
+                    <ThemeHeading as="p" className="text-lg mb-1 flex items-center gap-2">
+                      {exp.company.includes('CoSI') && (
+                        <span className="inline-flex items-center flex-shrink-0">
+                          <Image
+                            src="/CoSI_Icon_Light.png"
+                            alt="CoSI Icon"
+                            width={20}
+                            height={20}
+                            className="object-contain"
+                            unoptimized
+                          />
+                        </span>
+                      )}
+                      {exp.companyLink ? (
+                        <a
+                          href={exp.companyLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="underline hover:opacity-80 transition-opacity"
+                          style={{ color: 'inherit' }}
+                        >
+                          {exp.company}
+                        </a>
+                      ) : (
+                        exp.company
+                      )}
+                    </ThemeHeading>
+                    <div className="flex items-center gap-2 mb-2">
+                      <Users className="h-4 w-4" style={{ color: THEME_PRIMARY }} />
+                      <p className="text-sm" style={{ color: THEME_PRIMARY }}>{exp.position}</p>
+                    </div>
+                    <div className="flex items-center gap-2 mb-3">
+                      <Calendar className="h-3.5 w-3.5 text-gray-500" />
+                      <p className="text-xs text-gray-500">{exp.period}</p>
+                    </div>
+
+                    <div className="space-y-3 pl-4 border-l-2" style={{ borderColor: THEME_PRIMARY_BORDER }}>
+                      {exp.projects.map((project, projectIndex) => (
+                        <div key={projectIndex}>
+                          <ThemeHeading as="p" className="text-sm mb-1">
+                            {project.titleLinks && project.titleLinks.length > 0 ? (
+                              (() => {
+                                const text = project.title;
+                                const elements: React.ReactNode[] = [];
+                                const linkMap = new Map<number, { text: string; link: string; length: number }>();
+                                
+                                // Find all link positions
+                                project.titleLinks.forEach((linkItem) => {
+                                  const index = text.indexOf(linkItem.text);
+                                  if (index !== -1) {
+                                    linkMap.set(index, {
+                                      text: linkItem.text,
+                                      link: linkItem.link,
+                                      length: linkItem.text.length,
+                                    });
+                                  }
+                                });
+                                
+                                // Sort by position
+                                const sortedPositions = Array.from(linkMap.keys()).sort((a, b) => a - b);
+                                
+                                let lastIndex = 0;
+                                sortedPositions.forEach((pos, idx) => {
+                                  const linkData = linkMap.get(pos)!;
+                                  
+                                  // Add text before the link
+                                  if (pos > lastIndex) {
+                                    elements.push(text.substring(lastIndex, pos));
+                                  }
+                                  
+                                  // Add the link
+                                  elements.push(
+                                    <a
+                                      key={`link-${idx}`}
+                                      href={linkData.link}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="underline hover:opacity-80 transition-opacity"
+                                      style={{ color: 'inherit' }}
+                                    >
+                                      {linkData.text}
+                                    </a>
+                                  );
+                                  
+                                  lastIndex = pos + linkData.length;
+                                });
+                                
+                                // Add remaining text
+                                if (lastIndex < text.length) {
+                                  elements.push(text.substring(lastIndex));
+                                }
+                                
+                                return elements.length > 0 ? elements : project.title;
+                              })()
+                            ) : (
+                              project.title
+                            )}
+                          </ThemeHeading>
+                          {project.responsibilities.length > 0 && (
+                            <ul className="mt-1 space-y-1">
+                              {project.responsibilities.map((resp, respIndex) => {
+                                const dentsuLink = 'https://www.facebook.com/dentsuCreativeTH';
+                                const dentsuText = "Dentsu Creative Thailand";
+                                const hasDentsu = resp.includes(dentsuText);
+                                
+                                return (
+                                  <li key={respIndex} className="text-sm text-gray-400">
+                                    <span style={{ color: THEME_PRIMARY }}>•</span>{' '}
+                                    {hasDentsu ? (
+                                      <>
+                                        {resp.split(dentsuText).map((part, partIndex, array) => (
+                                          <span key={partIndex}>
+                                            {part}
+                                            {partIndex < array.length - 1 && (
+                                              <a
+                                                href={dentsuLink}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="underline hover:opacity-80 transition-opacity"
+                                                style={{ color: 'inherit' }}
+                                              >
+                                                {dentsuText}
+                                              </a>
+                                            )}
+                                          </span>
+                                        ))}
+                                      </>
+                                    ) : (
+                                      resp
+                                    )}
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          )}
+                          {project.subProjects && (
+                            <div className="mt-1 space-y-2">
+                              {project.subProjects.map((subProject, subIndex) => (
+                                <div key={subIndex}>
+                                  <ThemeHeading as="p" className="text-sm mb-1">
+                                    {subProject.titleLinks && subProject.titleLinks.length > 0 ? (
+                                      (() => {
+                                        const text = subProject.title;
+                                        const elements: React.ReactNode[] = [];
+                                        const linkMap = new Map<number, { text: string; link: string; length: number }>();
+                                        
+                                        // Find all link positions
+                                        subProject.titleLinks.forEach((linkItem) => {
+                                          const index = text.indexOf(linkItem.text);
+                                          if (index !== -1) {
+                                            linkMap.set(index, {
+                                              text: linkItem.text,
+                                              link: linkItem.link,
+                                              length: linkItem.text.length,
+                                            });
+                                          }
+                                        });
+                                        
+                                        // Sort by position
+                                        const sortedPositions = Array.from(linkMap.keys()).sort((a, b) => a - b);
+                                        
+                                        let lastIndex = 0;
+                                        sortedPositions.forEach((pos, idx) => {
+                                          const linkData = linkMap.get(pos)!;
+                                          
+                                          // Add text before the link
+                                          if (pos > lastIndex) {
+                                            elements.push(text.substring(lastIndex, pos));
+                                          }
+                                          
+                                          // Add the link
+                                          elements.push(
+                                            <a
+                                              key={`link-${idx}`}
+                                              href={linkData.link}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                              className="underline hover:opacity-80 transition-opacity"
+                                              style={{ color: 'inherit' }}
+                                            >
+                                              {linkData.text}
+                                            </a>
+                                          );
+                                          
+                                          lastIndex = pos + linkData.length;
+                                        });
+                                        
+                                        // Add remaining text
+                                        if (lastIndex < text.length) {
+                                          elements.push(text.substring(lastIndex));
+                                        }
+                                        
+                                        return elements.length > 0 ? elements : subProject.title;
+                                      })()
+                                    ) : (
+                                      subProject.title
+                                    )}
+                                  </ThemeHeading>
+                                  <ul className="mt-1 space-y-1">
+                                    {subProject.responsibilities.map((resp, respIndex) => {
+                                      const dentsuLink = 'https://www.facebook.com/dentsuCreativeTH';
+                                      const dentsuText = "Dentsu Creative Thailand";
+                                      const hasDentsu = resp.includes(dentsuText);
+                                      
+                                      return (
+                                        <li key={respIndex} className="text-sm text-gray-400">
+                                          <span style={{ color: THEME_PRIMARY }}>•</span>{' '}
+                                          {hasDentsu ? (
+                                            <>
+                                              {resp.split(dentsuText).map((part, partIndex, array) => (
+                                                <span key={partIndex}>
+                                                  {part}
+                                                  {partIndex < array.length - 1 && (
+                                                    <a
+                                                      href={dentsuLink}
+                                                      target="_blank"
+                                                      rel="noopener noreferrer"
+                                                      className="underline hover:opacity-80 transition-opacity"
+                                                      style={{ color: 'inherit' }}
+                                                    >
+                                                      {dentsuText}
+                                                    </a>
+                                                  )}
+                                                </span>
+                                              ))}
+                                            </>
+                                          ) : (
+                                            resp
+                                          )}
+                                        </li>
+                                      );
+                                    })}
+                                  </ul>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </ThemeCardBody>
+          </ThemeCard>
         </div>
       </div>
     </div>
   );
 }
-

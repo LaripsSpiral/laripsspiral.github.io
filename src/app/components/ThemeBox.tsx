@@ -20,6 +20,7 @@ type BoxProps = {
   as?: ElementType;
   className?: string;
   children: ReactNode;
+  style?: React.CSSProperties;
 };
 
 type BadgeProps = BoxProps & {
@@ -52,13 +53,15 @@ export function ThemeCard({ as: Comp = 'div', className, children }: BoxProps) {
   );
 }
 
-export function ThemeCardHeader({ as: Comp = 'div', className, children }: BoxProps) {
+export function ThemeCardHeader({ as: Comp = 'div', className, children, style }: BoxProps) {
   return (
     <Comp
       className={cx('px-6 py-4', className)}
       style={{
         borderBottom: `1px solid ${THEME_PRIMARY_BORDER}`,
         backgroundColor: THEME_PRIMARY_TINT,
+        color: THEME_PRIMARY,
+        ...style,
       }}
     >
       {children}
@@ -66,8 +69,8 @@ export function ThemeCardHeader({ as: Comp = 'div', className, children }: BoxPr
   );
 }
 
-export function ThemeCardBody({ as: Comp = 'div', className, children }: BoxProps) {
-  return <Comp className={cx('px-6 py-5 space-y-4', className)}>{children}</Comp>;
+export function ThemeCardBody({ as: Comp = 'div', className, children, style }: BoxProps) {
+  return <Comp className={cx('px-6 py-5 space-y-4', className)} style={style}>{children}</Comp>;
 }
 
 export function ThemeGroup({ as: Comp = 'div', className, children }: BoxProps) {
@@ -77,7 +80,7 @@ export function ThemeGroup({ as: Comp = 'div', className, children }: BoxProps) 
 export function ThemeTitle({ as: Comp = 'p', className, children }: BoxProps) {
   return (
     <Comp
-      className={cx('text-xs uppercase tracking-[0.24em] font-semibold', className)}
+      className={cx('text-sm uppercase tracking-[0.24em] font-bold', className)}
       style={{ color: THEME_PRIMARY }}
     >
       {children}
@@ -108,12 +111,10 @@ export function ThemeDetail({ as: Comp = 'div', className, children }: BoxProps)
   return (
     <Comp
       className={cx(
-        'rounded-md px-3 py-2 text-sm leading-relaxed',
+        'text-sm leading-relaxed',
         className
       )}
       style={{
-        border: `1px solid ${THEME_PRIMARY_BORDER}`,
-        backgroundColor: 'rgba(0,0,0,0.3)',
         color: '#dfe6ea',
         fontFamily: THEME_FONT_PRIMARY,
       }}
