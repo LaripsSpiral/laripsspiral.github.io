@@ -89,7 +89,7 @@ export function HomeTab({ games }: HomeTabProps) {
   useEffect(() => {
     if (scrollContainerRef.current) {
       const container = scrollContainerRef.current;
-      const itemWidth = 280; // Width of each item
+      const itemWidth = 200; // Width of each item
       const gap = 16; // Gap between items
       const itemTotalWidth = itemWidth + gap;
       const spacerWidth = container.clientWidth / 2 - itemWidth / 2; // Width of spacer
@@ -152,19 +152,19 @@ export function HomeTab({ games }: HomeTabProps) {
               background: `linear-gradient(135deg, ${THEME_TINT} 0%, ${THEME_COMP_TINT} 100%)`,
             }}
           >
-            <div className="p-6">
-              <div className="flex flex-col gap-6 md:flex-row md:items-center md:gap-6">
+            <div className="relative p-4">
+              <div className="flex flex-col gap-4 md:flex-row md:items-center">
                 {/* Profile Image */}
                 <div className="flex-shrink-0">
                   <div
-                    className="relative h-32 w-32 overflow-hidden rounded-full"
+                    className="relative aspect-square w-24 overflow-hidden rounded-full"
                     style={{
                       background: THEME_TINT,
-                      border: `3px solid ${THEME_BORDER}`,
+                      border: `2px solid ${THEME_BORDER}`,
                     }}
                   >
                     <div className="flex h-full w-full items-center justify-center bg-gray-800">
-                      <span className="text-4xl font-bold" style={{ color: THEME_PRIMARY }}>
+                      <span className="text-2xl font-bold" style={{ color: THEME_PRIMARY }}>
                         ST
                       </span>
                     </div>
@@ -173,52 +173,23 @@ export function HomeTab({ games }: HomeTabProps) {
 
                 {/* Content */}
                 <div className="flex-1">
-                  <div className="mb-4">
-                    <h2 className="mb-2 text-2xl font-bold uppercase text-white">{personalInfo.name}</h2>
-                    <p className="text-lg" style={{ color: THEME_PRIMARY }}>{personalInfo.title}</p>
+                  <div className="mb-2">
+                    <h2 className="mb-1 text-xl font-bold uppercase text-white">{personalInfo.name}</h2>
+                    <p className="text-base" style={{ color: THEME_PRIMARY }}>{personalInfo.title}</p>
                   </div>
 
                   {/* Professional Summary Preview */}
-                  <p className="mb-4 text-sm leading-relaxed text-gray-300 line-clamp-2">
+                  <p className="mb-2 text-xs leading-relaxed text-gray-300 line-clamp-2">
                     {personalInfo.professionalSummary.replace(/\*\*/g, '')}
                   </p>
 
-                  {/* Skills Preview */}
-                  <div className="mb-4 flex flex-wrap gap-2">
-                    {personalInfo.skills.programming.slice(0, 3).map((skill) => (
-                      <span
-                        key={skill}
-                        className="rounded-md px-3 py-1 text-xs font-medium"
-                        style={{
-                          backgroundColor: THEME_TINT,
-                          border: `1px solid ${THEME_BORDER}`,
-                          color: THEME_PRIMARY,
-                        }}
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                    {personalInfo.skills.tools.slice(0, 2).map((tool) => (
-                      <span
-                        key={tool}
-                        className="rounded-md px-3 py-1 text-xs font-medium"
-                        style={{
-                          backgroundColor: THEME_TINT,
-                          border: `1px solid ${THEME_BORDER}`,
-                          color: THEME_PRIMARY,
-                        }}
-                      >
-                        {tool}
-                      </span>
-                    ))}
-                  </div>
 
                   {/* Languages */}
-                  <div className="flex items-center gap-4 text-sm">
+                  <div className="flex items-center gap-3 text-xs">
                     <span className="font-semibold uppercase" style={{ color: THEME_PRIMARY }}>
                       Languages:
                     </span>
-                    <div className="flex gap-4">
+                    <div className="flex gap-3">
                       {personalInfo.languages.map((lang) => (
                         <span key={lang} style={{ color: THEME_PRIMARY }}>
                           {lang}
@@ -227,19 +198,19 @@ export function HomeTab({ games }: HomeTabProps) {
                     </div>
                   </div>
                 </div>
+              </div>
 
-                {/* View More Button */}
-                <div className="flex-shrink-0">
-                  <div
-                    className="flex items-center gap-2 rounded-lg px-6 py-3 transition-all group-hover:gap-3"
-                    style={{
-                      backgroundColor: THEME_PRIMARY,
-                      color: '#0a0d11',
-                    }}
-                  >
-                    <span className="font-semibold">View More</span>
-                    <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-                  </div>
+              {/* View More Button - Positioned at bottom right */}
+              <div className="absolute bottom-4 right-4">
+                <div
+                  className="flex items-center gap-2 rounded-lg px-4 py-2 transition-all group-hover:gap-3"
+                  style={{
+                    backgroundColor: THEME_PRIMARY,
+                    color: '#0a0d11',
+                  }}
+                >
+                  <span className="text-sm font-semibold">View More</span>
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </div>
               </div>
             </div>
@@ -258,7 +229,7 @@ export function HomeTab({ games }: HomeTabProps) {
               background: `linear-gradient(180deg, ${THEME_TINT} 0%, ${THEME_COMP_TINT} 100%)`,
             }}
           >
-            <div className="relative h-[400px] w-full overflow-hidden">
+            <div className="relative h-[280px] w-full overflow-hidden">
               <Image
                 src={currentGame.imageUrl}
                 alt={currentGame.title}
@@ -267,29 +238,29 @@ export function HomeTab({ games }: HomeTabProps) {
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
 
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6 pt-12">
-                <div className="flex items-end justify-between gap-4">
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-4 pt-10">
+                <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
                     {currentGame.status && (
-                      <div className="mb-4 flex items-center gap-2 text-white/90">
-                        <Calendar className="h-4 w-4" />
-                        <span className="text-sm">{currentGame.status}</span>
+                      <div className="flex items-center gap-2 mb-3 text-white/90">
+                        <Calendar className="h-3 w-3" />
+                        <span className="text-xs">{currentGame.status}</span>
                       </div>
                     )}
 
-                    <h2 className="mb-4 text-white text-xl sm:text-2xl font-bold">{currentGame.title}</h2>
+                    <h2 className="mb-3 text-white text-lg sm:text-xl font-bold">{currentGame.title}</h2>
                     
                     {currentGame.badges?.partner && (
-                      <div className="mb-4 flex items-center gap-2 text-white/70 text-xs">
-                        <Handshake className="h-3 w-3" />
-                        <span>{currentGame.badges.partner}</span>
+                      <div className="mb-3 flex items-center gap-2 text-white/70 text-xs">
+                        <Handshake className="h-2.5 w-2.5" />
+                        <span className="text-[10px]">{currentGame.badges.partner}</span>
                       </div>
                     )}
                     
-                    <div className="flex items-center gap-4 flex-wrap">
+                    <div className="flex flex-wrap items-center gap-3">
                       {(currentGame.client || currentGame.badges?.school) && (
-                        <div className="flex items-center gap-2 text-white/70 text-xs">
-                          <Building2 className="h-3 w-3" />
+                        <div className="flex items-center gap-1.5 text-white/70 text-[10px]">
+                          <Building2 className="h-2.5 w-2.5" />
                           <span>
                             {currentGame.badges?.school || currentGame.client === 'Academic Project'
                               ? 'Bangkok University'
@@ -298,8 +269,8 @@ export function HomeTab({ games }: HomeTabProps) {
                         </div>
                       )}
                       {currentGame.role && (
-                        <div className="flex items-center gap-2 text-white/70 text-xs">
-                          <Users className="h-3 w-3" />
+                        <div className="flex items-center gap-1.5 text-white/70 text-[10px]">
+                          <Users className="h-2.5 w-2.5" />
                           <span>{currentGame.role}</span>
                         </div>
                       )}
@@ -307,20 +278,20 @@ export function HomeTab({ games }: HomeTabProps) {
                   </div>
 
                   {currentGame.badges && (
-                    <div className="flex flex-wrap items-end justify-end gap-2">
+                    <div className="flex flex-wrap items-center justify-end gap-1.5">
                       {currentGame.badges.star && (
                         <ThemeBadge tone="star">
-                          <Star className="h-3 w-3" fill="currentColor" />
+                          <Star className="h-2.5 w-2.5" fill="currentColor" />
                         </ThemeBadge>
                       )}
                       {currentGame.badges.trophy && (
                         <ThemeBadge tone="trophy">
-                          <Trophy className="h-3 w-3" />
+                          <Trophy className="h-2.5 w-2.5" />
                         </ThemeBadge>
                       )}
                       {currentGame.badges.school && (
                         <ThemeBadge tone="school">
-                          <GraduationCap className="h-3 w-3" />
+                          <GraduationCap className="h-2.5 w-2.5" />
                         </ThemeBadge>
                       )}
                     </div>
@@ -360,7 +331,7 @@ export function HomeTab({ games }: HomeTabProps) {
           }}
         >
           {/* Spacer to allow first item to scroll to center */}
-          <div style={{ width: 'calc(50% - 140px)', flexShrink: 0 }} />
+          <div style={{ width: 'calc(50% - 100px)', flexShrink: 0 }} />
           {games.map((game, index) => {
             return (
             <div
@@ -372,13 +343,13 @@ export function HomeTab({ games }: HomeTabProps) {
                   : 'opacity-60 hover:opacity-100 hover:scale-[1.02]'
               }`}
               style={{ 
-                width: '280px', 
-                minWidth: '280px', 
+                width: '200px', 
+                minWidth: '200px', 
                 scrollSnapAlign: 'center'
               }}
             >
               <div
-                className="relative h-40 w-full overflow-hidden rounded-lg shadow-lg"
+                className="relative h-28 w-full overflow-hidden rounded-lg shadow-lg"
                 style={{
                   border: `1px solid ${THEME_BORDER}`,
                   background: `linear-gradient(180deg, ${THEME_TINT} 0%, ${THEME_COMP_TINT} 100%)`,
@@ -389,7 +360,7 @@ export function HomeTab({ games }: HomeTabProps) {
                   src={game.imageUrl}
                   alt={game.title}
                   fill
-                  sizes="280px"
+                  sizes="200px"
                   className="object-cover transition-transform duration-300 hover:scale-110"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-3">
@@ -406,7 +377,7 @@ export function HomeTab({ games }: HomeTabProps) {
             );
           })}
           {/* Spacer to allow last item to scroll to center */}
-          <div style={{ width: 'calc(50% - 140px)', flexShrink: 0 }} />
+          <div style={{ width: 'calc(50% - 100px)', flexShrink: 0 }} />
         </div>
         
         {/* View More Button */}
