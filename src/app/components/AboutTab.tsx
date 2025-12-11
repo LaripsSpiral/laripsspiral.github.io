@@ -34,9 +34,9 @@ import { personalInfo } from '../data/personalInfo';
 
 export function AboutTab() {
   return (
-    <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-7xl px-4 pt-6 pb-6 sm:px-6 lg:px-8">
       {/* Header */}
-      <div className="mb-12 flex items-center justify-between border-b pb-6" style={{ borderColor: THEME_PRIMARY_BORDER }}>
+      <div className="mb-6 flex items-center justify-between border-b pb-6" style={{ borderColor: THEME_PRIMARY_BORDER }}>
         <div className="flex items-center gap-4">
           {/* Profile Image Space */}
           <div
@@ -62,7 +62,7 @@ export function AboutTab() {
             */}
           </div>
           <div style={{ fontFamily: THEME_FONT_PRIMARY }}>
-            <h1 className="mb-1 text-3xl font-bold uppercase text-white">{personalInfo.name}</h1>
+            <h1 className="mb-2 text-3xl font-bold uppercase text-white">{personalInfo.name}</h1>
             <p className="text-lg" style={{ color: THEME_PRIMARY }}>{personalInfo.title}</p>
           </div>
         </div>
@@ -91,7 +91,7 @@ export function AboutTab() {
             <ThemeCardBody style={{ backgroundColor: 'rgba(255, 193, 7, 0.05)' }}>
               <div className="space-y-4">
                 <div>
-                  <h3 className="mb-2 text-sm font-bold uppercase" style={{ color: THEME_PRIMARY, letterSpacing: '0.05em' }}>
+                  <h3 className="mb-4 text-sm font-bold uppercase" style={{ color: THEME_PRIMARY, letterSpacing: '0.05em' }}>
                     Programming:
                   </h3>
                   <div className="flex flex-wrap gap-2">
@@ -111,7 +111,7 @@ export function AboutTab() {
                   </div>
                 </div>
                 <div>
-                  <h3 className="mb-2 text-sm font-bold uppercase" style={{ color: THEME_PRIMARY, letterSpacing: '0.05em', fontFamily: THEME_FONT_PRIMARY }}>
+                  <h3 className="mb-4 text-sm font-bold uppercase" style={{ color: THEME_PRIMARY, letterSpacing: '0.05em', fontFamily: THEME_FONT_PRIMARY }}>
                     Tools:
                   </h3>
                   <div className="flex flex-wrap gap-2">

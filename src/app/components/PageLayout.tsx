@@ -10,6 +10,8 @@ import {
   THEME_COMPLEMENT_TINT,
   THEME_HEADER_BG,
   THEME_FONT_PRIMARY,
+  THEME_NOTIFICATION_BG,
+  THEME_NOTIFICATION_BORDER,
 } from '../theme/palette';
 
 interface PageLayoutProps {
@@ -111,12 +113,16 @@ export function PageLayout({ children }: PageLayoutProps) {
                     title="Click to copy email"
                   >
                     <Mail className="h-5 w-5" />
+                    <span>laripsspiral47@gmail.com</span>
                   </button>
                   {emailCopied && (
                     <div className="absolute right-0 top-full mt-2 z-50 animate-fade-in">
                       <div
                         className="rounded-lg px-4 py-2 text-sm text-white shadow-lg"
-                        style={{ backgroundColor: THEME_PRIMARY }}
+                        style={{
+                          backgroundColor: THEME_NOTIFICATION_BG,
+                          border: `1px solid ${THEME_NOTIFICATION_BORDER}`,
+                        }}
                       >
                         <div className="flex items-center gap-2">
                           <svg

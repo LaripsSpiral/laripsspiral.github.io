@@ -6,6 +6,11 @@ export const THEME_COMPLEMENT_TINT = 'rgba(95, 80, 72, 0.14)';
 export const THEME_PANEL_BG = 'rgba(0,0,0,0.35)';
 export const THEME_HEADER_BG = 'rgba(10,13,17,0.9)';
 
+// Notifications
+export const THEME_NOTIFICATION_BG = 'rgba(10, 13, 17, 0.95)';
+export const THEME_NOTIFICATION_BORDER = THEME_PRIMARY;
+export const THEME_NOTIFICATION_TEXT = '#ffffff';
+
 // Typography
 export const THEME_FONT_PRIMARY =
   "var(--font-poppins), 'Poppins', 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif";

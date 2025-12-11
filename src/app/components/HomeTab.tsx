@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Star, Calendar, Trophy, GraduationCap, Users, Handshake, Building2 } from 'lucide-react';
+import { Star, Calendar, Trophy, GraduationCap, Users, Handshake, Building2, ArrowRight } from 'lucide-react';
 import { Game } from './GameCard';
 import { createSlug } from '@/app/lib/project/slug';
 import {
@@ -14,6 +14,7 @@ import {
   THEME_FONT_PRIMARY,
 } from '../theme/palette';
 import { ThemeBadge } from './ThemeBox';
+import { personalInfo } from '../data/personalInfo';
 
 interface HomeTabProps {
   games: Game[];
@@ -140,9 +141,115 @@ export function HomeTab({ games }: HomeTabProps) {
 
   return (
     <>
-      <div className="mx-auto max-w-7xl px-4 pt-4 sm:px-6 lg:px-8" style={{ fontFamily: THEME_FONT_PRIMARY }}>
+      {/* About Me Preview Section */}
+      <div className="mx-auto max-w-7xl px-4 pt-6 pb-2 sm:px-6 lg:px-8" style={{ fontFamily: THEME_FONT_PRIMARY }}>
+        <div className="px-4">
+          <Link
+            href="/about"
+            className="group relative block overflow-hidden rounded-xl shadow-2xl transition-all duration-300 hover:scale-[1.02]"
+            style={{
+              border: `1px solid ${THEME_BORDER}`,
+              background: `linear-gradient(135deg, ${THEME_TINT} 0%, ${THEME_COMP_TINT} 100%)`,
+            }}
+          >
+            <div className="p-6">
+              <div className="flex flex-col gap-6 md:flex-row md:items-center md:gap-6">
+                {/* Profile Image */}
+                <div className="flex-shrink-0">
+                  <div
+                    className="relative h-32 w-32 overflow-hidden rounded-full"
+                    style={{
+                      background: THEME_TINT,
+                      border: `3px solid ${THEME_BORDER}`,
+                    }}
+                  >
+                    <div className="flex h-full w-full items-center justify-center bg-gray-800">
+                      <span className="text-4xl font-bold" style={{ color: THEME_PRIMARY }}>
+                        ST
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="flex-1">
+                  <div className="mb-4">
+                    <h2 className="mb-2 text-2xl font-bold uppercase text-white">{personalInfo.name}</h2>
+                    <p className="text-lg" style={{ color: THEME_PRIMARY }}>{personalInfo.title}</p>
+                  </div>
+
+                  {/* Professional Summary Preview */}
+                  <p className="mb-4 text-sm leading-relaxed text-gray-300 line-clamp-2">
+                    {personalInfo.professionalSummary.replace(/\*\*/g, '')}
+                  </p>
+
+                  {/* Skills Preview */}
+                  <div className="mb-4 flex flex-wrap gap-2">
+                    {personalInfo.skills.programming.slice(0, 3).map((skill) => (
+                      <span
+                        key={skill}
+                        className="rounded-md px-3 py-1 text-xs font-medium"
+                        style={{
+                          backgroundColor: THEME_TINT,
+                          border: `1px solid ${THEME_BORDER}`,
+                          color: THEME_PRIMARY,
+                        }}
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                    {personalInfo.skills.tools.slice(0, 2).map((tool) => (
+                      <span
+                        key={tool}
+                        className="rounded-md px-3 py-1 text-xs font-medium"
+                        style={{
+                          backgroundColor: THEME_TINT,
+                          border: `1px solid ${THEME_BORDER}`,
+                          color: THEME_PRIMARY,
+                        }}
+                      >
+                        {tool}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Languages */}
+                  <div className="flex items-center gap-4 text-sm">
+                    <span className="font-semibold uppercase" style={{ color: THEME_PRIMARY }}>
+                      Languages:
+                    </span>
+                    <div className="flex gap-4">
+                      {personalInfo.languages.map((lang) => (
+                        <span key={lang} style={{ color: THEME_PRIMARY }}>
+                          {lang}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* View More Button */}
+                <div className="flex-shrink-0">
+                  <div
+                    className="flex items-center gap-2 rounded-lg px-6 py-3 transition-all group-hover:gap-3"
+                    style={{
+                      backgroundColor: THEME_PRIMARY,
+                      color: '#0a0d11',
+                    }}
+                  >
+                    <span className="font-semibold">View More</span>
+                    <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Link>
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-7xl px-4 pt-2 pb-2 sm:px-6 lg:px-8" style={{ fontFamily: THEME_FONT_PRIMARY }}>
         {/* Main Preview */}
-        <div className="mb-0 px-6 py-6">
+        <div className="px-4 py-6">
           <Link 
             href={`/projects/${createSlug(currentGame.title)}`}
             className="group relative overflow-hidden rounded-xl shadow-2xl transition-transform duration-300 cursor-pointer block"
@@ -164,22 +271,22 @@ export function HomeTab({ games }: HomeTabProps) {
                 <div className="flex items-end justify-between gap-4">
                   <div className="flex-1">
                     {currentGame.status && (
-                      <div className="mb-2 flex items-center gap-2 text-white/90">
+                      <div className="mb-4 flex items-center gap-2 text-white/90">
                         <Calendar className="h-4 w-4" />
                         <span className="text-sm">{currentGame.status}</span>
                       </div>
                     )}
 
-                    <h2 className="text-white text-xl sm:text-2xl font-bold">{currentGame.title}</h2>
+                    <h2 className="mb-4 text-white text-xl sm:text-2xl font-bold">{currentGame.title}</h2>
                     
                     {currentGame.badges?.partner && (
-                      <div className="mt-2 flex items-center gap-2 text-white/70 text-xs">
+                      <div className="mb-4 flex items-center gap-2 text-white/70 text-xs">
                         <Handshake className="h-3 w-3" />
                         <span>{currentGame.badges.partner}</span>
                       </div>
                     )}
                     
-                    <div className="mt-2 flex items-center gap-3 flex-wrap">
+                    <div className="flex items-center gap-4 flex-wrap">
                       {(currentGame.client || currentGame.badges?.school) && (
                         <div className="flex items-center gap-2 text-white/70 text-xs">
                           <Building2 className="h-3 w-3" />
@@ -224,7 +331,7 @@ export function HomeTab({ games }: HomeTabProps) {
           </Link>
           
           {/* Auto-scroll Progress Bar */}
-          <div className="mt-4">
+          <div className="mt-6">
             <div
               className="h-1 w-full rounded-full overflow-hidden"
               style={{ backgroundColor: 'rgba(255,255,255,0.08)' }}
@@ -243,7 +350,7 @@ export function HomeTab({ games }: HomeTabProps) {
       </div>
 
       {/* Sub Preview Carousel - Full Width */}
-      <div className="relative w-full py-2">
+      <div className="relative w-full pt-2 pb-6">
         {/* Projects Row - Single horizontal scrolling row, centered */}
         <div 
           ref={scrollContainerRef}
@@ -300,6 +407,21 @@ export function HomeTab({ games }: HomeTabProps) {
           })}
           {/* Spacer to allow last item to scroll to center */}
           <div style={{ width: 'calc(50% - 140px)', flexShrink: 0 }} />
+        </div>
+        
+        {/* View More Button */}
+        <div className="flex justify-center mt-6">
+          <Link
+            href="/projects"
+            className="group flex items-center gap-2 rounded-lg px-6 py-3 transition-all hover:gap-3"
+            style={{
+              backgroundColor: THEME_PRIMARY,
+              color: '#0a0d11',
+            }}
+          >
+            <span className="font-semibold">View More Projects</span>
+            <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+          </Link>
         </div>
       </div>
     </>

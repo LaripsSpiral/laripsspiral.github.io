@@ -19,11 +19,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Game } from './GameCard';
 import {
-  ThemeCard,
-  ThemeCardHeader,
-  ThemeCardBody,
-  ThemeGroup,
-  ThemeTitle,
   ThemeHeading,
   ThemeDetail,
   ThemeBadge,
@@ -99,15 +94,14 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
       </div>
 
       <div className="min-h-screen">
-
-      {/* Main Content - Steam Style Layout */}
-      <div className="mx-auto max-w-7xl px-4 md:px-8 py-6">
+        {/* Main Content - Steam Style Layout */}
+      <div className="mx-auto max-w-7xl px-4 pt-6 pb-6 sm:px-6 lg:px-8">
         {/* Top Section - Two Column: Main Video Left, Info Right */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-4 lg:items-start lg:grid-rows-[1fr]">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6 lg:items-start lg:grid-rows-[1fr]">
           {/* Left Column - Main Video/Image */}
           <div className="lg:col-span-2">
             {/* Main Hero Video/Image */}
-            <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-gray-900 mb-4 group">
+            <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-gray-900 mb-6 group">
               {displayMedia[mainMediaIndex].type === 'video' ? (
                 <>
                   <video
@@ -188,7 +182,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
 
             {/* Thumbnail Carousel Below Main Video */}
             {displayMedia.length > 1 && (
-              <div className="w-full mt-4">
+              <div className="w-full mt-6">
                 {/* Scrollable Carousel */}
                 <div 
                   ref={carouselRef}
@@ -248,17 +242,20 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
           </div>
 
           {/* Right Column - Game Info */}
-          <div className="flex flex-col space-y-4">
+          <div className="flex flex-col space-y-6">
             {/* Game Title */}
             <h1 className="text-3xl font-bold text-white">{game.title}</h1>
 
-            {/* Description - Truncated with ellipsis */}
-            <div className="max-h-24 overflow-hidden">
-              <p className="text-gray-300 leading-relaxed line-clamp-4 break-words">{game.description}</p>
+            {/* Description */}
+            <div
+              className="rounded-lg p-4"
+              style={{ backgroundColor: THEME_PANEL_BG, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
+            >
+              <p className="text-gray-200 leading-relaxed whitespace-pre-line text-lg">{game.description}</p>
             </div>
 
             {/* Reviews/Badges and Release Info - Horizontal Layout */}
-            <div className="flex flex-wrap items-center gap-3">
+            <div className="flex flex-wrap items-center gap-4">
               {game.badges?.star && (
                 <div className="flex items-center gap-2 text-yellow-400">
                   <Star className="h-4 w-4" fill="currentColor" />
@@ -293,25 +290,19 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                   <span>{game.role}</span>
                 </div>
               )}
-              {game.badges?.teamSize && (
-                <div className="flex items-center gap-2 text-gray-400 text-sm">
-                  <Users className="h-4 w-4" />
-                  <span>Team: {game.badges.teamSize} members</span>
-                </div>
-              )}
             </div>
           </div>
         </div>
 
         {/* Detailed Content Sections */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-2">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
           {/* Left Column - Main Content */}
           <div className="lg:col-span-2 space-y-6">
             {/* About Section */}
             <div>
               <h2 className="mb-4 text-2xl font-bold text-white">About This Project</h2>
               <div
-                className="rounded-lg p-6"
+                className="rounded-lg p-4"
                 style={{ backgroundColor: THEME_PANEL_BG, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
               >
                 <p className="text-gray-200 leading-relaxed whitespace-pre-line text-lg">{game.description}</p>
@@ -320,71 +311,66 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
 
             {/* Features Worked On */}
             {game.features && game.features.length > 0 && (
-              <ThemeCard>
-                <ThemeCardHeader>
-                  <ThemeTitle>Features & Contributions</ThemeTitle>
-                  <ThemeHeading className="mt-1">Endless possibilities for this project</ThemeHeading>
-                  <p className="text-sm text-gray-300/90 mt-2">
-                    Highlights from this build — every pick-up, discard, and gameplay system that shaped the experience.
-                  </p>
-                </ThemeCardHeader>
-
-                <ThemeCardBody>
-                  <ThemeGroup>
-                  {game.features.map((feature, index) => {
-                    // Map each feature to a corresponding media item by index
-                    const featureMedia = displayMedia[index];
-                    const featureDetail = game.featureDetails?.[index] || feature;
-                    return (
-                      <div
-                        key={index}
-                        className="rounded-lg bg-white/5 border border-white/5 hover:border-blue-500/30 transition-colors overflow-hidden"
-                      >
-                        <div className="px-4 py-3 space-y-2">
-                          <ThemeHeading as="p" className="text-base font-semibold text-white">
-                            {feature}
-                          </ThemeHeading>
-                          <ThemeDetail as="p" className="mb-1">
-                            {featureDetail}
-                          </ThemeDetail>
-                        </div>
-
-                        {featureMedia && (
-                          <div className="relative aspect-video w-full overflow-hidden bg-black/30 border-t border-white/5">
-                            {featureMedia.type === 'gif' || featureMedia.type === 'image' ? (
-                              <Image
-                                src={('thumbnail' in featureMedia && featureMedia.thumbnail) ? featureMedia.thumbnail : featureMedia.url}
-                                alt={featureMedia.title || feature}
-                                fill
-                                sizes="(max-width: 1200px) 100vw, 66vw"
-                                className="object-cover"
-                              />
-                            ) : featureMedia.type === 'video' ? (
-                              <>
-                                {('thumbnail' in featureMedia && featureMedia.thumbnail) ? (
-                                  <Image
-                                    src={featureMedia.thumbnail}
-                                    alt={featureMedia.title || feature}
-                                    fill
-                                    sizes="(max-width: 1200px) 100vw, 66vw"
-                                    className="object-cover"
-                                  />
-                                ) : (
-                                  <div className="h-full w-full bg-gray-800 flex items-center justify-center">
-                                    <Play className="h-12 w-12 text-gray-500" />
-                                  </div>
-                                )}
-                              </>
-                            ) : null}
-                            <div className="absolute inset-0 bg-gradient-to-t from-[#0f1724]/80 via-transparent to-transparent" />
+              <div>
+                <h2 className="mb-4 text-2xl font-bold text-white">Features</h2>
+                <div
+                  className="rounded-lg p-4"
+                  style={{ backgroundColor: THEME_PANEL_BG, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
+                >
+                  <div className="space-y-6">
+                    {game.features.map((feature, index) => {
+                      // Map each feature to a corresponding media item by index
+                      const featureMedia = displayMedia[index];
+                      const featureDetail = game.featureDetails?.[index] || feature;
+                      return (
+                        <div
+                          key={index}
+                        >
+                          <div className="space-y-2">
+                            <ThemeHeading as="p" className="text-base font-semibold text-white">
+                              {feature}
+                            </ThemeHeading>
+                            <ThemeDetail as="p" className="mb-1">
+                              {featureDetail}
+                            </ThemeDetail>
                           </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                  </ThemeGroup>
-                </ThemeCardBody>
-              </ThemeCard>
+
+                          {featureMedia && (
+                            <div className="relative aspect-video w-full overflow-hidden bg-black/30 border-t border-white/5 mt-4">
+                              {featureMedia.type === 'gif' || featureMedia.type === 'image' ? (
+                                <Image
+                                  src={('thumbnail' in featureMedia && featureMedia.thumbnail) ? featureMedia.thumbnail : featureMedia.url}
+                                  alt={featureMedia.title || feature}
+                                  fill
+                                  sizes="(max-width: 1200px) 100vw, 66vw"
+                                  className="object-cover"
+                                />
+                              ) : featureMedia.type === 'video' ? (
+                                <>
+                                  {('thumbnail' in featureMedia && featureMedia.thumbnail) ? (
+                                    <Image
+                                      src={featureMedia.thumbnail}
+                                      alt={featureMedia.title || feature}
+                                      fill
+                                      sizes="(max-width: 1200px) 100vw, 66vw"
+                                      className="object-cover"
+                                    />
+                                  ) : (
+                                    <div className="h-full w-full bg-gray-800 flex items-center justify-center">
+                                      <Play className="h-12 w-12 text-gray-500" />
+                                    </div>
+                                  )}
+                                </>
+                              ) : null}
+                              <div className="absolute inset-0 bg-gradient-to-t from-[#0f1724]/80 via-transparent to-transparent" />
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
             )}
           </div>
 
@@ -393,7 +379,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
             {/* Role & Position */}
             {(game.role || game.roleDetails) && (
               <div
-                className="rounded-lg p-6"
+                className="rounded-lg p-4"
                 style={{ backgroundColor: THEME_PANEL_BG, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
               >
                 <h3 className="mb-4 text-lg font-semibold text-white">Role & Position</h3>
@@ -414,7 +400,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
             {/* Working for / Working while studying */}
             {(game.client || game.badges?.school) && (
               <div
-                className="rounded-lg p-6"
+                className="rounded-lg p-4"
                 style={{ backgroundColor: THEME_PANEL_BG, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
               >
                 <h3 className="mb-4 text-lg font-semibold text-white">
@@ -436,7 +422,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
             {/* Collaborate */}
             {game.badges?.partner && (
               <div
-                className="rounded-lg p-6"
+                className="rounded-lg p-4"
                 style={{ backgroundColor: THEME_PANEL_BG, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
               >
                 <h3 className="mb-4 text-lg font-semibold text-white">Collaborate</h3>
@@ -450,7 +436,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
             {/* Awards */}
             {game.awards && game.awards.length > 0 && (
               <div
-                className="rounded-lg p-6"
+                className="rounded-lg p-4"
                 style={{ backgroundColor: THEME_PANEL_BG, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
               >
                 <h3 className="mb-4 text-lg font-semibold text-white">Awards</h3>
@@ -466,9 +452,9 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
             )}
           </div>
         </div>
-      </div>
+        </div>
 
-      {/* Media Viewer Modal */}
+        {/* Media Viewer Modal */}
       {selectedMediaIndex !== null && displayMedia[selectedMediaIndex] && (
         <div
           className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 p-4"
@@ -478,7 +464,6 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
           <div 
             className="relative w-[90vw] max-w-6xl rounded-lg bg-gray-900/50 backdrop-blur-sm shadow-2xl overflow-hidden flex flex-col" 
             onClick={(e) => e.stopPropagation()}
-            onMouseDown={(e) => e.stopPropagation()}
           >
             {/* Title bar at top */}
             {displayMedia[selectedMediaIndex].title && (
