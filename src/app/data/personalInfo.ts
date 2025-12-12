@@ -67,7 +67,7 @@ export const personalInfo: PersonalInfo = {
     major: 'Majoring in Game and Interactive Media',
   },
   professionalSummary:
-    '**Unity Game Programmer** with hands-on experience in **research, rapid prototyping** and **collaborative development**, specializing in **optimization**. Strong **responsibility, problem-solving skills** and a highly **receptive** approach to the team.',
+    'As a **Unity Game Programmer**, I bring hands-on experience in **research, rapid prototyping**, and **collaborative development**, with a strong focus on **optimization**. My approach combines **responsibility** and **problem-solving skills** with a highly **receptive** mindset, enabling me to work effectively within team environments and deliver high-quality game experiences.',
   achievements: [
     {
       title: 'School of Survival | อยู่รอดวิทยา (CoSI x Dentsu Creative Thailand)',

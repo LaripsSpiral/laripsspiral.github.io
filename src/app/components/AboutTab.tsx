@@ -48,7 +48,7 @@ export function AboutTab() {
           >
             {/* Placeholder - replace with actual image */}
             <div className="flex h-full w-full items-center justify-center bg-gray-800">
-              <span className="text-lg sm:text-xl md:text-2xl font-bold" style={{ color: THEME_PRIMARY }}>
+              <span className="text-lg sm:text-xl md:text-2xl font-bold" style={{ color: THEME_PRIMARY, fontFamily: THEME_FONT_PRIMARY }}>
                 ST
               </span>
             </div>
@@ -63,14 +63,14 @@ export function AboutTab() {
           </div>
           <div className="flex-1 min-w-0 flex items-center justify-between gap-2 sm:gap-3 md:gap-4" style={{ fontFamily: THEME_FONT_PRIMARY }}>
             <div className="flex-1 min-w-0">
-              <h1 className="mb-1 sm:mb-2 text-xl sm:text-2xl md:text-3xl font-bold uppercase text-white">{personalInfo.name}</h1>
-              <p className="text-sm sm:text-base md:text-lg" style={{ color: THEME_PRIMARY }}>{personalInfo.title}</p>
+              <h1 className="mb-1 sm:mb-2 text-xl sm:text-2xl md:text-3xl font-bold uppercase text-white" style={{ fontFamily: THEME_FONT_PRIMARY }}>{personalInfo.name}</h1>
+              <p className="text-sm sm:text-base md:text-lg" style={{ color: THEME_PRIMARY, fontFamily: THEME_FONT_PRIMARY }}>{personalInfo.title}</p>
             </div>
             <div className="flex-shrink-0 flex flex-col items-end gap-1 sm:gap-1.5 pr-2 sm:pr-3 md:pr-4" style={{ fontFamily: THEME_FONT_PRIMARY }}>
-              <p className="text-xs sm:text-sm font-semibold uppercase whitespace-nowrap" style={{ color: THEME_PRIMARY }}>Languages:</p>
+              <p className="text-sm font-semibold uppercase whitespace-nowrap" style={{ color: THEME_PRIMARY, fontFamily: THEME_FONT_PRIMARY }}>Languages:</p>
               <div className="flex flex-wrap justify-end gap-1.5 sm:gap-2 md:gap-3">
                 {personalInfo.languages.map((lang) => (
-                  <span key={lang} className="text-xs sm:text-sm whitespace-nowrap" style={{ color: THEME_PRIMARY }}>{lang}</span>
+                  <span key={lang} className="text-sm whitespace-nowrap" style={{ color: THEME_PRIMARY, fontFamily: THEME_FONT_PRIMARY }}>{lang}</span>
                 ))}
               </div>
             </div>
@@ -93,18 +93,19 @@ export function AboutTab() {
             <ThemeCardBody style={{ backgroundColor: 'rgba(255, 193, 7, 0.05)' }}>
               <div className="space-y-3 sm:space-y-4">
                 <div>
-                  <h3 className="mb-2 sm:mb-3 md:mb-4 text-xs sm:text-sm font-bold uppercase" style={{ color: THEME_PRIMARY, letterSpacing: '0.05em', fontFamily: THEME_FONT_PRIMARY }}>
+                  <h3 className="mb-2 sm:mb-3 md:mb-4 text-sm font-bold uppercase" style={{ color: THEME_PRIMARY, letterSpacing: '0.05em', fontFamily: THEME_FONT_PRIMARY }}>
                     Programming:
                   </h3>
                   <div className="flex flex-wrap gap-1.5 sm:gap-2">
                     {personalInfo.skills.programming.map((skill) => (
                       <span
                         key={skill}
-                        className="rounded-md px-2 py-0.5 sm:px-2.5 sm:py-1 md:px-3 md:py-1 text-xs sm:text-sm"
+                        className="rounded-md px-2 py-0.5 sm:px-2.5 sm:py-1 md:px-3 md:py-1 text-sm"
                         style={{
                           backgroundColor: THEME_PRIMARY_TINT,
                           border: `1px solid ${THEME_PRIMARY_BORDER}`,
                           color: THEME_PRIMARY,
+                          fontFamily: THEME_FONT_PRIMARY,
                         }}
                       >
                         {skill}
@@ -113,18 +114,19 @@ export function AboutTab() {
                   </div>
                 </div>
                 <div>
-                  <h3 className="mb-2 sm:mb-3 md:mb-4 text-xs sm:text-sm font-bold uppercase" style={{ color: THEME_PRIMARY, letterSpacing: '0.05em', fontFamily: THEME_FONT_PRIMARY }}>
+                  <h3 className="mb-2 sm:mb-3 md:mb-4 text-sm font-bold uppercase" style={{ color: THEME_PRIMARY, letterSpacing: '0.05em', fontFamily: THEME_FONT_PRIMARY }}>
                     Tools:
                   </h3>
                   <div className="flex flex-wrap gap-1.5 sm:gap-2">
                     {personalInfo.skills.tools.map((tool) => (
                       <span
                         key={tool}
-                        className="rounded-md px-2 py-0.5 sm:px-2.5 sm:py-1 md:px-3 md:py-1 text-xs sm:text-sm"
+                        className="rounded-md px-2 py-0.5 sm:px-2.5 sm:py-1 md:px-3 md:py-1 text-sm"
                         style={{
                           backgroundColor: THEME_PRIMARY_TINT,
                           border: `1px solid ${THEME_PRIMARY_BORDER}`,
                           color: THEME_PRIMARY,
+                          fontFamily: THEME_FONT_PRIMARY,
                         }}
                       >
                         {tool}
@@ -147,7 +149,7 @@ export function AboutTab() {
                 </div>
               </ThemeCardHeader>
               <ThemeCardBody style={{ backgroundColor: 'rgba(255, 87, 34, 0.05)' }}>
-                <div className="space-y-1.5 sm:space-y-2">
+                <div>
                   {personalInfo.strengths.map((strength) => (
                     <ThemeDetail key={strength}>{strength}</ThemeDetail>
                   ))}
@@ -164,7 +166,7 @@ export function AboutTab() {
                 </div>
               </ThemeCardHeader>
               <ThemeCardBody style={{ backgroundColor: 'rgba(0, 188, 212, 0.05)' }}>
-                <div className="space-y-1.5 sm:space-y-2">
+                <div>
                   {personalInfo.interests.map((interest) => (
                     <ThemeDetail key={interest}>{interest}</ThemeDetail>
                   ))}
@@ -185,9 +187,9 @@ export function AboutTab() {
               <div className="space-y-1.5 sm:space-y-2">
                 <div className="flex items-center gap-1.5 sm:gap-2">
                   <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4" style={{ color: THEME_PRIMARY }} />
-                  <p className="text-xs sm:text-sm" style={{ color: THEME_PRIMARY, fontFamily: THEME_FONT_PRIMARY }}>{personalInfo.education.period}</p>
+                  <p className="text-sm" style={{ color: THEME_PRIMARY, fontFamily: THEME_FONT_PRIMARY }}>{personalInfo.education.period}</p>
                 </div>
-                <ThemeHeading as="p" className="text-base sm:text-lg">
+                <ThemeHeading as="p" className="text-lg">
                   <a
                     href="https://www.bu.ac.th/th"
                     target="_blank"
@@ -199,8 +201,10 @@ export function AboutTab() {
                   </a>
                   {' 3\'rd year'}
                 </ThemeHeading>
-                <ThemeDetail>{personalInfo.education.degree}</ThemeDetail>
-                <ThemeDetail>{personalInfo.education.major}</ThemeDetail>
+                <div>
+                  <ThemeDetail>{personalInfo.education.degree}</ThemeDetail>
+                  <ThemeDetail>{personalInfo.education.major}</ThemeDetail>
+                </div>
               </div>
             </ThemeCardBody>
           </ThemeCard>
@@ -218,7 +222,7 @@ export function AboutTab() {
             </ThemeCardHeader>
             <ThemeCardBody style={{ backgroundColor: 'rgba(171, 71, 188, 0.05)' }}>
               <div
-                className="text-xs sm:text-sm leading-relaxed"
+                className="text-sm leading-relaxed"
                 style={{
                   color: '#dfe6ea',
                   fontFamily: THEME_FONT_PRIMARY,
@@ -245,7 +249,7 @@ export function AboutTab() {
               <div className="space-y-3 sm:space-y-4">
                 {personalInfo.achievements.map((achievement, index) => (
                   <div key={index}>
-                    <ThemeHeading as="p" className="text-sm sm:text-base mb-1">
+                    <ThemeHeading as="p" className="text-base mb-1">
                       {achievement.titleLinks && achievement.titleLinks.length > 0 ? (
                         (() => {
                           const text = achievement.title;
@@ -304,23 +308,28 @@ export function AboutTab() {
                         achievement.title
                       )}
                     </ThemeHeading>
-                    {achievement.awards?.map((award, awardIndex) => (
-                      <ThemeDetail key={awardIndex}>
-                        {award.link ? (
-                          <a
-                            href={award.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="underline hover:opacity-80 transition-opacity"
-                            style={{ color: 'inherit' }}
-                          >
-                            {award.text}
-                          </a>
-                        ) : (
-                          award.text
-                        )}
-                      </ThemeDetail>
-                    ))}
+                    {achievement.awards && achievement.awards.length > 0 && (
+                      <ul className="mt-1 space-y-0.5 sm:space-y-1">
+                        {achievement.awards.map((award, awardIndex) => (
+                          <li key={awardIndex} className="text-sm text-gray-400" style={{ fontFamily: THEME_FONT_PRIMARY }}>
+                            <span style={{ color: THEME_PRIMARY }}>•</span>{' '}
+                            {award.link ? (
+                              <a
+                                href={award.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="underline hover:opacity-80 transition-opacity"
+                                style={{ color: 'inherit' }}
+                              >
+                                {award.text}
+                              </a>
+                            ) : (
+                              award.text
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 ))}
               </div>
@@ -339,7 +348,7 @@ export function AboutTab() {
               <div className="space-y-3 sm:space-y-4">
                 {personalInfo.experience.map((exp, expIndex) => (
                   <div key={expIndex}>
-                    <ThemeHeading as="p" className="text-base sm:text-lg mb-1 flex items-center gap-1.5 sm:gap-2">
+                    <ThemeHeading as="p" className="text-lg mb-1 flex items-center gap-1.5 sm:gap-2">
                       {exp.company.includes('CoSI') && (
                         <span className="inline-flex items-center flex-shrink-0">
                           <Image
@@ -368,17 +377,17 @@ export function AboutTab() {
                     </ThemeHeading>
                     <div className="flex items-center gap-1.5 sm:gap-2 mb-1.5 sm:mb-2">
                       <Users className="h-3.5 w-3.5 sm:h-4 sm:w-4" style={{ color: THEME_PRIMARY }} />
-                      <p className="text-xs sm:text-sm" style={{ color: THEME_PRIMARY }}>{exp.position}</p>
+                      <p className="text-sm" style={{ color: THEME_PRIMARY, fontFamily: THEME_FONT_PRIMARY }}>{exp.position}</p>
                     </div>
                     <div className="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3">
                       <Calendar className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-gray-500" />
-                      <p className="text-xs text-gray-500" style={{ fontFamily: THEME_FONT_PRIMARY }}>{exp.period}</p>
+                      <p className="text-sm text-gray-500" style={{ fontFamily: THEME_FONT_PRIMARY }}>{exp.period}</p>
                     </div>
 
                     <div className="space-y-2 sm:space-y-3 pl-3 sm:pl-4 border-l-2" style={{ borderColor: THEME_PRIMARY_BORDER }}>
                       {exp.projects.map((project, projectIndex) => (
                         <div key={projectIndex}>
-                          <ThemeHeading as="p" className="text-xs sm:text-sm mb-1">
+                          <ThemeHeading as="p" className="text-sm mb-1">
                             {project.titleLinks && project.titleLinks.length > 0 ? (
                               (() => {
                                 const text = project.title;
@@ -445,7 +454,7 @@ export function AboutTab() {
                                 const hasDentsu = resp.includes(dentsuText);
                                 
                                 return (
-                                  <li key={respIndex} className="text-xs sm:text-sm text-gray-400">
+                                  <li key={respIndex} className="text-sm text-gray-400" style={{ fontFamily: THEME_FONT_PRIMARY }}>
                                     <span style={{ color: THEME_PRIMARY }}>•</span>{' '}
                                     {hasDentsu ? (
                                       <>
@@ -478,7 +487,7 @@ export function AboutTab() {
                             <div className="mt-1 space-y-1.5 sm:space-y-2">
                               {project.subProjects.map((subProject, subIndex) => (
                                 <div key={subIndex}>
-                                  <ThemeHeading as="p" className="text-xs sm:text-sm mb-1">
+                                  <ThemeHeading as="p" className="text-sm mb-1">
                                     {subProject.titleLinks && subProject.titleLinks.length > 0 ? (
                                       (() => {
                                         const text = subProject.title;
@@ -544,7 +553,7 @@ export function AboutTab() {
                                       const hasDentsu = resp.includes(dentsuText);
                                       
                                       return (
-                                        <li key={respIndex} className="text-xs sm:text-sm text-gray-400">
+                                        <li key={respIndex} className="text-sm text-gray-400">
                                           <span style={{ color: THEME_PRIMARY }}>•</span>{' '}
                                           {hasDentsu ? (
                                             <>
