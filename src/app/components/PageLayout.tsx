@@ -16,9 +16,10 @@ import {
 
 interface PageLayoutProps {
   children: React.ReactNode;
+  transparentBackground?: boolean;
 }
 
-export function PageLayout({ children }: PageLayoutProps) {
+export function PageLayout({ children, transparentBackground = false }: PageLayoutProps) {
   const [emailCopied, setEmailCopied] = useState(false);
 
   const copyEmailToClipboard = async () => {
@@ -35,7 +36,10 @@ export function PageLayout({ children }: PageLayoutProps) {
     <div
       className="min-h-screen"
       style={{
-        background: `radial-gradient(circle at 20% 20%, ${THEME_PRIMARY_TINT} 0, transparent 25%), radial-gradient(circle at 80% 10%, ${THEME_COMPLEMENT_TINT} 0, transparent 22%), linear-gradient(180deg, #0b0f14 0%, #0a0d11 60%, #06080c 100%)`,
+        background: transparentBackground 
+          ? 'transparent'
+          : `radial-gradient(circle at 20% 20%, ${THEME_PRIMARY_TINT} 0, transparent 25%), radial-gradient(circle at 80% 10%, ${THEME_COMPLEMENT_TINT} 0, transparent 22%), linear-gradient(180deg, #0b0f14 0%, #0a0d11 60%, #06080c 100%)`,
+        fontFamily: THEME_FONT_PRIMARY,
       }}
     >
       <div className="sticky top-0 z-50">
@@ -50,7 +54,7 @@ export function PageLayout({ children }: PageLayoutProps) {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div
-                  className="rounded-full p-2"
+                  className="rounded-full p-2 hidden sm:block"
                   style={{ background: THEME_PRIMARY_TINT, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
                 >
                   <Gamepad2 className="h-6 w-6" style={{ color: THEME_PRIMARY }} />
@@ -113,7 +117,7 @@ export function PageLayout({ children }: PageLayoutProps) {
                     title="Click to copy email"
                   >
                     <Mail className="h-5 w-5" />
-                    <span>laripsspiral47@gmail.com</span>
+                    <span className="hidden sm:inline">laripsspiral47@gmail.com</span>
                   </button>
                   {emailCopied && (
                     <div className="absolute right-0 top-full mt-2 z-50 animate-fade-in">

@@ -28,9 +28,9 @@ export const THEME_BADGE_BG_MUTED = 'rgba(255,255,255,0.05)';
 export const THEME_BADGE_STAR_TEXT = '#EDDD59';
 export const THEME_BADGE_STAR_BG = 'rgba(237, 221, 89, 0.2)';
 
-// Royal Lilac (Purple) - Trophy badge
-export const THEME_BADGE_TROPHY_TEXT = '#AD66D3';
-export const THEME_BADGE_TROPHY_BG = 'rgba(119, 77, 142, 0.5)';
+// Gold - Trophy badge (Award)
+export const THEME_BADGE_TROPHY_TEXT = '#FFD700';
+export const THEME_BADGE_TROPHY_BG = 'rgba(255, 215, 0, 0.3)';
 
 // Directoire Blue - School badge
 export const THEME_BADGE_SCHOOL_TEXT = '#0061A3';

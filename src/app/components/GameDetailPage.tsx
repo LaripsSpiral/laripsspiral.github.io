@@ -13,6 +13,7 @@ import {
   ChevronRight,
   ArrowLeft,
   X,
+  Tag,
 } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
@@ -21,13 +22,13 @@ import { Game } from './GameCard';
 import {
   ThemeHeading,
   ThemeDetail,
-  ThemeBadge,
 } from './ThemeBox';
 import { PageLayout } from './PageLayout';
 import {
   THEME_PRIMARY_BORDER,
   THEME_PRIMARY,
   THEME_PANEL_BG,
+  THEME_FONT_PRIMARY,
 } from '../theme/palette';
 
 interface GameDetailPageProps {
@@ -76,26 +77,46 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
   }, [mainMediaIndex]);
 
   return (
-    <PageLayout>
-      {/* Back Button */}
-      <div
-        className="sticky top-0 z-10 backdrop-blur-sm"
-        style={{ backgroundColor: 'rgba(10,13,17,0.9)', borderBottom: `1px solid ${THEME_PRIMARY_BORDER}` }}
-      >
-        <div className="mx-auto max-w-7xl px-4 md:px-8 py-4">
-          <Link
-            href="/projects"
-            className="inline-flex items-center gap-2 text-gray-300 transition-colors hover:text-white"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span>Back to Projects</span>
-          </Link>
+    <div className="relative min-h-screen" style={game.wallpaper ? { background: 'transparent' } : undefined}>
+      {/* Background Wallpaper */}
+      {game.wallpaper && (
+        <>
+          <div className="fixed inset-0 z-0" style={{ pointerEvents: 'none' }}>
+            <Image
+              src={game.wallpaper}
+              alt={`${game.title} wallpaper`}
+              fill
+              sizes="100vw"
+              className="object-cover"
+              priority
+              style={{ opacity: 0.5 }}
+            />
+          </div>
+          <div className="fixed inset-0 z-[1] bg-gradient-to-b from-[#0a0d11]/50 via-[#0a0d11]/40 to-[#06080c]/50" style={{ pointerEvents: 'none' }} />
+        </>
+      )}
+      
+      <div style={game.wallpaper ? { position: 'relative', zIndex: 2 } : undefined}>
+        <PageLayout transparentBackground={!!game.wallpaper}>
+        {/* Back Button */}
+        <div
+          className="sticky top-0 z-10 backdrop-blur-sm"
+          style={{ backgroundColor: 'rgba(10,13,17,0.9)', borderBottom: `1px solid ${THEME_PRIMARY_BORDER}` }}
+        >
+          <div className="mx-auto max-w-7xl px-4 md:px-8 py-4" style={{ fontFamily: THEME_FONT_PRIMARY }}>
+            <Link
+              href="/projects"
+              className="inline-flex items-center gap-2 text-gray-300 transition-colors hover:text-white"
+            >
+              <ArrowLeft className="h-5 w-5" />
+              <span>Back to Projects</span>
+            </Link>
+          </div>
         </div>
-      </div>
 
-      <div className="min-h-screen">
+        <div className="min-h-screen relative z-10">
         {/* Main Content - Steam Style Layout */}
-      <div className="mx-auto max-w-7xl px-4 pt-6 pb-6 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 pt-6 pb-6 sm:px-6 lg:px-8" style={{ fontFamily: THEME_FONT_PRIMARY }}>
         {/* Top Section - Two Column: Main Video Left, Info Right */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6 lg:items-start lg:grid-rows-[1fr]">
           {/* Left Column - Main Video/Image */}
@@ -251,8 +272,36 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
               className="rounded-lg p-4"
               style={{ backgroundColor: THEME_PANEL_BG, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
             >
-              <p className="text-gray-200 leading-relaxed whitespace-pre-line text-lg">{game.description}</p>
+              <p className="text-gray-200 leading-relaxed whitespace-pre-line text-sm">{game.description}</p>
             </div>
+
+            {/* Tags */}
+            {game.tags && game.tags.length > 0 && (
+              <div
+                className="rounded-lg p-4"
+                style={{ backgroundColor: THEME_PANEL_BG, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
+              >
+                <div className="mb-3 flex items-center gap-2">
+                  <Tag className="h-4 w-4" style={{ color: THEME_PRIMARY }} />
+                  <h3 className="text-sm font-semibold uppercase tracking-wide text-white">Tags</h3>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {game.tags.map((tag, index) => (
+                    <span
+                      key={index}
+                      className="rounded-full px-3 py-1 text-xs font-medium"
+                      style={{
+                        backgroundColor: THEME_PRIMARY + '20',
+                        color: THEME_PRIMARY,
+                        border: `1px solid ${THEME_PRIMARY}40`,
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Reviews/Badges and Release Info - Horizontal Layout */}
             <div className="flex flex-wrap items-center gap-4">
@@ -267,12 +316,6 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                   <Trophy className="h-4 w-4" />
                   <span className="text-sm font-semibold">Award Winner</span>
                 </div>
-              )}
-              {game.badges?.teamSize && (
-                <ThemeBadge tone="team">
-                  <Users className="h-4 w-4" />
-                  <span>{game.badges.teamSize}</span>
-                </ThemeBadge>
               )}
               {game.status && (
                 <div className="flex items-center gap-2 text-gray-400 text-sm">
@@ -305,7 +348,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                 className="rounded-lg p-4"
                 style={{ backgroundColor: THEME_PANEL_BG, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
               >
-                <p className="text-gray-200 leading-relaxed whitespace-pre-line text-lg">{game.description}</p>
+                <p className="text-gray-200 leading-relaxed whitespace-pre-line text-sm">{game.description}</p>
               </div>
             </div>
 
@@ -419,6 +462,84 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
               </div>
             )}
 
+            {/* Team Members */}
+            {(game.teamMembers && game.teamMembers.length > 0) || game.badges?.teamSize ? (
+              <div
+                className="rounded-lg p-4"
+                style={{ backgroundColor: THEME_PANEL_BG, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
+              >
+                <div className="mb-4 flex items-center justify-between">
+                  <h3 className="text-lg font-semibold text-white">Team</h3>
+                  {game.teamMembers && game.teamMembers.length > 0 ? (
+                    <span className="text-sm text-gray-400" style={{ color: THEME_PRIMARY }}>
+                      {game.teamMembers.length} {game.teamMembers.length === 1 ? 'Member' : 'Members'}
+                    </span>
+                  ) : game.badges?.teamSize ? (
+                    <span className="text-sm text-gray-400" style={{ color: THEME_PRIMARY }}>
+                      {game.badges.teamSize} {game.badges.teamSize === 1 ? 'Member' : 'Members'}
+                    </span>
+                  ) : null}
+                </div>
+                {game.teamMembers && game.teamMembers.length > 0 ? (
+                  <div className="space-y-3">
+                    {(() => {
+                      // Group members by role
+                      const roleGroups = game.teamMembers.reduce((acc, member) => {
+                        if (!acc[member.role]) {
+                          acc[member.role] = [];
+                        }
+                        acc[member.role].push(member);
+                        return acc;
+                      }, {} as Record<string, Array<{ name: string; role: string }>>);
+
+                      // Custom role priority order
+                      const rolePriority = ['Producer', 'Designer', 'Programmer', 'Artist', 'Sound', 'QA'];
+                      
+                      const getRolePriority = (role: string): number => {
+                        const roleLower = role.toLowerCase();
+                        for (let i = 0; i < rolePriority.length; i++) {
+                          if (roleLower.includes(rolePriority[i].toLowerCase())) {
+                            return i;
+                          }
+                        }
+                        return rolePriority.length; // Unmatched roles come last
+                      };
+
+                      // Sort roles by priority, then alphabetically within same priority
+                      return Object.entries(roleGroups)
+                        .sort(([roleA], [roleB]) => {
+                          const priorityA = getRolePriority(roleA);
+                          const priorityB = getRolePriority(roleB);
+                          if (priorityA !== priorityB) {
+                            return priorityA - priorityB;
+                          }
+                          return roleA.localeCompare(roleB);
+                        })
+                        .map(([role, members]) => {
+                          // Sort members by name within each role
+                          const sortedMembers = [...members].sort((a, b) => a.name.localeCompare(b.name));
+                          
+                          return (
+                            <div key={role} className="text-sm">
+                              <p className="text-gray-200 font-medium mb-1">
+                                {role} <span className="text-gray-500">({sortedMembers.length})</span>
+                              </p>
+                              <div className="ml-2 space-y-1">
+                                {sortedMembers.map((member, index) => (
+                                  <p key={index} className="text-gray-400 text-xs">
+                                    {member.name}
+                                  </p>
+                                ))}
+                              </div>
+                            </div>
+                          );
+                        });
+                    })()}
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
+
             {/* Collaborate */}
             {game.badges?.partner && (
               <div
@@ -453,12 +574,14 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
           </div>
         </div>
         </div>
+        </div>
 
         {/* Media Viewer Modal */}
-      {selectedMediaIndex !== null && displayMedia[selectedMediaIndex] && (
+        {selectedMediaIndex !== null && displayMedia[selectedMediaIndex] && (
         <div
           className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 p-4"
           onClick={() => setSelectedMediaIndex(null)}
+          style={{ fontFamily: THEME_FONT_PRIMARY }}
         >
           {/* Content container */}
           <div 
@@ -552,9 +675,10 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
             )}
           </div>
         </div>
-      )}
+        )}
+        </PageLayout>
       </div>
-    </PageLayout>
+    </div>
   );
 }
 

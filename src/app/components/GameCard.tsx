@@ -32,6 +32,11 @@ export interface Game {
   awards?: string[];
   client?: string;
   media?: GameMedia[];
+  wallpaper?: string;
+  teamMembers?: Array<{
+    name: string;
+    role: string;
+  }>;
   badges?: {
     star?: boolean;
     trophy?: boolean;
@@ -77,7 +82,7 @@ export function GameCard({ game, onClick, isSelected = false }: GameCardProps) {
 
         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6 pt-12">
           <div className="flex items-end justify-between gap-4">
-            <div className="flex-1">
+            <div className="flex-1 mb-2.5 -ml-2">
               {game.status && (
                 <div className="mb-2 flex items-center gap-2 text-white/90">
                   <Calendar className="h-4 w-4" />
@@ -113,29 +118,29 @@ export function GameCard({ game, onClick, isSelected = false }: GameCardProps) {
                 )}
               </div>
             </div>
-
-            {game.badges && (
-              <div className="flex flex-wrap items-end justify-end gap-2">
-                {game.badges.star && (
-                  <ThemeBadge tone="star">
-                    <Star className="h-3 w-3" fill="currentColor" />
-                  </ThemeBadge>
-                )}
-                {game.badges.trophy && (
-                  <ThemeBadge tone="trophy">
-                    <Trophy className="h-3 w-3" />
-                  </ThemeBadge>
-                )}
-                {game.badges.school && (
-                  <ThemeBadge tone="school">
-                    <GraduationCap className="h-3 w-3" />
-                  </ThemeBadge>
-                )}
-              </div>
-            )}
           </div>
         </div>
       </div>
+      
+      {game.badges && (
+        <div className="absolute bottom-0 right-0 flex flex-row items-center justify-end gap-2 p-2">
+          {game.badges.star && (
+            <ThemeBadge tone="star">
+              <Star className="h-3 w-3" fill="currentColor" />
+            </ThemeBadge>
+          )}
+          {game.badges.trophy && (
+            <ThemeBadge tone="trophy">
+              <Trophy className="h-3 w-3" />
+            </ThemeBadge>
+          )}
+          {game.badges.school && (
+            <ThemeBadge tone="school">
+              <GraduationCap className="h-3 w-3" />
+            </ThemeBadge>
+          )}
+        </div>
+      )}
     </div>
     </Link>
   );
