@@ -210,5 +210,67 @@ export const games: Game[] = [
       teamSize: 8,
     },
   },
+  {
+    id: '5',
+    title: 'TINY TUNA',
+    description:
+      'You are born as a Bluefin Tuna that must live in a cruel ocean. You must eat smaller fish in order to grow, and you also have to avoid larger animals and dangerous predators. Your objective is survival for the sake of breeding.',
+    genre: 'Survival',
+    platform: 'Unity',
+    releaseYear: '2025',
+    imageUrl: '/projects/tinytuna/tinytunacover.png',
+    wallpaper: '/projects/tinytuna/tinytunawallpaper.png',
+    tags: ['Casual', 'Survival', '2D Side Scroller', 'Unity', 'Single player', 'Coursework'],
+    role: 'Programmer',
+    roleDetails:
+      'Served as a programmer on the development team, responsible for implementing core gameplay systems. Developed spawn logic for fish and predators, created the world stage system, and implemented AI behaviors using Unity\'s IJob system with Burst compilation for optimal performance. Built time-based event systems to manage dynamic gameplay elements throughout the survival experience.',
+    status: 'Released Nov/2025',
+    starred: false,
+    features: [
+      'Spawn Logic',
+      'World Stage',
+      'AI Logics with IJob & Burst',
+      'Time base event',
+    ],
+    awards: [],
+    client: 'Academic Project',
+    teamMembers: [
+      { name: 'Jakkaphong Boonyaritlakkhana', role: 'Programmer' },
+      { name: 'Jirawat Damung', role: 'Programmer' },
+      { name: 'Sirasit Tumvijit', role: 'Programmer' },
+      { name: 'Tatsapong Jirabulvanit', role: 'Ai Artist' },
+      { name: 'Thirat Chanthawa', role: 'Game Designer' },
+      { name: 'Sorawit Nartmanee', role: 'Level Designer' },
+      { name: 'Nicha Munkongwongsiri', role: 'UX/UI Designer' },
+      { name: 'Kanyanat Sermsup', role: 'UX/UI Designer' },
+    ],
+    media: [
+      {
+        type: 'video',
+        url: '/projects/tinytuna/gamepreviews/FishGameplay.mp4',
+        thumbnail: '/projects/tinytuna/gamepreviews/tinytuna_1.png',
+        title: 'Fish Gameplay',
+      },
+      {
+        type: 'image',
+        url: '/projects/tinytuna/gamepreviews/tinytuna_1.png',
+        title: 'Tiny Tuna Screenshot 1',
+      },
+      {
+        type: 'image',
+        url: '/projects/tinytuna/gamepreviews/tinytuna_2.png',
+        title: 'Tiny Tuna Screenshot 2',
+      },
+      {
+        type: 'image',
+        url: '/projects/tinytuna/gamepreviews/tinytuna_3.png',
+        title: 'Tiny Tuna Screenshot 3',
+      },
+    ],
+    badges: {
+      school: true,
+      teamSize: 8,
+    },
+  },
 ];
 
