@@ -70,7 +70,7 @@ export function ThemeCardHeader({ as: Comp = 'div', className, children, style }
 }
 
 export function ThemeCardBody({ as: Comp = 'div', className, children, style }: BoxProps) {
-  return <Comp className={cx('px-6 py-5 space-y-4', className)} style={style}>{children}</Comp>;
+  return <Comp className={cx('px-6 py-5 space-y-4 flex-1', className)} style={style}>{children}</Comp>;
 }
 
 export function ThemeGroup({ as: Comp = 'div', className, children }: BoxProps) {

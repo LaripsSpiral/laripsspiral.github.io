@@ -66,7 +66,7 @@ export function AboutTab() {
               <h1 className="mb-1 sm:mb-2 text-xl sm:text-2xl md:text-3xl font-bold uppercase text-white">{personalInfo.name}</h1>
               <p className="text-sm sm:text-base md:text-lg" style={{ color: THEME_PRIMARY }}>{personalInfo.title}</p>
             </div>
-            <div className="flex-shrink-0 flex flex-col items-end gap-1 sm:gap-1.5" style={{ fontFamily: THEME_FONT_PRIMARY }}>
+            <div className="flex-shrink-0 flex flex-col items-end gap-1 sm:gap-1.5 pr-2 sm:pr-3 md:pr-4" style={{ fontFamily: THEME_FONT_PRIMARY }}>
               <p className="text-xs sm:text-sm font-semibold uppercase whitespace-nowrap" style={{ color: THEME_PRIMARY }}>Languages:</p>
               <div className="flex flex-wrap justify-end gap-1.5 sm:gap-2 md:gap-3">
                 {personalInfo.languages.map((lang) => (
