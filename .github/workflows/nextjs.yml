@@ -33,6 +33,15 @@ jobs:
         uses: actions/checkout@v4
         with:
           lfs: true
+      - name: Setup Git LFS
+        run: |
+          git lfs install
+          git lfs pull
+      - name: Verify LFS files
+        run: |
+          echo "Checking for LFS video files..."
+          ls -lh public/projects/tinytuna/gamepreviews/*.mp4 || echo "Gameplay video not found"
+          ls -lh public/projects/tinytuna/features/*.mp4 || echo "Feature video not found"
       - name: Detect package manager
         id: detect-package-manager
         run: |
@@ -77,6 +86,13 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
+      - name: Verify build output
+        run: |
+          echo "Checking build output for video files..."
+          ls -lh out/projects/tinytuna/gamepreviews/*.mp4 2>/dev/null || echo "Gameplay video not in build output"
+          ls -lh out/projects/tinytuna/features/*.mp4 2>/dev/null || echo "Feature video not in build output"
+          echo "Build output size:"
+          du -sh out/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
