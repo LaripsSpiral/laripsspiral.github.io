@@ -13,6 +13,9 @@ import {
   ArrowLeft,
   X,
   Tag,
+  CheckCircle,
+  Calendar,
+  Clock,
 } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
@@ -127,11 +130,57 @@ function FeatureVideo({
   );
 }
 
+// Helper function to calculate duration between dates
+const calculateDuration = (startDate?: string, lastDate?: string): string => {
+  if (!startDate || !lastDate) return '';
+  
+  try {
+    const monthMap: { [key: string]: number } = {
+      'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'Jun': 6,
+      'Jul': 7, 'Aug': 8, 'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12
+    };
+    
+    const parseDate = (dateStr: string): Date => {
+      const [monthStr, year] = dateStr.split('/');
+      const month = monthMap[monthStr] || parseInt(monthStr);
+      if (isNaN(month) || isNaN(parseInt(year))) {
+        throw new Error('Invalid date format');
+      }
+      return new Date(parseInt(year), month - 1, 1);
+    };
+    
+    const start = parseDate(startDate);
+    const end = parseDate(lastDate);
+    
+    // Calculate difference in months more accurately
+    const yearsDiff = end.getFullYear() - start.getFullYear();
+    const monthsDiff = end.getMonth() - start.getMonth();
+    const totalMonths = yearsDiff * 12 + monthsDiff;
+    
+    if (totalMonths < 0) return '';
+    if (totalMonths === 0) return 'Less than 1 month';
+    if (totalMonths < 12) {
+      return `${totalMonths} month${totalMonths > 1 ? 's' : ''}`;
+    } else {
+      const years = Math.floor(totalMonths / 12);
+      const months = totalMonths % 12;
+      if (months === 0) {
+        return `${years} year${years > 1 ? 's' : ''}`;
+      }
+      return `${years} year${years > 1 ? 's' : ''} ${months} month${months > 1 ? 's' : ''}`;
+    }
+  } catch {
+    return '';
+  }
+};
+
 export function GameDetailPage({ game }: GameDetailPageProps) {
   const [selectedMediaIndex, setSelectedMediaIndex] = useState<number | null>(null);
   const [mainMediaIndex, setMainMediaIndex] = useState<number>(0);
   const [isVideoPlaying, setIsVideoPlaying] = useState<boolean>(false);
   const [showAllFeatures, setShowAllFeatures] = useState<boolean>(false);
+  
+  const duration = calculateDuration(game.startDate, game.lastDate);
   const [showTeam, setShowTeam] = useState<boolean>(false);
   const [showTags, setShowTags] = useState<boolean>(false);
   const [showRoleDetails, setShowRoleDetails] = useState<boolean>(false);
@@ -671,6 +720,33 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
               style={{ backgroundColor: THEME_PANEL_BG, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
             >
               <h3 className="mb-3 text-lg font-semibold text-white">About Project</h3>
+              
+              {/* Status, Dates, and Duration */}
+              <div className="mb-4 space-y-2">
+                {game.status && (
+                  <div className="flex items-center gap-2 text-gray-200 text-sm">
+                    <CheckCircle className="h-4 w-4" />
+                    <span>{game.status}</span>
+                  </div>
+                )}
+                {(game.startDate || game.lastDate) && (
+                  <div className="flex items-center gap-2 text-gray-200 text-sm">
+                    <Calendar className="h-4 w-4" />
+                    <span>
+                      {game.lastDate 
+                        ? `${game.startDate || ''}${game.startDate ? ' to ' : ''}${game.lastDate}`
+                        : game.startDate || game.lastDate}
+                    </span>
+                  </div>
+                )}
+                {duration && (
+                  <div className="flex items-center gap-2 text-gray-200 text-sm">
+                    <Clock className="h-4 w-4" />
+                    <span>Duration: {duration}</span>
+                  </div>
+                )}
+              </div>
+              
               <p className="text-gray-200 leading-relaxed whitespace-pre-line text-sm">{game.description}</p>
             </div>
 

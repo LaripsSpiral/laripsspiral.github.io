@@ -16,7 +16,7 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
   const pathname = usePathname();
   
   const [searchQuery, setSearchQuery] = useState<string>(searchParams.get('q') || '');
-  const [sortBy, setSortBy] = useState<string>(searchParams.get('sort') || 'newest');
+  const [sortBy, setSortBy] = useState<string>(searchParams.get('sort') || 'name');
 
   // Update URL when search or sort changes
   useEffect(() => {
@@ -24,7 +24,7 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
     if (searchQuery.trim()) {
       params.set('q', searchQuery.trim());
     }
-    if (sortBy !== 'newest') {
+    if (sortBy !== 'name') {
       params.set('sort', sortBy);
     }
     
@@ -48,11 +48,7 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
     }
 
     const sorted = [...filtered];
-    if (sortBy === 'newest') {
-      sorted.sort((a, b) => parseInt(b.releaseYear, 10) - parseInt(a.releaseYear, 10));
-    } else if (sortBy === 'oldest') {
-      sorted.sort((a, b) => parseInt(a.releaseYear, 10) - parseInt(b.releaseYear, 10));
-    } else if (sortBy === 'name') {
+    if (sortBy === 'name') {
       sorted.sort((a, b) => a.title.localeCompare(b.title));
     }
 
@@ -85,8 +81,6 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
             className="rounded-lg border bg-[#0d1117] px-4 py-3 text-sm text-gray-300 transition-colors focus:outline-none"
             style={{ borderColor: THEME_PRIMARY_BORDER }}
           >
-            <option value="newest">Newest First</option>
-            <option value="oldest">Oldest First</option>
             <option value="name">Name (A-Z)</option>
           </select>
         </div>

@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Star, Calendar, Trophy, GraduationCap, Users, Handshake, Building2, ArrowRight } from 'lucide-react';
+import { Star, Calendar, Trophy, GraduationCap, Users, Handshake, Building2, ArrowRight, CheckCircle } from 'lucide-react';
 import { Game } from './GameCard';
 import { createSlug } from '@/app/lib/project/slug';
 import {
@@ -337,9 +337,19 @@ export function HomeTab({ games }: HomeTabProps) {
                     <div className="flex items-start justify-between gap-2 sm:gap-3 md:gap-4">
                       <div className="flex-1">
                         {currentGame.status && (
+                          <div className="mb-2 sm:mb-2.5 md:mb-3 flex items-center gap-1.5 sm:gap-2 text-white/90">
+                            <CheckCircle className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4" />
+                            <span className="text-xs sm:text-sm">{currentGame.status}</span>
+                          </div>
+                        )}
+                        {(currentGame.startDate || currentGame.lastDate) && (
                           <div className="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-2.5 md:mb-3 text-white/90">
                             <Calendar className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4" />
-                            <span className="text-xs sm:text-sm">{currentGame.status}</span>
+                            <span className="text-xs sm:text-sm">
+                              {currentGame.lastDate 
+                                ? `${currentGame.startDate || ''}${currentGame.startDate ? ' to ' : ''}${currentGame.lastDate}`
+                                : currentGame.startDate || currentGame.lastDate}
+                            </span>
                           </div>
                         )}
 

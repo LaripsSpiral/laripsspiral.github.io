@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Calendar, Star, Trophy, GraduationCap, Users, Handshake, Building2 } from 'lucide-react';
+import { Calendar, Star, Trophy, GraduationCap, Users, Handshake, Building2, CheckCircle } from 'lucide-react';
 import { createSlug } from '@/app/lib/project/slug';
 import { ThemeBadge } from './ThemeBox';
 import { THEME_FONT_PRIMARY } from '../theme/palette';
@@ -30,7 +30,6 @@ export interface Game {
   id: string;
   title: string;
   description: string;
-  releaseYear: string;
   imageUrl: string;
   genres?: string[];
   platforms?: string[];
@@ -39,7 +38,8 @@ export interface Game {
   role?: string;
   roleDetails?: string;
   status?: string;
-  starred?: boolean;
+  startDate?: string;
+  lastDate?: string;
   features?: string[];
   featureDetails?: (string | FeatureDetailItem)[];
   awards?: string[];
@@ -98,8 +98,18 @@ export function GameCard({ game, onClick, isSelected = false }: GameCardProps) {
             <div className="flex-1 mb-2.5 -ml-2">
               {game.status && (
                 <div className="mb-2 flex items-center gap-2 text-white/90">
-                  <Calendar className="h-4 w-4" />
+                  <CheckCircle className="h-4 w-4" />
                   <span className="text-sm">{game.status}</span>
+                </div>
+              )}
+              {(game.startDate || game.lastDate) && (
+                <div className="mb-2 flex items-center gap-2 text-white/90">
+                  <Calendar className="h-4 w-4" />
+                  <span className="text-sm">
+                    {game.lastDate 
+                      ? `${game.startDate || ''}${game.startDate ? ' to ' : ''}${game.lastDate}`
+                      : game.startDate || game.lastDate}
+                  </span>
                 </div>
               )}
 
