@@ -20,6 +20,7 @@ import {
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { differenceInDays, differenceInMonths, differenceInYears, parse, isValid, addYears, addMonths } from 'date-fns';
 import { Game, FeatureDetailItem } from './GameCard';
 import {
   ThemeHeading,
@@ -130,45 +131,94 @@ function FeatureVideo({
   );
 }
 
-// Helper function to calculate duration between dates
+// Helper function to calculate duration between dates using date-fns
 const calculateDuration = (startDate?: string, lastDate?: string): string => {
   if (!startDate || !lastDate) return '';
   
   try {
-    const monthMap: { [key: string]: number } = {
-      'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4, 'May': 5, 'Jun': 6,
-      'Jul': 7, 'Aug': 8, 'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12
+    const monthMap: { [key: string]: string } = {
+      'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',
+      'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'
     };
     
-    const parseDate = (dateStr: string): Date => {
-      const [monthStr, year] = dateStr.split('/');
-      const month = monthMap[monthStr] || parseInt(monthStr);
-      if (isNaN(month) || isNaN(parseInt(year))) {
-        throw new Error('Invalid date format');
+    const parseDate = (dateStr: string): Date | null => {
+      const parts = dateStr.split('/');
+      let day: string, month: string, year: string;
+      
+      if (parts.length === 3) {
+        // Format: Day/Month/Year (e.g., "11/Nov/2024")
+        day = parts[0].padStart(2, '0');
+        const monthStr = parts[1];
+        year = parts[2];
+        month = monthMap[monthStr] || parts[1].padStart(2, '0');
+        // Parse as "dd/MM/yyyy"
+        return parse(`${day}/${month}/${year}`, 'dd/MM/yyyy', new Date());
+      } else if (parts.length === 2) {
+        // Format: Month/Year (e.g., "Nov/2024")
+        const monthStr = parts[0];
+        year = parts[1];
+        month = monthMap[monthStr] || parts[0].padStart(2, '0');
+        // Parse as "01/MM/yyyy" (first day of month)
+        return parse(`01/${month}/${year}`, 'dd/MM/yyyy', new Date());
       }
-      return new Date(parseInt(year), month - 1, 1);
+      return null;
     };
     
     const start = parseDate(startDate);
     const end = parseDate(lastDate);
     
-    // Calculate difference in months more accurately
-    const yearsDiff = end.getFullYear() - start.getFullYear();
-    const monthsDiff = end.getMonth() - start.getMonth();
-    const totalMonths = yearsDiff * 12 + monthsDiff;
-    
-    if (totalMonths < 0) return '';
-    if (totalMonths === 0) return 'Less than 1 month';
-    if (totalMonths < 12) {
-      return `${totalMonths} month${totalMonths > 1 ? 's' : ''}`;
-    } else {
-      const years = Math.floor(totalMonths / 12);
-      const months = totalMonths % 12;
-      if (months === 0) {
-        return `${years} year${years > 1 ? 's' : ''}`;
-      }
-      return `${years} year${years > 1 ? 's' : ''} ${months} month${months > 1 ? 's' : ''}`;
+    if (!start || !end || !isValid(start) || !isValid(end)) {
+      return '';
     }
+    
+    // Calculate differences using date-fns
+    const years = differenceInYears(end, start);
+    const totalMonths = differenceInMonths(end, start);
+    const months = totalMonths % 12;
+    
+    // Calculate remaining days after accounting for years and months
+    let dateAfterYearsMonths = start;
+    if (years > 0) {
+      dateAfterYearsMonths = addYears(dateAfterYearsMonths, years);
+    }
+    if (months > 0) {
+      dateAfterYearsMonths = addMonths(dateAfterYearsMonths, months);
+    }
+    const remainingDays = differenceInDays(end, dateAfterYearsMonths);
+    
+    // Build the duration string
+    const parts: string[] = [];
+    
+    if (years > 0) {
+      parts.push(`${years} year${years > 1 ? 's' : ''}`);
+    }
+    if (months > 0) {
+      parts.push(`${months} month${months > 1 ? 's' : ''}`);
+    }
+    
+    // Show remaining days
+    if (remainingDays > 0) {
+      if (remainingDays >= 7 && years === 0 && months === 0) {
+        // If less than a year and month, show weeks and days
+        const weeks = Math.floor(remainingDays / 7);
+        const days = remainingDays % 7;
+        if (weeks > 0) {
+          parts.push(`${weeks} week${weeks > 1 ? 's' : ''}`);
+        }
+        if (days > 0) {
+          parts.push(`${days} day${days > 1 ? 's' : ''}`);
+        }
+      } else {
+        // Show days directly
+        parts.push(`${remainingDays} day${remainingDays > 1 ? 's' : ''}`);
+      }
+    }
+    
+    if (parts.length === 0) {
+      return 'Less than 1 day';
+    }
+    
+    return parts.join(' ');
   } catch {
     return '';
   }

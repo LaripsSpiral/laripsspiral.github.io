@@ -16,8 +16,8 @@ export const games: Game[] = [
     roleDetails:
       'Implemented core gameplay systems including spawn logic, world stage progression, and AI behaviors using Unity\'s IJob & Burst for performance optimization. Developed time-based event systems for dynamic gameplay management.',
     status: 'Released',
-    startDate: 'Nov/2024',
-    lastDate: 'Nov/2025',
+    startDate: '11/Nov/2024',
+    lastDate: '28/Nov/2025',
     features: [
       'Spawn Logic',
       'World Stage',
