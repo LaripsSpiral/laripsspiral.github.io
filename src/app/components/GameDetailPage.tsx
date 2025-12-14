@@ -57,6 +57,76 @@ const generateMockupMedia = (game: Game) => {
   return mockups;
 };
 
+// Feature Video Component with play button overlay
+function FeatureVideo({ 
+  src, 
+  thumbnail, 
+  title,
+  fallbackImage
+}: { 
+  src: string; 
+  thumbnail?: string; 
+  title?: string;
+  fallbackImage?: string;
+}) {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  return (
+    <div className="relative w-full h-full group">
+      {/* Background image/thumbnail while video loads */}
+      {(thumbnail || fallbackImage) && !isLoaded && (
+        <div className="absolute inset-0 z-0">
+          <Image
+            src={thumbnail || fallbackImage || ''}
+            alt={title || 'Video thumbnail'}
+            fill
+            className="object-cover"
+            sizes="(max-width: 1200px) 100vw, 66vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/40" />
+        </div>
+      )}
+      <video
+        ref={videoRef}
+        src={src}
+        controls
+        controlsList="nodownload"
+        className="h-full w-full object-cover relative z-10 bg-transparent"
+        preload="metadata"
+        poster={thumbnail || fallbackImage}
+        onLoadedMetadata={() => setIsLoaded(true)}
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
+        onEnded={() => setIsPlaying(false)}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        style={{ backgroundColor: 'transparent' }}
+      >
+        Your browser does not support the video tag.
+      </video>
+      {!isPlaying && (
+        <div 
+          className="absolute inset-0 flex items-center justify-center cursor-pointer z-20 opacity-100 group-hover:opacity-100 transition-opacity"
+          style={{
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.3))'
+          }}
+          onClick={(e) => {
+            e.stopPropagation();
+            videoRef.current?.play();
+          }}
+        >
+          <div className="rounded-full bg-white/90 p-4 shadow-2xl hover:bg-white transition-colors">
+            <Play className="h-10 w-10 text-gray-900" fill="currentColor" />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function GameDetailPage({ game }: GameDetailPageProps) {
   const [selectedMediaIndex, setSelectedMediaIndex] = useState<number | null>(null);
   const [mainMediaIndex, setMainMediaIndex] = useState<number>(0);
@@ -148,6 +218,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                 <video
                   src={displayMedia[mainMediaIndex].url}
                   controls
+                  controlsList="nodownload"
                   className="h-full w-full object-cover"
                   preload="metadata"
                   onPlay={() => setIsVideoPlaying(true)}
@@ -304,6 +375,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                     ref={videoRef}
                     src={displayMedia[mainMediaIndex].url}
                     controls
+                    controlsList="nodownload"
                     className="h-full w-full object-cover"
                     preload="metadata"
                     onPlay={() => setIsVideoPlaying(true)}
@@ -511,7 +583,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                               </div>
                             )}
                             {detail.media && (
-                              <div className="relative aspect-video w-full overflow-hidden bg-black/30 border border-white/5 mt-4 rounded">
+                              <div className="relative aspect-video w-full overflow-hidden border border-white/5 mt-4 rounded" style={{ backgroundColor: THEME_PANEL_BG }}>
                                 {detail.media.type === 'image' || detail.media.type === 'gif' ? (
                                   <Image
                                     src={detail.media.url}
@@ -521,14 +593,12 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                                     className="object-cover"
                                   />
                                 ) : detail.media.type === 'video' ? (
-                                  <video
+                                  <FeatureVideo
                                     src={detail.media.url}
-                                    controls
-                                    className="h-full w-full object-cover"
-                                    preload="none"
-                                  >
-                                    Your browser does not support the video tag.
-                                  </video>
+                                    thumbnail={detail.media.thumbnail}
+                                    title={detail.media.title || detail.topic}
+                                    fallbackImage={game.imageUrl}
+                                  />
                                 ) : null}
                               </div>
                             )}
@@ -930,6 +1000,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                 <video
                   src={displayMedia[selectedMediaIndex].url}
                   controls
+                  controlsList="nodownload"
                   autoPlay
                   preload="auto"
                   className="w-full h-full object-contain pointer-events-auto"
