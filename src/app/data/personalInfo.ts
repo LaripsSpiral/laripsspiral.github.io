@@ -96,7 +96,7 @@ export const personalInfo: PersonalInfo = {
       period: 'Oct/2023 - Apr/2025 (1 year 7 months)',
       projects: [
         {
-          title: 'Roblox School of Survival | อยู่รอดวิทยา (Game Programmer):',
+          title: 'Roblox School of Survival (Programmer):',
           titleLinks: [
             { text: 'Roblox School of Survival | อยู่รอดวิทยา', link: 'https://yoorodwittaya.com/' },
           ],
@@ -127,9 +127,9 @@ export const personalInfo: PersonalInfo = {
             {
               title: 'Unity Medicals VR Multiplayer (Netcode):',
               responsibilities: [
-                "Implemented a match making to queue patient, allowing them to receive invitations to the host's lobby.",
-                'Implementing webcam streaming over the network by converting to texture and encoding to jpg, i improve performance by reducing resolution of image and separating the encoded image bytes into chunk due to maximum transmission limits.',
-                'Implementing networked physics and state synchronization to ensure all clients see the same position, rotation, and appearance of avatars and environments.',
+                "Implemented matchmaking to queue patients and send host lobby invitations.",
+                'Implemented webcam streaming via texture-to-JPG encoding, optimized by reducing resolution and chunking data for transmission limits.',
+                'Implemented networked physics and state synchronization for consistent avatar and environment states across clients.',
               ],
             },
           ],

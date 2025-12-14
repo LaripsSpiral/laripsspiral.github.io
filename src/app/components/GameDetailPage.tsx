@@ -142,11 +142,11 @@ const calculateDuration = (startDate?: string, lastDate?: string): string => {
     };
     
     const parseDate = (dateStr: string): Date | null => {
-      const parts = dateStr.split('/');
+      const parts = dateStr.split(' ').filter(part => part.length > 0);
       let day: string, month: string, year: string;
       
       if (parts.length === 3) {
-        // Format: Day/Month/Year (e.g., "11/Nov/2024")
+        // Format: Day Month Year (e.g., "11 Nov 2024")
         day = parts[0].padStart(2, '0');
         const monthStr = parts[1];
         year = parts[2];
@@ -154,7 +154,7 @@ const calculateDuration = (startDate?: string, lastDate?: string): string => {
         // Parse as "dd/MM/yyyy"
         return parse(`${day}/${month}/${year}`, 'dd/MM/yyyy', new Date());
       } else if (parts.length === 2) {
-        // Format: Month/Year (e.g., "Nov/2024")
+        // Format: Month Year (e.g., "Nov 2024")
         const monthStr = parts[0];
         year = parts[1];
         month = monthMap[monthStr] || parts[0].padStart(2, '0');
@@ -292,7 +292,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
         {/* Main Content - Steam Style Layout */}
       <div className="mx-auto max-w-7xl px-4 pt-6 pb-6 sm:px-6 lg:px-8" style={{ fontFamily: THEME_FONT_PRIMARY }}>
         {/* Game Title - Moved to top */}
-        <h1 className="text-3xl font-bold text-white mb-0">{game.title}</h1>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-0">{game.title}</h1>
         {/* Main Content - Merged Grid Layout */}
         <div className="flex flex-col lg:grid lg:grid-cols-3 gap-6 lg:items-start">
           {/* Mobile Media Container */}
@@ -626,7 +626,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                   className="rounded-lg p-4"
                   style={{ backgroundColor: THEME_PANEL_BG, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
                 >
-                  <h2 className="mb-2 text-2xl font-bold text-white">Features</h2>
+                  <h2 className="mb-2 text-xl sm:text-2xl md:text-3xl font-bold text-white">Features</h2>
                   <div className="space-y-6">
                     {game.features.map((feature, index) => {
                       // Show only first 2 features initially, or all if showAllFeatures is true
@@ -652,13 +652,13 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                         
                         // If it's a FeatureDetailItem object
                         const isSubLevel = depth > 0;
-                        const textSize = isSubLevel ? 'text-xs' : 'text-sm';
+                        const textSize = isSubLevel ? 'text-xs sm:text-sm' : 'text-sm sm:text-base';
                         
                         return (
                           <div className={isSubLevel ? 'ml-4 mt-2' : ''}>
                             <ThemeHeading 
                               as="p" 
-                              className={`${isSubLevel ? 'text-sm' : 'text-base'} font-semibold text-white mb-2`}
+                              className={`${isSubLevel ? 'text-sm sm:text-base' : 'text-base sm:text-lg'} font-semibold text-white mb-2`}
                             >
                               {detail.topic}
                             </ThemeHeading>
@@ -769,18 +769,18 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
               className="rounded-lg p-4"
               style={{ backgroundColor: THEME_PANEL_BG, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
             >
-              <h3 className="mb-3 text-lg font-semibold text-white">About Project</h3>
+              <h3 className="mb-3 text-base sm:text-lg md:text-xl font-semibold text-white">About Project</h3>
               
               {/* Status, Dates, and Duration */}
-              <div className="mb-4 space-y-2">
+              <div className="mb-4 flex flex-wrap items-center gap-3 sm:gap-x-3 lg:gap-x-4">
                 {game.status && (
-                  <div className="flex items-center gap-2 text-gray-200 text-sm">
+                  <div className="flex items-center gap-2 text-gray-200 text-xs sm:text-sm">
                     <CheckCircle className="h-4 w-4" />
                     <span>{game.status}</span>
                   </div>
                 )}
                 {(game.startDate || game.lastDate) && (
-                  <div className="flex items-center gap-2 text-gray-200 text-sm">
+                  <div className="flex items-center gap-2 text-gray-200 text-xs sm:text-sm">
                     <Calendar className="h-4 w-4" />
                     <span>
                       {game.lastDate 
@@ -790,14 +790,14 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                   </div>
                 )}
                 {duration && (
-                  <div className="flex items-center gap-2 text-gray-200 text-sm">
+                  <div className="flex items-center gap-2 text-gray-200 text-xs sm:text-sm">
                     <Clock className="h-4 w-4" />
-                    <span>Duration: {duration}</span>
+                    <span>{duration}</span>
                   </div>
                 )}
               </div>
               
-              <p className="text-gray-200 leading-relaxed whitespace-pre-line text-sm">{game.description}</p>
+              <p className="text-gray-200 leading-relaxed whitespace-pre-line text-xs sm:text-sm md:text-base">{game.description}</p>
             </div>
 
             {/* Tags */}
@@ -813,7 +813,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                 >
                   <div className="flex items-center gap-2">
                     <Tag className="h-4 w-4" style={{ color: THEME_PRIMARY }} />
-                    <h3 className="text-lg font-semibold uppercase tracking-wide text-white">Tags</h3>
+                    <h3 className="text-base sm:text-lg md:text-xl font-semibold uppercase tracking-wide text-white">Tags</h3>
                   </div>
                   <ChevronDown 
                     className={`h-5 w-5 text-gray-400 transition-transform lg:hidden ${showTags ? 'rotate-180' : ''}`}
@@ -917,7 +917,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                 className="rounded-lg p-4"
                 style={{ backgroundColor: THEME_PANEL_BG, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
               >
-                <h3 className="mb-4 text-lg font-semibold text-white">Role & Position</h3>
+                <h3 className="mb-4 text-base sm:text-lg md:text-xl font-semibold text-white">Role & Position</h3>
                 <div className="space-y-3">
                   {game.role && (
                     <button
@@ -927,7 +927,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                       style={{ color: THEME_PRIMARY }}
                     >
                       <Users className="h-4 w-4" />
-                      <span className="text-gray-300 text-sm">{game.role}</span>
+                      <span className="text-gray-300 text-xs sm:text-sm">{game.role}</span>
                       {game.roleDetails && (
                         <ChevronDown 
                           className={`ml-auto h-4 w-4 text-gray-400 transition-transform lg:hidden ${showRoleDetails ? 'rotate-180' : ''}`}
@@ -937,7 +937,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                   )}
                   {game.roleDetails && (
                     <div className={`${showRoleDetails ? 'block' : 'max-lg:hidden'} lg:block`}>
-                      <p className="text-gray-300 text-sm leading-relaxed whitespace-pre-line">{game.roleDetails}</p>
+                      <p className="text-gray-300 text-xs sm:text-sm md:text-base leading-relaxed whitespace-pre-line">{game.roleDetails}</p>
                     </div>
                   )}
                 </div>
@@ -950,14 +950,14 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                 className="rounded-lg p-4"
                 style={{ backgroundColor: THEME_PANEL_BG, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
               >
-                <h3 className="mb-4 text-lg font-semibold text-white">
+                <h3 className="mb-4 text-base sm:text-lg md:text-xl font-semibold text-white">
                   {game.badges?.school || game.client === 'Academic Project'
                     ? 'Academic Project at'
                     : 'Working for'}
                 </h3>
                 <div className="flex items-center gap-2 text-orange-400">
                   <Building2 className="h-4 w-4" />
-                  <span className="text-gray-300 text-sm">
+                  <span className="text-gray-300 text-xs sm:text-sm">
                     {game.badges?.school || game.client === 'Academic Project'
                       ? 'Bangkok University'
                       : game.client}
@@ -977,14 +977,14 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                   className="mb-4 flex w-full items-center justify-between lg:pointer-events-none"
                   type="button"
                 >
-                  <h3 className="text-lg font-semibold text-white">Team</h3>
+                  <h3 className="text-base sm:text-lg md:text-xl font-semibold text-white">Team</h3>
                   <div className="flex items-center gap-2">
                     {game.teamMembers && game.teamMembers.length > 0 ? (
-                      <span className="text-sm text-gray-400" style={{ color: THEME_PRIMARY }}>
+                      <span className="text-xs sm:text-sm text-gray-400" style={{ color: THEME_PRIMARY }}>
                         {game.teamMembers.length} {game.teamMembers.length === 1 ? 'Member' : 'Members'}
                       </span>
                     ) : game.badges?.teamSize ? (
-                      <span className="text-sm text-gray-400" style={{ color: THEME_PRIMARY }}>
+                      <span className="text-xs sm:text-sm text-gray-400" style={{ color: THEME_PRIMARY }}>
                         {game.badges.teamSize} {game.badges.teamSize === 1 ? 'Member' : 'Members'}
                       </span>
                     ) : null}
@@ -1034,7 +1034,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                           const sortedMembers = [...members].sort((a, b) => a.name.localeCompare(b.name));
                           
                           return (
-                            <div key={role} className="text-sm">
+                            <div key={role} className="text-xs sm:text-sm">
                               <p className="text-gray-200 font-medium mb-1">
                                 {role} <span className="text-gray-500">({sortedMembers.length})</span>
                               </p>
@@ -1061,10 +1061,10 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                 className="rounded-lg p-4"
                 style={{ backgroundColor: THEME_PANEL_BG, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
               >
-                <h3 className="mb-4 text-lg font-semibold text-white">Collaborate</h3>
+                <h3 className="mb-4 text-base sm:text-lg md:text-xl font-semibold text-white">Collaborate</h3>
                 <div className="flex items-center gap-2 text-orange-400">
                   <Handshake className="h-4 w-4" />
-                  <span className="text-gray-300 text-sm">{game.badges.partner}</span>
+                  <span className="text-gray-300 text-xs sm:text-sm">{game.badges.partner}</span>
                 </div>
               </div>
             )}
@@ -1075,12 +1075,12 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                 className="rounded-lg p-4"
                 style={{ backgroundColor: THEME_PANEL_BG, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
               >
-                <h3 className="mb-4 text-lg font-semibold text-white">Awards</h3>
+                <h3 className="mb-4 text-base sm:text-lg md:text-xl font-semibold text-white">Awards</h3>
                 <div className="space-y-2">
                   {game.awards.map((award, index) => (
                     <div key={index} className="flex items-start gap-3">
                       <Trophy className="h-5 w-5 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-300 text-sm">{award}</span>
+                      <span className="text-gray-300 text-xs sm:text-sm md:text-base">{award}</span>
                     </div>
                   ))}
                 </div>
@@ -1106,7 +1106,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
             {/* Title bar at top */}
             {displayMedia[selectedMediaIndex].title && (
               <div className="relative bg-gray-800/95 px-4 py-3 flex items-center justify-center border-b border-gray-700/50">
-                <p className="text-white font-semibold text-center">{displayMedia[selectedMediaIndex].title}</p>
+                <p className="text-white font-semibold text-center text-sm sm:text-base md:text-lg">{displayMedia[selectedMediaIndex].title}</p>
                 {/* Close button - centered in top panel */}
                 <button
                   onClick={(e) => {
@@ -1151,7 +1151,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
             {/* Bottom bar with position indicator */}
             {displayMedia.length > 1 && (
               <div className="relative bg-gray-800/95 px-4 py-3 flex items-center justify-center border-t border-gray-700/50">
-                <p className="text-gray-300 text-sm">
+                <p className="text-gray-300 text-xs sm:text-sm">
                   {selectedMediaIndex !== null ? selectedMediaIndex + 1 : 1} of {displayMedia.length}
                 </p>
               </div>
