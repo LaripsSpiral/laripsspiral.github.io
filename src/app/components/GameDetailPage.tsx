@@ -1,9 +1,6 @@
 'use client';
 
 import {
-  Calendar,
-  Monitor,
-  Star,
   Trophy,
   Users,
   Handshake,
@@ -11,6 +8,8 @@ import {
   Play,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
+  ChevronUp,
   ArrowLeft,
   X,
   Tag,
@@ -18,12 +17,13 @@ import {
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Game } from './GameCard';
+import { Game, FeatureDetailItem } from './GameCard';
 import {
   ThemeHeading,
   ThemeDetail,
 } from './ThemeBox';
 import { PageLayout } from './PageLayout';
+import { ItchWidget } from './ItchWidget';
 import {
   THEME_PRIMARY_BORDER,
   THEME_PRIMARY,
@@ -61,11 +61,16 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
   const [selectedMediaIndex, setSelectedMediaIndex] = useState<number | null>(null);
   const [mainMediaIndex, setMainMediaIndex] = useState<number>(0);
   const [isVideoPlaying, setIsVideoPlaying] = useState<boolean>(false);
+  const [showAllFeatures, setShowAllFeatures] = useState<boolean>(false);
+  const [showTeam, setShowTeam] = useState<boolean>(false);
+  const [showTags, setShowTags] = useState<boolean>(false);
+  const [showRoleDetails, setShowRoleDetails] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
   
   // Use mockup media if no media is provided
   const displayMedia = game.media && game.media.length > 0 ? game.media : generateMockupMedia(game);
+
 
   // Reset video when main media changes
   useEffect(() => {
@@ -117,12 +122,180 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
         <div className="min-h-screen relative z-10">
         {/* Main Content - Steam Style Layout */}
       <div className="mx-auto max-w-7xl px-4 pt-6 pb-6 sm:px-6 lg:px-8" style={{ fontFamily: THEME_FONT_PRIMARY }}>
-        {/* Top Section - Two Column: Main Video Left, Info Right */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6 lg:items-start lg:grid-rows-[1fr]">
-          {/* Left Column - Main Video/Image */}
-          <div className="lg:col-span-2">
-            {/* Main Hero Video/Image */}
-            <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-gray-900 mb-6 group">
+        {/* Game Title - Moved to top */}
+        <h1 className="text-3xl font-bold text-white mb-0">{game.title}</h1>
+        {/* Main Content - Merged Grid Layout */}
+        <div className="flex flex-col lg:grid lg:grid-cols-3 gap-6 lg:items-start">
+          {/* Mobile Media Container */}
+          <div 
+            className="w-full lg:hidden space-y-4"
+            style={{
+              paddingTop: '0px',
+              paddingBottom: '0px',
+              boxSizing: 'content-box'
+            }}
+          >
+            {/* Main Hero Video/Image - Extracted for small screens */}
+            <div 
+              className="relative aspect-video w-full overflow-hidden rounded-lg bg-gray-900 group"
+              style={{
+                marginTop: '5px',
+                marginBottom: '5px'
+              }}
+            >
+            {displayMedia[mainMediaIndex].type === 'video' ? (
+              <>
+                <video
+                  src={displayMedia[mainMediaIndex].url}
+                  controls
+                  className="h-full w-full object-cover"
+                  onPlay={() => setIsVideoPlaying(true)}
+                  onPause={() => setIsVideoPlaying(false)}
+                  onEnded={() => setIsVideoPlaying(false)}
+                  onClick={(e) => {
+                    // Prevent default click behavior, let video controls handle it
+                    e.stopPropagation();
+                  }}
+                >
+                  Your browser does not support the video tag.
+                </video>
+                {!isVideoPlaying && (
+                  <div 
+                    className="absolute inset-0 flex items-center justify-center bg-black/30 cursor-pointer z-10"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const video = e.currentTarget.parentElement?.querySelector('video');
+                      video?.play();
+                    }}
+                  >
+                    <div className="rounded-full bg-white/90 p-6 shadow-2xl">
+                      <Play className="h-16 w-16 text-gray-900" fill="currentColor" />
+                    </div>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div
+                className="relative w-full h-full cursor-pointer"
+                onClick={() => setSelectedMediaIndex(mainMediaIndex)}
+              >
+                <Image
+                  src={displayMedia[mainMediaIndex].url}
+                  alt={displayMedia[mainMediaIndex].title || game.title}
+                  fill
+                  sizes="(max-width: 1200px) 100vw, 66vw"
+                  className="object-cover"
+                />
+              </div>
+            )}
+
+            {/* Navigation Arrows - Show on Hover */}
+            {displayMedia.length > 1 && (
+              <>
+                {/* Left Arrow */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    const newIndex = mainMediaIndex > 0 ? mainMediaIndex - 1 : displayMedia.length - 1;
+                    setMainMediaIndex(newIndex);
+                  }}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 z-20 rounded-full bg-gray-800/90 p-3 text-white hover:bg-gray-700 transition-all shadow-lg opacity-0 group-hover:opacity-100"
+                >
+                  <ChevronLeft className="h-6 w-6" />
+                </button>
+
+                {/* Right Arrow */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    const newIndex = mainMediaIndex < displayMedia.length - 1 ? mainMediaIndex + 1 : 0;
+                    setMainMediaIndex(newIndex);
+                  }}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 z-20 rounded-full bg-gray-800/90 p-3 text-white hover:bg-gray-700 transition-all shadow-lg opacity-0 group-hover:opacity-100"
+                >
+                  <ChevronRight className="h-6 w-6" />
+                </button>
+              </>
+            )}
+            </div>
+
+            {/* Thumbnail Carousel - Extracted for small screens, appears above sidebar */}
+            {displayMedia.length > 1 && (
+              <div className="w-full">
+                {/* Scrollable Carousel */}
+                <div 
+                  className="flex gap-2 scroll-smooth py-0 [&::-webkit-scrollbar]:block [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:bg-gray-600 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent"
+                  style={{ 
+                    scrollbarWidth: 'thin',
+                    scrollbarColor: 'rgba(160, 175, 183, 0.5) transparent',
+                    overflowX: 'scroll',
+                    paddingTop: '0px',
+                    paddingBottom: '0px'
+                  }}
+                >
+                  {displayMedia.map((media, index) => (
+                    <div
+                      key={`sm-${index}`}
+                      className={`relative h-20 w-32 flex-shrink-0 cursor-pointer overflow-hidden rounded border-2 transition-all ${
+                        index === mainMediaIndex
+                          ? 'border-blue-500'
+                          : 'border-transparent hover:border-gray-600'
+                      }`}
+                      onClick={() => setMainMediaIndex(index)}
+                    >
+                      {media.type === 'video' ? (
+                        <>
+                          {media.thumbnail ? (
+                            <Image
+                              src={media.thumbnail}
+                              alt={media.title || `Thumbnail ${index + 1}`}
+                              fill
+                              sizes="128px"
+                              className="object-cover"
+                            />
+                          ) : (
+                            <Image
+                              src={game.imageUrl}
+                              alt={game.title}
+                              fill
+                              sizes="128px"
+                              className="object-cover"
+                            />
+                          )}
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                            <Play className="h-6 w-6 text-white" fill="currentColor" />
+                          </div>
+                        </>
+                      ) : (
+                        <Image
+                          src={media.url}
+                          alt={media.title || `Media ${index + 1}`}
+                          fill
+                          sizes="128px"
+                          className="object-cover"
+                        />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Left Column - Main Content */}
+          <div className="lg:col-span-2 space-y-6 order-3 lg:order-none">
+            {/* Main Video and Carousel Container */}
+            <div className="hidden lg:block space-y-0">
+              {/* Main Hero Video/Image - Shown on large screens */}
+              <div 
+                className="relative aspect-video w-full overflow-hidden rounded-lg bg-gray-900 group"
+                style={{
+                  marginTop: '5px',
+                  marginBottom: '5px'
+                }}
+              >
               {displayMedia[mainMediaIndex].type === 'video' ? (
                 <>
                   <video
@@ -199,23 +372,24 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                   </button>
                 </>
               )}
-            </div>
+              </div>
 
-            {/* Thumbnail Carousel Below Main Video */}
-            {displayMedia.length > 1 && (
-              <div className="w-full mt-6">
+              {/* Thumbnail Carousel Below Main Video */}
+              {displayMedia.length > 1 && (
+                <div className="w-full">
                 {/* Scrollable Carousel */}
                 <div 
                   ref={carouselRef}
-                  className="flex gap-2 overflow-x-auto scrollbar-hide scroll-smooth py-2"
+                  className="flex gap-2 scroll-smooth py-2 [&::-webkit-scrollbar]:block [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:bg-gray-600 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent"
                   style={{ 
-                    scrollbarWidth: 'none',
-                    msOverflowStyle: 'none'
+                    scrollbarWidth: 'thin',
+                    scrollbarColor: 'rgba(160, 175, 183, 0.5) transparent',
+                    overflowX: 'scroll'
                   }}
                 >
                   {displayMedia.map((media, index) => (
                     <div
-                      key={index}
+                      key={`lg-${index}`}
                       className={`relative h-20 w-32 flex-shrink-0 cursor-pointer overflow-hidden rounded border-2 transition-all ${
                         index === mainMediaIndex
                           ? 'border-blue-500'
@@ -258,167 +432,285 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                     </div>
                   ))}
                 </div>
+                </div>
+              )}
+            </div>
+            {/* Itch.io Widget - Only for TinyTuna */}
+            {game.id === '5' && (
+              <ItchWidget
+                embedId="4074544"
+                gameUrl="https://laripsspiral.itch.io/tiny-tuna"
+                gameName="TinyTuna"
+                authorName="LaripsSpiral"
+              />
+            )}
+
+            {/* Features Worked On */}
+            {game.features && game.features.length > 0 && (
+              <div>
+                <div
+                  className="rounded-lg p-4"
+                  style={{ backgroundColor: THEME_PANEL_BG, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
+                >
+                  <h2 className="mb-2 text-2xl font-bold text-white">Features</h2>
+                  <div className="space-y-6">
+                    {game.features.map((feature, index) => {
+                      // Show only first 2 features initially, or all if showAllFeatures is true
+                      const INITIAL_FEATURES_COUNT = 2;
+                      if (!showAllFeatures && index >= INITIAL_FEATURES_COUNT) {
+                        return null;
+                      }
+                      
+                      const featureDetail = game.featureDetails?.[index];
+                      
+                      // Recursive component to render feature detail structure
+                      const renderFeatureDetail = (detail: string | FeatureDetailItem | undefined, depth: number = 0) => {
+                        if (!detail) return null;
+                        
+                        // If it's a string, render as plain text (backward compatibility)
+                        if (typeof detail === 'string') {
+                          return (
+                            <ThemeDetail as="p" className="mb-1 whitespace-pre-line">
+                              {detail}
+                            </ThemeDetail>
+                          );
+                        }
+                        
+                        // If it's a FeatureDetailItem object
+                        const isSubLevel = depth > 0;
+                        const textSize = isSubLevel ? 'text-xs' : 'text-sm';
+                        
+                        return (
+                          <div className={isSubLevel ? 'ml-4 mt-2' : ''}>
+                            <ThemeHeading 
+                              as="p" 
+                              className={`${isSubLevel ? 'text-sm' : 'text-base'} font-semibold text-white mb-2`}
+                            >
+                              {detail.topic}
+                            </ThemeHeading>
+                            {detail.details && detail.details.length > 0 && (
+                              <ul className={`space-y-1 ${textSize}`} style={{ listStyle: 'none', paddingLeft: 0 }}>
+                                {detail.details.map((item, itemIndex) => (
+                                  <li key={itemIndex} className="flex items-start">
+                                    <span className="mr-2" style={{ color: '#dfe6ea' }}>•</span>
+                                    <span style={{ color: '#dfe6ea' }}>{item}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+                            {detail.subTopics && detail.subTopics.length > 0 && (
+                              <div className="mt-3 space-y-3">
+                                {detail.subTopics.map((subTopic, subIndex) => (
+                                  <div key={subIndex}>
+                                    {renderFeatureDetail(subTopic, depth + 1)}
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                            {detail.media && (
+                              <div className="relative aspect-video w-full overflow-hidden bg-black/30 border border-white/5 mt-4 rounded">
+                                {detail.media.type === 'image' || detail.media.type === 'gif' ? (
+                                  <Image
+                                    src={detail.media.url}
+                                    alt={detail.media.title || detail.topic}
+                                    fill
+                                    sizes="(max-width: 1200px) 100vw, 66vw"
+                                    className="object-cover"
+                                  />
+                                ) : detail.media.type === 'video' ? (
+                                  <video
+                                    src={detail.media.url}
+                                    controls
+                                    className="h-full w-full object-cover"
+                                  >
+                                    Your browser does not support the video tag.
+                                  </video>
+                                ) : null}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      };
+                      
+                      return (
+                        <div
+                          key={index}
+                        >
+                          <div className="space-y-2">
+                            {renderFeatureDetail(featureDetail)}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  
+                  {/* View More / View Less Button */}
+                  {game.features.length > 2 && (
+                    <div className="mt-6 flex justify-center">
+                      <button
+                        onClick={() => setShowAllFeatures(!showAllFeatures)}
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg transition-colors"
+                        style={{
+                          backgroundColor: THEME_PRIMARY + '20',
+                          color: THEME_PRIMARY,
+                          border: `1px solid ${THEME_PRIMARY}40`,
+                        }}
+                      >
+                        {showAllFeatures ? (
+                          <>
+                            <ChevronUp className="h-4 w-4" />
+                            <span>View Less</span>
+                          </>
+                        ) : (
+                          <>
+                            <ChevronDown className="h-4 w-4" />
+                            <span>View More ({game.features.length - 2} more)</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </div>
 
-          {/* Right Column - Game Info */}
-          <div className="flex flex-col space-y-6">
-            {/* Game Title */}
-            <h1 className="text-3xl font-bold text-white">{game.title}</h1>
+
+          {/* Right Column - Game Info & Sidebar */}
+          <div className="flex flex-col space-y-4 order-2 lg:order-none">
+            {/* Project Cover Image */}
+            {game.imageUrl && (
+              <div className="hidden lg:block relative w-full aspect-video rounded-lg overflow-hidden">
+                <Image
+                  src={game.imageUrl}
+                  alt={game.title}
+                  fill
+                  sizes="(max-width: 1024px) 0vw, 389px"
+                  className="object-cover"
+                />
+              </div>
+            )}
 
             {/* Description */}
             <div
               className="rounded-lg p-4"
               style={{ backgroundColor: THEME_PANEL_BG, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
             >
+              <h3 className="mb-3 text-lg font-semibold text-white">About Project</h3>
               <p className="text-gray-200 leading-relaxed whitespace-pre-line text-sm">{game.description}</p>
             </div>
 
             {/* Tags */}
-            {game.tags && game.tags.length > 0 && (
+            {(game.genres?.length || game.platforms?.length || game.tools?.length || game.tags?.length) && (
               <div
                 className="rounded-lg p-4"
                 style={{ backgroundColor: THEME_PANEL_BG, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
               >
-                <div className="mb-3 flex items-center gap-2">
-                  <Tag className="h-4 w-4" style={{ color: THEME_PRIMARY }} />
-                  <h3 className="text-sm font-semibold uppercase tracking-wide text-white">Tags</h3>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {game.tags.map((tag, index) => (
-                    <span
-                      key={index}
-                      className="rounded-full px-3 py-1 text-xs font-medium"
-                      style={{
-                        backgroundColor: THEME_PRIMARY + '20',
-                        color: THEME_PRIMARY,
-                        border: `1px solid ${THEME_PRIMARY}40`,
-                      }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Reviews/Badges and Release Info - Horizontal Layout */}
-            <div className="flex flex-wrap items-center gap-4">
-              {game.badges?.star && (
-                <div className="flex items-center gap-2 text-yellow-400">
-                  <Star className="h-4 w-4" fill="currentColor" />
-                  <span className="text-sm font-semibold">Featured Project</span>
-                </div>
-              )}
-              {game.badges?.trophy && (
-                <div className="flex items-center gap-2" style={{ color: THEME_PRIMARY }}>
-                  <Trophy className="h-4 w-4" />
-                  <span className="text-sm font-semibold">Award Winner</span>
-                </div>
-              )}
-              {game.status && (
-                <div className="flex items-center gap-2 text-gray-400 text-sm">
-                  <Calendar className="h-4 w-4" />
-                  <span>{game.status}</span>
-                </div>
-              )}
-              <div className="flex items-center gap-2 text-gray-400 text-sm">
-                <Monitor className="h-4 w-4" />
-                <span>{game.platform}</span>
-              </div>
-              {game.role && (
-                <div className="flex items-center gap-2 text-gray-400 text-sm">
-                  <Users className="h-4 w-4" />
-                  <span>{game.role}</span>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Detailed Content Sections */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-          {/* Left Column - Main Content */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* About Section */}
-            <div>
-              <h2 className="mb-4 text-2xl font-bold text-white">About This Project</h2>
-              <div
-                className="rounded-lg p-4"
-                style={{ backgroundColor: THEME_PANEL_BG, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
-              >
-                <p className="text-gray-200 leading-relaxed whitespace-pre-line text-sm">{game.description}</p>
-              </div>
-            </div>
-
-            {/* Features Worked On */}
-            {game.features && game.features.length > 0 && (
-              <div>
-                <h2 className="mb-4 text-2xl font-bold text-white">Features</h2>
-                <div
-                  className="rounded-lg p-4"
-                  style={{ backgroundColor: THEME_PANEL_BG, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
+                <button
+                  onClick={() => setShowTags(!showTags)}
+                  className="mb-3 flex w-full items-center justify-between lg:pointer-events-none"
+                  type="button"
                 >
-                  <div className="space-y-6">
-                    {game.features.map((feature, index) => {
-                      // Map each feature to a corresponding media item by index
-                      const featureMedia = displayMedia[index];
-                      const featureDetail = game.featureDetails?.[index] || feature;
-                      return (
-                        <div
-                          key={index}
-                        >
-                          <div className="space-y-2">
-                            <ThemeHeading as="p" className="text-base font-semibold text-white">
-                              {feature}
-                            </ThemeHeading>
-                            <ThemeDetail as="p" className="mb-1">
-                              {featureDetail}
-                            </ThemeDetail>
-                          </div>
-
-                          {featureMedia && (
-                            <div className="relative aspect-video w-full overflow-hidden bg-black/30 border-t border-white/5 mt-4">
-                              {featureMedia.type === 'gif' || featureMedia.type === 'image' ? (
-                                <Image
-                                  src={('thumbnail' in featureMedia && featureMedia.thumbnail) ? featureMedia.thumbnail : featureMedia.url}
-                                  alt={featureMedia.title || feature}
-                                  fill
-                                  sizes="(max-width: 1200px) 100vw, 66vw"
-                                  className="object-cover"
-                                />
-                              ) : featureMedia.type === 'video' ? (
-                                <>
-                                  {('thumbnail' in featureMedia && featureMedia.thumbnail) ? (
-                                    <Image
-                                      src={featureMedia.thumbnail}
-                                      alt={featureMedia.title || feature}
-                                      fill
-                                      sizes="(max-width: 1200px) 100vw, 66vw"
-                                      className="object-cover"
-                                    />
-                                  ) : (
-                                    <div className="h-full w-full bg-gray-800 flex items-center justify-center">
-                                      <Play className="h-12 w-12 text-gray-500" />
-                                    </div>
-                                  )}
-                                </>
-                              ) : null}
-                              <div className="absolute inset-0 bg-gradient-to-t from-[#0f1724]/80 via-transparent to-transparent" />
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })}
+                  <div className="flex items-center gap-2">
+                    <Tag className="h-4 w-4" style={{ color: THEME_PRIMARY }} />
+                    <h3 className="text-lg font-semibold uppercase tracking-wide text-white">Tags</h3>
                   </div>
+                  <ChevronDown 
+                    className={`h-5 w-5 text-gray-400 transition-transform lg:hidden ${showTags ? 'rotate-180' : ''}`}
+                  />
+                </button>
+                <div className={`${showTags ? 'block' : 'hidden'} lg:block space-y-4`}>
+                  {/* Genre Tags */}
+                  {game.genres && game.genres.length > 0 && (
+                    <div>
+                      <h4 className="mb-2 text-xs font-medium uppercase tracking-wide text-gray-400">Genre</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {game.genres.map((tag, index) => (
+                          <span
+                            key={index}
+                            className="rounded-full px-3 py-1 text-xs font-medium"
+                            style={{
+                              backgroundColor: THEME_PRIMARY + '20',
+                              color: THEME_PRIMARY,
+                              border: `1px solid ${THEME_PRIMARY}40`,
+                            }}
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Platform Tags */}
+                  {game.platforms && game.platforms.length > 0 && (
+                    <div>
+                      <h4 className="mb-2 text-xs font-medium uppercase tracking-wide text-gray-400">Platforms</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {game.platforms.map((tag, index) => (
+                          <span
+                            key={index}
+                            className="rounded-full px-3 py-1 text-xs font-medium"
+                            style={{
+                              backgroundColor: THEME_PRIMARY + '20',
+                              color: THEME_PRIMARY,
+                              border: `1px solid ${THEME_PRIMARY}40`,
+                            }}
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Tools Tags */}
+                  {game.tools && game.tools.length > 0 && (
+                    <div>
+                      <h4 className="mb-2 text-xs font-medium uppercase tracking-wide text-gray-400">Tools</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {game.tools.map((tag, index) => (
+                          <span
+                            key={index}
+                            className="rounded-full px-3 py-1 text-xs font-medium"
+                            style={{
+                              backgroundColor: THEME_PRIMARY + '20',
+                              color: THEME_PRIMARY,
+                              border: `1px solid ${THEME_PRIMARY}40`,
+                            }}
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Other Tags */}
+                  {game.tags && game.tags.length > 0 && (
+                    <div>
+                      <h4 className="mb-2 text-xs font-medium uppercase tracking-wide text-gray-400">Other</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {game.tags.map((tag, index) => (
+                          <span
+                            key={index}
+                            className="rounded-full px-3 py-1 text-xs font-medium"
+                            style={{
+                              backgroundColor: THEME_PRIMARY + '20',
+                              color: THEME_PRIMARY,
+                              border: `1px solid ${THEME_PRIMARY}40`,
+                            }}
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
-          </div>
 
-          {/* Right Sidebar */}
-          <div className="space-y-6">
             {/* Role & Position */}
             {(game.role || game.roleDetails) && (
               <div
@@ -428,13 +720,25 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                 <h3 className="mb-4 text-lg font-semibold text-white">Role & Position</h3>
                 <div className="space-y-3">
                   {game.role && (
-                    <div className="flex items-center gap-2" style={{ color: THEME_PRIMARY }}>
+                    <button
+                      onClick={() => setShowRoleDetails(!showRoleDetails)}
+                      className="flex w-full items-center gap-2 text-left lg:pointer-events-none"
+                      type="button"
+                      style={{ color: THEME_PRIMARY }}
+                    >
                       <Users className="h-4 w-4" />
-                      <span className="text-gray-300">{game.role}</span>
-                    </div>
+                      <span className="text-gray-300 text-sm">{game.role}</span>
+                      {game.roleDetails && (
+                        <ChevronDown 
+                          className={`ml-auto h-4 w-4 text-gray-400 transition-transform lg:hidden ${showRoleDetails ? 'rotate-180' : ''}`}
+                        />
+                      )}
+                    </button>
                   )}
                   {game.roleDetails && (
-                    <p className="text-gray-300 text-sm leading-relaxed whitespace-pre-line">{game.roleDetails}</p>
+                    <div className={`${showRoleDetails ? 'block' : 'max-lg:hidden'} lg:block`}>
+                      <p className="text-gray-300 text-sm leading-relaxed whitespace-pre-line">{game.roleDetails}</p>
+                    </div>
                   )}
                 </div>
               </div>
@@ -448,12 +752,12 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
               >
                 <h3 className="mb-4 text-lg font-semibold text-white">
                   {game.badges?.school || game.client === 'Academic Project'
-                    ? 'Working while studying at'
+                    ? 'Academic Project at'
                     : 'Working for'}
                 </h3>
                 <div className="flex items-center gap-2 text-orange-400">
                   <Building2 className="h-4 w-4" />
-                  <span className="text-gray-300">
+                  <span className="text-gray-300 text-sm">
                     {game.badges?.school || game.client === 'Academic Project'
                       ? 'Bangkok University'
                       : game.client}
@@ -468,18 +772,28 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                 className="rounded-lg p-4"
                 style={{ backgroundColor: THEME_PANEL_BG, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
               >
-                <div className="mb-4 flex items-center justify-between">
+                <button
+                  onClick={() => setShowTeam(!showTeam)}
+                  className="mb-4 flex w-full items-center justify-between lg:pointer-events-none"
+                  type="button"
+                >
                   <h3 className="text-lg font-semibold text-white">Team</h3>
-                  {game.teamMembers && game.teamMembers.length > 0 ? (
-                    <span className="text-sm text-gray-400" style={{ color: THEME_PRIMARY }}>
-                      {game.teamMembers.length} {game.teamMembers.length === 1 ? 'Member' : 'Members'}
-                    </span>
-                  ) : game.badges?.teamSize ? (
-                    <span className="text-sm text-gray-400" style={{ color: THEME_PRIMARY }}>
-                      {game.badges.teamSize} {game.badges.teamSize === 1 ? 'Member' : 'Members'}
-                    </span>
-                  ) : null}
-                </div>
+                  <div className="flex items-center gap-2">
+                    {game.teamMembers && game.teamMembers.length > 0 ? (
+                      <span className="text-sm text-gray-400" style={{ color: THEME_PRIMARY }}>
+                        {game.teamMembers.length} {game.teamMembers.length === 1 ? 'Member' : 'Members'}
+                      </span>
+                    ) : game.badges?.teamSize ? (
+                      <span className="text-sm text-gray-400" style={{ color: THEME_PRIMARY }}>
+                        {game.badges.teamSize} {game.badges.teamSize === 1 ? 'Member' : 'Members'}
+                      </span>
+                    ) : null}
+                    <ChevronDown 
+                      className={`h-5 w-5 text-gray-400 transition-transform lg:hidden ${showTeam ? 'rotate-180' : ''}`}
+                    />
+                  </div>
+                </button>
+                <div className={`${showTeam ? 'block' : 'hidden'} lg:block`}>
                 {game.teamMembers && game.teamMembers.length > 0 ? (
                   <div className="space-y-3">
                     {(() => {
@@ -537,6 +851,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                     })()}
                   </div>
                 ) : null}
+                </div>
               </div>
             ) : null}
 
@@ -549,7 +864,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                 <h3 className="mb-4 text-lg font-semibold text-white">Collaborate</h3>
                 <div className="flex items-center gap-2 text-orange-400">
                   <Handshake className="h-4 w-4" />
-                  <span className="text-gray-300">{game.badges.partner}</span>
+                  <span className="text-gray-300 text-sm">{game.badges.partner}</span>
                 </div>
               </div>
             )}

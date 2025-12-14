@@ -41,8 +41,9 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
         (game) =>
           game.title.toLowerCase().includes(query) ||
           game.description.toLowerCase().includes(query) ||
-          game.genre.toLowerCase().includes(query) ||
-          game.tags.some((tag) => tag.toLowerCase().includes(query)),
+          game.genres?.some((tag) => tag.toLowerCase().includes(query)) ||
+          game.platforms?.some((tag) => tag.toLowerCase().includes(query)) ||
+          game.tools?.some((tag) => tag.toLowerCase().includes(query)),
       );
     }
 

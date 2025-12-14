@@ -14,21 +14,34 @@ export interface GameMedia {
   title?: string;
 }
 
+export interface FeatureDetailItem {
+  topic: string;
+  details: string[];
+  media?: {
+    type: 'image' | 'gif' | 'video';
+    url: string;
+    title?: string;
+    thumbnail?: string;
+  };
+  subTopics?: FeatureDetailItem[];
+}
+
 export interface Game {
   id: string;
   title: string;
   description: string;
-  genre: string;
-  platform: string;
   releaseYear: string;
   imageUrl: string;
-  tags: string[];
+  genres?: string[];
+  platforms?: string[];
+  tools?: string[];
+  tags?: string[];
   role?: string;
   roleDetails?: string;
   status?: string;
   starred?: boolean;
   features?: string[];
-  featureDetails?: string[];
+  featureDetails?: (string | FeatureDetailItem)[];
   awards?: string[];
   client?: string;
   media?: GameMedia[];
