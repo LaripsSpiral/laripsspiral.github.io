@@ -772,7 +772,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
               <h3 className="mb-3 text-base sm:text-lg md:text-xl font-semibold text-white">About Project</h3>
               
               {/* Status, Dates, and Duration */}
-              <div className="mb-4 flex flex-wrap items-center gap-3 sm:gap-x-3 lg:gap-x-100">
+              <div className="mb-4 flex flex-wrap items-center gap-3 sm:gap-x-3 lg:gap-x-4">
                 {game.status && (
                   <div className="flex items-center gap-2 text-gray-200 text-xs sm:text-sm">
                     <CheckCircle className="h-4 w-4" />
@@ -797,7 +797,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                 )}
               </div>
               
-              <p className="text-gray-200 leading-relaxed whitespace-pre-line text-xs sm:text-sm md:text-sm">{game.description}</p>
+              <p className="text-gray-200 leading-relaxed whitespace-pre-line text-xs sm:text-sm md:text-base">{game.description}</p>
             </div>
 
             {/* Tags */}
@@ -937,7 +937,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                   )}
                   {game.roleDetails && (
                     <div className={`${showRoleDetails ? 'block' : 'max-lg:hidden'} lg:block`}>
-                      <p className="text-gray-300 text-xs sm:text-sm md:text-sm leading-relaxed whitespace-pre-line">{game.roleDetails}</p>
+                      <p className="text-gray-300 text-xs sm:text-sm md:text-base leading-relaxed whitespace-pre-line">{game.roleDetails}</p>
                     </div>
                   )}
                 </div>
