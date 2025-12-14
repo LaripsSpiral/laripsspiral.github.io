@@ -149,6 +149,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                   src={displayMedia[mainMediaIndex].url}
                   controls
                   className="h-full w-full object-cover"
+                  preload="metadata"
                   onPlay={() => setIsVideoPlaying(true)}
                   onPause={() => setIsVideoPlaying(false)}
                   onEnded={() => setIsVideoPlaying(false)}
@@ -185,6 +186,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                   fill
                   sizes="(max-width: 1200px) 100vw, 66vw"
                   className="object-cover"
+                  priority
                 />
               </div>
             )}
@@ -303,6 +305,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                     src={displayMedia[mainMediaIndex].url}
                     controls
                     className="h-full w-full object-cover"
+                    preload="metadata"
                     onPlay={() => setIsVideoPlaying(true)}
                     onPause={() => setIsVideoPlaying(false)}
                     onEnded={() => setIsVideoPlaying(false)}
@@ -522,6 +525,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                                     src={detail.media.url}
                                     controls
                                     className="h-full w-full object-cover"
+                                    preload="none"
                                   >
                                     Your browser does not support the video tag.
                                   </video>
@@ -927,6 +931,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                   src={displayMedia[selectedMediaIndex].url}
                   controls
                   autoPlay
+                  preload="auto"
                   className="w-full h-full object-contain pointer-events-auto"
                   onClick={(e) => e.stopPropagation()}
                 >
