@@ -219,7 +219,7 @@ export const games: Game[] = [
     imageUrl: '/projects/tinytuna/tinytunacover.png',
     wallpaper: '/projects/tinytuna/tinytunawallpaper.png',
     genres: ['Casual', 'Survival', '2D Side Scroller', 'Single player'],
-    tags: ['AI Character'],
+    tags: ['AI System', 'IJob & Burst'],
     platforms: ['PC', 'Web', 'itch.io'],
     tools: ['Unity', 'AI (Suno AI, Gemini Art)'],
     role: 'Programmer',
