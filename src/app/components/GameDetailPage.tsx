@@ -797,7 +797,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                 )}
               </div>
               
-              <p className="text-gray-200 leading-relaxed whitespace-pre-line text-xs sm:text-sm md:text-base">{game.description}</p>
+              <p className="text-gray-200 leading-relaxed whitespace-pre-line text-xs sm:text-sm md:text-sm">{game.description}</p>
             </div>
 
             {/* Tags */}
@@ -937,7 +937,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                   )}
                   {game.roleDetails && (
                     <div className={`${showRoleDetails ? 'block' : 'max-lg:hidden'} lg:block`}>
-                      <p className="text-gray-300 text-xs sm:text-sm md:text-base leading-relaxed whitespace-pre-line">{game.roleDetails}</p>
+                      <p className="text-gray-300 text-xs sm:text-sm md:text-sm leading-relaxed whitespace-pre-line">{game.roleDetails}</p>
                     </div>
                   )}
                 </div>
