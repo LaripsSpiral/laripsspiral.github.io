@@ -484,7 +484,7 @@ export function AboutTab() {
                             </ul>
                           )}
                           {project.subProjects && (
-                            <div className="mt-1 space-y-1.5 sm:space-y-2">
+                            <div className="mt-1 space-y-1.5 sm:space-y-2 pl-3 sm:pl-4 border-l-2" style={{ borderColor: THEME_PRIMARY_BORDER }}>
                               {project.subProjects.map((subProject, subIndex) => (
                                 <div key={subIndex}>
                                   <ThemeHeading as="p" className="text-sm mb-1">
