@@ -1,10 +1,27 @@
 # PowerShell script to compress MP4 videos to under 100MB
 # Requires ffmpeg to be installed
 
-$videos = @(
-    "public/projects/tinytuna/features/tinytuna_feature_ai.mp4",
-    "public/projects/tinytuna/gamepreviews/FishGameplay.mp4"
-)
+# Find all MP4 files in public/projects directory recursively
+$projectPath = "public/projects"
+if (-not (Test-Path $projectPath)) {
+    Write-Host "Directory not found: $projectPath" -ForegroundColor Red
+    exit 1
+}
+
+# Get all MP4 files and convert to relative paths (using forward slashes)
+$currentDir = (Get-Location).Path
+$videos = Get-ChildItem -Path $projectPath -Filter "*.mp4" -Recurse -File | ForEach-Object {
+    $relativePath = $_.FullName.Replace($currentDir, "").TrimStart("\", "/")
+    $relativePath -replace "\\", "/"
+}
+
+if ($videos.Count -eq 0) {
+    Write-Host "No MP4 files found in $projectPath" -ForegroundColor Yellow
+    exit 0
+}
+
+Write-Host "Found $($videos.Count) MP4 file(s) in $projectPath" -ForegroundColor Cyan
+Write-Host ""
 
 foreach ($video in $videos) {
     if (Test-Path $video) {

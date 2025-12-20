@@ -2,6 +2,130 @@ import { Game, FeatureDetailItem } from '@/app/components/GameCard';
 
 export const games: Game[] = [
   {
+    id: '6',
+    title: 'Augus Lost Without You',
+    description:
+      'The story of a cat named Augus, a magic-lover searching for his owner. After a tragic accident with a truck, he awakens in a fantasy world of his own memories, still determined to find his way back to his owner.',
+    imageUrl: '/projects/AugusLostWithoutYou/AugusLostWithoutYou_cover.jpg',
+    wallpaper: '/projects/AugusLostWithoutYou/AugusLostWithoutYou_cover.jpg',
+    genres: ['Action', 'Fantasy', 'Single player'],
+    tags: ['AI System'],
+    platforms: ['PC'],
+    tools: ['Unity'],
+    role: 'Programmer',
+    roleDetails:
+      'Implemented core AI systems inspired by Monster Hunter, including character behavior, hitbox/hurtbox combat detection, alliance systems, stun & enrage mechanics, dynamic action selection, state machines, and boss phase management.',
+    status: 'Prototype',
+    startDate: '',
+    lastDate: '',
+    features: [
+      'AI Character Behavior',
+      'Hitbox / Hurtbox System',
+      'Alliance System',
+      'Stun & Enrage System',
+      'Dynamic Action System',
+      'Boss Phases',
+    ],
+    featureDetails: [
+      {
+        topic: 'AI Character Behavior',
+        details: [
+          'Implemented character AI inspired by Monster Hunter, featuring decision-making based on states, specific conditions, and combat context.',
+        ],
+      },
+      {
+        topic: 'Hitbox / Hurtbox System',
+        details: [
+          'Designed a precision hitbox and hurtbox system using Unity colliders.',
+          'Assigned unique owners to each collider to accurately track damage to specific body parts.',
+          'Configured actions to generate dynamic hitboxes per animation frame for precise combat detection.',
+        ],
+        media: {
+          type: 'image',
+          url: '/projects/AugusLostWithoutYou/features/Augus_feature_hitboxhurtbox.jpg',
+          title: 'Hitbox / Hurtbox System',
+        },
+      },
+      {
+        topic: 'Alliance System',
+        details: [
+          'Implemented an alliance system to classify characters as allies or enemies, enabling appropriate AI reactions during combat.',
+        ],
+        media: {
+          type: 'image',
+          url: '/projects/AugusLostWithoutYou/features/Augus_feature_alliance.jpg',
+          title: 'Alliance System',
+        },
+      },
+      {
+        topic: 'Stun & Enrage System',
+        details: [
+          'Developed a stun mechanic where characters are incapacitated based on specific gameplay conditions.',
+          'Integrated a Stun Gauge system; once the gauge is depleted, the character enters an Enrage mode.',
+          'While enraged, the character becomes immune to stun. All parameters (gauge size, stun duration, and enrage duration) are fully configurable.',
+        ],
+        media: {
+          type: 'video',
+          url: '/projects/AugusLostWithoutYou/features/Augus_feature_stun.mp4',
+          title: 'Stun & Enrage System',
+        },
+      },
+      {
+        topic: 'Dynamic Action System',
+        details: [
+          'Developed a dynamic action system that allows actions to be assigned specific priorities and conditions.',
+          'The AI evaluates these rules at runtime to select and execute the most appropriate action.',
+          'Architected a state machine to manage character transitions.',
+          'Each action functions as its own state, containing logic to determine the subsequent state or follow-up action.',
+        ],
+        media: {
+          type: 'image',
+          url: '/projects/AugusLostWithoutYou/features/Augus_feature_aiactions.jpg',
+          title: 'Dynamic Action System',
+        },
+      },
+      {
+        topic: 'Boss Phases',
+        details: [
+          'Implemented phase-based boss behavior using the Dynamic Action system, allowing for unique action sets and behavior shifts across different health thresholds or phases.',
+        ],
+        media: {
+          type: 'video',
+          url: '/projects/AugusLostWithoutYou/features/Augus_feature_boss.mp4',
+          title: 'Boss Phases',
+        },
+      },
+    ] as FeatureDetailItem[],
+    awards: [],
+    client: 'Coursework',
+    teamMembers: [
+      { name: 'Jirawat Damung', role: 'Programmer' },
+      { name: 'Sirasit Tumvijit', role: 'Programmer' },
+      { name: 'Naran Lamoonpandh', role: 'Programmer' },
+      { name: 'Thanapong Pensuwarn', role: 'Art Director' },
+      { name: 'Gittanon Vathanachai', role: 'Technical Artist' },
+      { name: 'Ramida Tantrapirom', role: 'Sound Design' },
+    ],
+    media: [
+      {
+      type: 'video',
+      url: '/projects/AugusLostWithoutYou/gamepreviews/Augus_trailer.mp4',
+      thumbnail: '/projects/AugusLostWithoutYou/gamepreviews/Augus_triler_thumpnail.jpg',
+      title: 'Trailer',
+      },
+      {
+      type: 'video',
+      url: '/projects/AugusLostWithoutYou/gamepreviews/Augus_gameplay.mp4',
+      thumbnail: '/projects/AugusLostWithoutYou/AugusLostWithoutYou_cover.jpg',
+      title: 'Gameplay',
+      },
+    ],
+    badges: {
+      school: true,
+      teamSize: 6,
+    },
+  },
+  {
     id: '5',
     title: 'TINY TUNA',
     description:
@@ -114,7 +238,7 @@ export const games: Game[] = [
         type: 'video',
         url: '/projects/tinytuna/gamepreviews/FishGameplay.mp4',
         thumbnail: '/projects/tinytuna/gamepreviews/tinytuna_1.png',
-        title: 'Fish Gameplay',
+        title: 'Gameplay',
       },
       {
         type: 'image',
