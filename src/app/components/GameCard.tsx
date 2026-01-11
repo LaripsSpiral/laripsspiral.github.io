@@ -34,7 +34,7 @@ export interface Game {
   genres?: string[];
   platforms?: string[];
   tools?: string[];
-  tags?: string[];
+  othertags?: string[];
   role?: string;
   roleDetails?: string;
   status?: string;
@@ -57,6 +57,7 @@ export interface Game {
     teamSize?: number;
     partner?: string;
   };
+  itchLink?: string;
 }
 
 interface GameCardProps {
