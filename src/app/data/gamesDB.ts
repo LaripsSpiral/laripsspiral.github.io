@@ -2,22 +2,22 @@ import { Game, FeatureDetailItem } from '@/app/components/GameCard';
 
 export const games: Game[] = [
   {
-    id: '6',
+    id: '4',
     title: 'Augus Lost Without You',
     description:
       'The story of a cat named Augus, a magic-lover searching for his owner. After a tragic accident with a truck, he awakens in a fantasy world of his own memories, still determined to find his way back to his owner.',
     imageUrl: '/projects/AugusLostWithoutYou/AugusLostWithoutYou_cover.jpg',
     wallpaper: '/projects/AugusLostWithoutYou/AugusLostWithoutYou_cover.jpg',
     genres: ['Action', 'Fantasy', 'Single player'],
-    tags: ['AI System'],
+    othertags: ['AI System'],
     platforms: ['PC'],
     tools: ['Unity'],
     role: 'Programmer',
     roleDetails:
       'Implemented core AI systems inspired by Monster Hunter, including character behavior, hitbox/hurtbox combat detection, alliance systems, stun & enrage mechanics, dynamic action selection, state machines, and boss phase management.',
     status: 'Prototype',
-    startDate: '',
-    lastDate: '',
+    startDate: '17 Feb 2025',
+    lastDate: '20 May 2025',
     features: [
       'AI Character Behavior',
       'Hitbox / Hurtbox System',
@@ -108,16 +108,16 @@ export const games: Game[] = [
     ],
     media: [
       {
-      type: 'video',
-      url: '/projects/AugusLostWithoutYou/gamepreviews/Augus_trailer.mp4',
-      thumbnail: '/projects/AugusLostWithoutYou/gamepreviews/Augus_triler_thumpnail.jpg',
-      title: 'Trailer',
+        type: 'video',
+        url: '/projects/AugusLostWithoutYou/gamepreviews/Augus_trailer.mp4',
+        thumbnail: '/projects/AugusLostWithoutYou/gamepreviews/Augus_triler_thumpnail.jpg',
+        title: 'Trailer',
       },
       {
-      type: 'video',
-      url: '/projects/AugusLostWithoutYou/gamepreviews/Augus_gameplay.mp4',
-      thumbnail: '/projects/AugusLostWithoutYou/AugusLostWithoutYou_cover.jpg',
-      title: 'Gameplay',
+        type: 'video',
+        url: '/projects/AugusLostWithoutYou/gamepreviews/Augus_gameplay.mp4',
+        thumbnail: '/projects/AugusLostWithoutYou/AugusLostWithoutYou_cover.jpg',
+        title: 'Gameplay',
       },
     ],
     badges: {
@@ -133,7 +133,7 @@ export const games: Game[] = [
     imageUrl: '/projects/tinytuna/tinytunacover.png',
     wallpaper: '/projects/tinytuna/tinytunawallpaper.png',
     genres: ['Casual', 'Survival', '2D Side Scroller', 'Single player'],
-    tags: ['AI System', 'IJob & Burst'],
+    othertags: ['AI System', 'IJob & Burst'],
     platforms: ['PC', 'Web', 'itch.io'],
     tools: ['Unity', 'AI (Suno AI, Gemini Art)'],
     role: 'Programmer',
@@ -261,6 +261,89 @@ export const games: Game[] = [
       teamSize: 8,
       star: true,
     },
+    itchLink: 'https://laripsspiral.itch.io/tiny-tuna',
+  },
+  {
+    id: '6',
+    title: 'MiceTrix',
+    description: 'You play as a hacker with the mission to help The Lab Rat, known as "Mice," escape from of the matrix-like world.',
+    imageUrl: '/projects/MiceTrix/MiceTrix_Cover.png',
+    wallpaper: '',
+    genres: ['Point and click', '2D Side Scroller', 'Single player'],
+    othertags: [],
+    platforms: ['PC', 'Web', 'itch.io'],
+    tools: ['Unity'],
+    role: 'Programmer',
+    roleDetails:
+      'Implemented core gameplay systems, hacking mechanics and character interaction with path navigation.',
+    status: 'Prototype',
+    startDate: '5 Nov 2025',
+    lastDate: '3 Dec 2025',
+    features: [
+      'Character Interaction',
+      'Hacking Mechanics',
+      'Path Navigation',
+    ],
+    featureDetails: [
+      {
+        topic: 'Character Interaction',
+        details: [
+          'Synchronized character animations triggered during object interactions, seamlessly handling entry, exit, and override actions.',
+        ],
+        media: {
+          type: 'video',
+          url: '/projects/MiceTrix/features/MiceTrix_feature_CharacterInteraction.mp4',
+          title: 'Character Interaction',
+        },
+      },
+      {
+        topic: 'Hacking Mechanics',
+        details: [
+          'Implemented raycasting interactions, enabling actions such as activation and path switching.',
+        ],
+        media: {
+          type: 'video',
+          url: '/projects/MiceTrix/features/MiceTrix_feature_Hacking.mp4',
+          title: 'Hacking Mechanics',
+        },
+      },
+      {
+        topic: 'Path Navigation',
+        details: [
+          'Navigate path with splines for movement, combined with colliders to manage character interactions, including entry, exit, and path overrides.',
+        ],
+        media: {
+          type: 'video',
+          url: '/projects/MiceTrix/features/MiceTrix_feature_PathNav.mp4',
+          title: 'Path Navigation',
+        },
+      },
+    ] as FeatureDetailItem[],
+    awards: [],
+    client: 'Coursework',
+    teamMembers: [
+      { name: 'Jirawat Damung', role: 'Programmer' },
+      { name: 'Sirasit Tumvijit', role: 'Programmer' },
+      { name: 'Nathotsathon Saengarun', role: 'Game Designer' },
+      { name: 'Yuranan Insuk', role: 'Game Designer' },
+      { name: 'Supanat Siemtaku', role: 'Art Environment' },
+      { name: 'Chinnakrit Phuengthong', role: 'Art Environment' },
+      { name: 'Thamolwan Jomklang', role: 'Art Environment' },
+      { name: 'Muanfan Rurksermsook', role: 'Art Character' },
+    ],
+    media: [
+      {
+        type: 'video',
+        url: '/projects/MiceTrix/gamepreviews/MiceTrix_Gameplay.mp4',
+        thumbnail: '/projects/MiceTrix/MiceTrix_Cover.png',
+        title: 'Gameplay',
+      },
+    ],
+    badges: {
+      school: true,
+      teamSize: 8,
+    },
+    itchLink: 'https://laripsspiral.itch.io/micetrix',
   },
 ];
 
