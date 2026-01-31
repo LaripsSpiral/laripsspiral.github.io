@@ -1,14 +1,13 @@
 import { Game, FeatureDetailItem } from '@/app/components/GameCard';
 
 export const games: Game[] = [
-  {
-    id: '4',
-    title: 'Augus Lost Without You',
+  {title: 'Augus Lost Without You',
     description:
       'The story of a cat named Augus, a magic-lover searching for his owner. After a tragic accident with a truck, he awakens in a fantasy world of his own memories, still determined to find his way back to his owner.',
     imageUrl: '/projects/AugusLostWithoutYou/AugusLostWithoutYou_cover.jpg',
     wallpaper: '/projects/AugusLostWithoutYou/AugusLostWithoutYou_cover.jpg',
-    genres: ['Action', 'Fantasy', 'Single player'],
+    genres: ['Action', 'Fantasy'],
+    playModes: ['Single player'],
     othertags: ['AI System'],
     platforms: ['PC'],
     tools: ['Unity'],
@@ -18,14 +17,6 @@ export const games: Game[] = [
     status: 'Prototype',
     startDate: '17 Feb 2025',
     lastDate: '20 May 2025',
-    features: [
-      'AI Character Behavior',
-      'Hitbox / Hurtbox System',
-      'Alliance System',
-      'Stun & Enrage System',
-      'Dynamic Action System',
-      'Boss Phases',
-    ],
     featureDetails: [
       {
         topic: 'AI Character Behavior',
@@ -125,9 +116,7 @@ export const games: Game[] = [
       teamSize: 6,
     },
   },
-  {
-    id: '5',
-    title: 'TINY TUNA',
+  {title: 'TINY TUNA',
     description:
       'You are born as a Bluefin Tuna that must live in a cruel ocean. You must eat smaller fish in order to grow, and you also have to avoid larger animals and dangerous predators. Your objective is survival for the sake of breeding.',
     imageUrl: '/projects/tinytuna/tinytunacover.png',
@@ -142,12 +131,6 @@ export const games: Game[] = [
     status: 'Released',
     startDate: '11 Nov 2024',
     lastDate: '28 Nov 2025',
-    features: [
-      'Spawn Logic',
-      'World Stage',
-      'Time base event',
-      'AI Logics with IJob & Burst',
-    ],
     featureDetails: [
       {
         topic: 'Spawn Logic',
@@ -187,8 +170,8 @@ export const games: Game[] = [
         topic: 'AI Logics with IJob & Burst',
         details: [],
         media: {
-          type: 'video',
-          url: '/projects/tinytuna/features/tinytuna_feature_ai.mp4',
+          type: 'youtube',
+          url: 'https://youtu.be/ibwgDwhygJM',
           title: 'AI Logic System',
         },
         subTopics: [
@@ -235,8 +218,8 @@ export const games: Game[] = [
     ],
     media: [
       {
-        type: 'video',
-        url: '/projects/tinytuna/gamepreviews/FishGameplay.mp4',
+        type: 'youtube',
+        url: 'https://youtu.be/RUj7Mr9sbJg',
         thumbnail: '/projects/tinytuna/gamepreviews/tinytuna_1.png',
         title: 'Gameplay',
       },
@@ -263,9 +246,7 @@ export const games: Game[] = [
     },
     itchLink: 'https://laripsspiral.itch.io/tiny-tuna',
   },
-  {
-    id: '6',
-    title: 'MiceTrix',
+  {title: 'MiceTrix',
     description: 'You play as a hacker with the mission to help The Lab Rat, known as "Mice," escape from of the matrix-like world.',
     imageUrl: '/projects/MiceTrix/MiceTrix_Cover.png',
     wallpaper: '',
@@ -279,11 +260,6 @@ export const games: Game[] = [
     status: 'Prototype',
     startDate: '5 Nov 2025',
     lastDate: '3 Dec 2025',
-    features: [
-      'Character Interaction',
-      'Hacking Mechanics',
-      'Path Navigation',
-    ],
     featureDetails: [
       {
         topic: 'Character Interaction',
@@ -291,8 +267,8 @@ export const games: Game[] = [
           'Synchronized character animations triggered during object interactions, seamlessly handling entry, exit, and override actions.',
         ],
         media: {
-          type: 'video',
-          url: '/projects/MiceTrix/features/MiceTrix_feature_CharacterInteraction.mp4',
+          type: 'youtube',
+          url: 'https://youtu.be/CNySYmq9b1c',
           title: 'Character Interaction',
         },
       },
@@ -302,8 +278,8 @@ export const games: Game[] = [
           'Implemented raycasting interactions, enabling actions such as activation and path switching.',
         ],
         media: {
-          type: 'video',
-          url: '/projects/MiceTrix/features/MiceTrix_feature_Hacking.mp4',
+          type: 'youtube',
+          url: 'https://youtu.be/9ztyeKtOCRA',
           title: 'Hacking Mechanics',
         },
       },
@@ -313,8 +289,8 @@ export const games: Game[] = [
           'Navigate path with splines for movement, combined with colliders to manage character interactions, including entry, exit, and path overrides.',
         ],
         media: {
-          type: 'video',
-          url: '/projects/MiceTrix/features/MiceTrix_feature_PathNav.mp4',
+          type: 'youtube',
+          url: 'https://youtu.be/7n7q5tB7FAU',
           title: 'Path Navigation',
         },
       },
@@ -333,8 +309,8 @@ export const games: Game[] = [
     ],
     media: [
       {
-        type: 'video',
-        url: '/projects/MiceTrix/gamepreviews/MiceTrix_Gameplay.mp4',
+        type: 'youtube',
+        url: 'https://youtu.be/gEybr23IraQ',
         thumbnail: '/projects/MiceTrix/MiceTrix_Cover.png',
         title: 'Gameplay',
       },
@@ -344,6 +320,108 @@ export const games: Game[] = [
       teamSize: 8,
     },
     itchLink: 'https://laripsspiral.itch.io/micetrix',
+  },
+  {title: 'School of Survival',
+    description: 'Practice survival strategies for helping students to learning in an immerses realistic school setting where an emergency situation.',
+    imageUrl: '/projects/SchoolOfSurvival/Yoorod_Cover.png',
+    wallpaper: '/projects/SchoolOfSurvival/gamepreviews/Yoorod_Preview2.png',
+    genres: ['Simulation'],
+    playModes: ['Multiplayer'],
+    othertags: [],
+    platforms: ['Roblox'],
+    tools: ['Roblox Studio'],
+    role: 'Programmer',
+    roleDetails:
+      'Implemented core gameplay systems, hacking mechanics and character interaction with path navigation.',
+    status: 'Released',
+    startDate: '1 Oct 2023',
+    lastDate: '1 Apr 2025',
+    featureDetails: [
+      {
+        topic: 'Hide Objectives',
+        details: [
+          'Implemented checklist objectives in hide situation for safety in emergency situation.',
+        ],
+        media: {
+          type: 'youtube',
+          url: 'https://youtu.be/Vgk775w87bM?si=fMgoXxcjcFsfp_Zm',
+          title: 'Hide Objectives',
+        },
+      },
+      {
+        topic: 'Hiding Mechanic',
+        details: [
+          'Implemented a safe area for hiding in hide situation.',
+        ],
+        media: {
+          type: 'youtube',
+          url: 'https://youtu.be/r_1jCm2WmOY?si=4MNxwGmTwes0VtHB',
+          title: 'Hiding Mechanic',
+        },
+      },
+      {
+        topic: 'Fight Quick Time Event',
+        details: [
+          'Implemented a quick time event for fight in situation of encounter using IK animation in realtime cutscene.'
+        ],
+        media: {
+          type: 'youtube',
+          url: 'https://youtu.be/54Q6QtvfWWQ?si=Cz5WYhQi0C9LT88R',
+          title: 'Fight Quick Time Event',
+        },
+      },
+    ] as FeatureDetailItem[],
+    awards: [
+      {
+        title: 'ADPEOPLE 2024 (8 Awards)',
+        link: 'https://bu.ac.th/en/featured-stories/1645',
+        cover: '/projects/SchoolOfSurvival/awards/ADPEOPLE_2024.png',
+      },
+      {
+        title: 'ADFEST 2025 (1 Award)',
+        link: 'https://www.facebook.com/permalink.php/?story_fbid=122163891134304926&id=61559147805158',
+        cover: '/projects/SchoolOfSurvival/awards/ADFEST_2025.png',
+      },
+    ] as (string | { title: string; link?: string; cover?: string })[],
+    client: 'CoSI | Center of Specialty Innovation (Bangkok University)',
+    teamMembers: [
+      { name: 'Jirawat Damung', role: 'Programmer' },
+      { name: 'Sirasit Tumvijit', role: 'Programmer' },
+      { name: 'Thanapong Pensuwarn', role: 'Team Leader, Art' },
+    ],
+    media: [
+      {
+        type: 'youtube',
+        url: 'https://youtu.be/YG4v2UuGFVs?si=v63k3Tjs2tcXq-WH',
+        title: 'School Of Survival Trailer',
+      },
+      {
+        type: 'youtube',
+        url: 'https://www.youtube.com/watch?v=MkZd_YYGaBA',
+        title: 'School Of Survival Gameplay',
+      },
+      {
+        type: 'image',
+        url: '/projects/SchoolOfSurvival/gamepreviews/Yoorod_Preview1.png',
+        title: 'School Of Survival Screenshot 1',
+      },
+      {
+        type: 'image',
+        url: '/projects/SchoolOfSurvival/gamepreviews/Yoorod_Preview2.png',
+        title: 'School Of Survival Screenshot 2',
+      },
+    ],
+    badges: {
+      star: true,
+      school: true,
+      teamSize: 3,
+      client: 'CoSI | Center of Specialty Innovation (Bangkok University)',
+      clientLink: 'https://cosi.bu.ac.th/',
+      collaboration: 'Dentsu Creative Thailand',
+      collaborationLink: 'https://www.facebook.com/dentsuCreativeTH',
+    },
+    itchLink: 'https://www.roblox.com/games/16880223610/School-of-Survival',
+    websiteLink: 'https://yoorodwittaya.com/',
   },
 ];
 

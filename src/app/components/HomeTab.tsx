@@ -250,7 +250,7 @@ export function HomeTab({ games }: HomeTabProps) {
                   
                   return (
                     <div
-                      key={game.id}
+                      key={game.title}
                       ref={(el) => {
                         itemRefs.current[index] = el;
                       }}

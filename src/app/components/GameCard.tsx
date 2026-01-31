@@ -2,13 +2,13 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Calendar, Star, Trophy, GraduationCap, Users, Handshake, Building2, CheckCircle } from 'lucide-react';
+import { Calendar, Star, Trophy, GraduationCap, Users, Handshake, Building2, CheckCircle, Globe, ExternalLink } from 'lucide-react';
 import { createSlug } from '@/app/lib/project/slug';
 import { ThemeBadge } from './ThemeBox';
 import { THEME_FONT_PRIMARY } from '../theme/palette';
 
 export interface GameMedia {
-  type: 'video' | 'image' | 'gif';
+  type: 'video' | 'image' | 'gif' | 'youtube';
   url: string;
   thumbnail?: string;
   title?: string;
@@ -18,7 +18,7 @@ export interface FeatureDetailItem {
   topic: string;
   details: string[];
   media?: {
-    type: 'image' | 'gif' | 'video';
+    type: 'image' | 'gif' | 'video' | 'youtube';
     url: string;
     title?: string;
     thumbnail?: string;
@@ -27,11 +27,11 @@ export interface FeatureDetailItem {
 }
 
 export interface Game {
-  id: string;
   title: string;
   description: string;
   imageUrl: string;
   genres?: string[];
+  playModes?: string[];
   platforms?: string[];
   tools?: string[];
   othertags?: string[];
@@ -40,9 +40,8 @@ export interface Game {
   status?: string;
   startDate?: string;
   lastDate?: string;
-  features?: string[];
   featureDetails?: (string | FeatureDetailItem)[];
-  awards?: string[];
+  awards?: (string | { title: string; link?: string; cover?: string })[];
   client?: string;
   media?: GameMedia[];
   wallpaper?: string;
@@ -56,8 +55,13 @@ export interface Game {
     school?: boolean;
     teamSize?: number;
     partner?: string;
+    client?: string;
+    clientLink?: string;
+    collaboration?: string;
+    collaborationLink?: string;
   };
   itchLink?: string;
+  websiteLink?: string;
 }
 
 interface GameCardProps {
@@ -161,6 +165,18 @@ export function GameCard({ game, onClick, isSelected = false }: GameCardProps) {
           {game.badges.school && (
             <ThemeBadge tone="school">
               <GraduationCap className="h-3 w-3" />
+            </ThemeBadge>
+          )}
+          {game.badges.client && (
+            <ThemeBadge tone="partner">
+              <Building2 className="h-3 w-3" />
+              {game.badges.client.split(' | ')[0]}
+            </ThemeBadge>
+          )}
+          {game.badges.collaboration && (
+            <ThemeBadge tone="team">
+              <Handshake className="h-3 w-3" />
+              {game.badges.collaboration.split(' ')[0]}
             </ThemeBadge>
           )}
         </div>
