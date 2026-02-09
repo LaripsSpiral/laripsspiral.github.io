@@ -307,7 +307,7 @@ export const games: Game[] = [
       },
     ] as FeatureDetailItem[],
     awards: [],
-    client: 'Academic Project',
+    client: 'Coursework',
     teamMembers: [
       { name: 'Jakkaphong Boonyaritlakkhana', role: 'Programmer' },
       { name: 'Jirawat Damung', role: 'Programmer' },
