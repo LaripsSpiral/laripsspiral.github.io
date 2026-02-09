@@ -101,9 +101,10 @@ export function GameCard({ game, onClick, isSelected = false }: GameCardProps) {
             <div className="flex items-end justify-between gap-4">
               <div className="flex-1 mb-2.5 -ml-2">
                 {game.status && (
-                  <div className="mb-2 flex items-center gap-2 text-white/90">
-                    <CheckCircle className="h-4 w-4" />
-                    <span className="text-sm font-caption">{game.status}</span>
+                  <div className="mb-2">
+                    <span className="px-3 py-1 rounded text-xs uppercase font-bold bg-black/50 text-white border border-white/30">
+                      {game.status}
+                    </span>
                   </div>
                 )}
                 {(game.startDate || game.lastDate) && (

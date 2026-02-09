@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Star, Calendar, Trophy, GraduationCap, Users, Handshake, Building2, ArrowRight, CheckCircle, Clock } from 'lucide-react';
@@ -34,6 +34,17 @@ export function HomeTab({ games }: HomeTabProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
+  // Sort games: starred projects first
+  const sortedGames = useMemo(() => {
+    return [...games].sort((a, b) => {
+      // Starred projects come first
+      if (a.badges?.star && !b.badges?.star) return -1;
+      if (!a.badges?.star && b.badges?.star) return 1;
+      // If both have same star status, maintain original order
+      return 0;
+    });
+  }, [games]);
+
   // Track screen size for responsive scroll-snap
   useEffect(() => {
     const checkScreenSize = () => {
@@ -56,7 +67,7 @@ export function HomeTab({ games }: HomeTabProps) {
       intervalRef.current = null;
     }
 
-    if (isAutoPlaying && games.length > 0) {
+    if (isAutoPlaying && sortedGames.length > 0) {
       // Clear resume timer when auto-playing starts
       if (resumeAutoPlayRef.current) {
         clearTimeout(resumeAutoPlayRef.current);
@@ -68,7 +79,7 @@ export function HomeTab({ games }: HomeTabProps) {
 
       // Create new interval with current duration
       intervalRef.current = setInterval(() => {
-        setCurrentIndex((prev) => (prev + 1) % games.length);
+        setCurrentIndex((prev) => (prev + 1) % sortedGames.length);
         setProgress(0); // Reset progress when item changes
       }, AUTO_SCROLL_DURATION);
     }
@@ -82,7 +93,7 @@ export function HomeTab({ games }: HomeTabProps) {
         clearTimeout(resumeAutoPlayRef.current);
       }
     };
-  }, [isAutoPlaying, games.length]);
+  }, [isAutoPlaying, sortedGames.length]);
 
   // Progress bar animation
   useEffect(() => {
@@ -95,7 +106,7 @@ export function HomeTab({ games }: HomeTabProps) {
     // Reset progress when currentIndex changes
     setProgress(0);
 
-    if (isAutoPlaying && games.length > 0) {
+    if (isAutoPlaying && sortedGames.length > 0) {
       const updateInterval = 50; // Update every 50ms for smooth animation
       const increment = (100 / AUTO_SCROLL_DURATION) * updateInterval;
 
@@ -115,10 +126,10 @@ export function HomeTab({ games }: HomeTabProps) {
         progressIntervalRef.current = null;
       }
     };
-  }, [isAutoPlaying, games.length, currentIndex]);
+  }, [isAutoPlaying, sortedGames.length, currentIndex]);
 
 
-  const currentGame = games[currentIndex];
+  const currentGame = sortedGames[currentIndex];
 
   // Resume auto-play after inactivity
   const scheduleResumeAutoPlay = () => {
@@ -141,7 +152,29 @@ export function HomeTab({ games }: HomeTabProps) {
     scheduleResumeAutoPlay();
   };
 
-  if (games.length === 0) {
+  const handleMouseEnter = () => {
+    setIsAutoPlaying(false);
+  };
+
+  const handleMouseLeave = () => {
+    scheduleResumeAutoPlay();
+  };
+
+  const handleWheel = (e: React.WheelEvent) => {
+    e.preventDefault();
+    
+    if (e.deltaY > 0) {
+      // Scroll down - next preview
+      setCurrentIndex((prev) => (prev + 1) % sortedGames.length);
+    } else {
+      // Scroll up - previous preview
+      setCurrentIndex((prev) => (prev - 1 + sortedGames.length) % sortedGames.length);
+    }
+    
+    setProgress(0);
+  };
+
+  if (sortedGames.length === 0) {
     return (
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8" style={{ fontFamily: THEME_FONT_PRIMARY }}>
         <div className="py-20 text-center">
@@ -245,7 +278,7 @@ export function HomeTab({ games }: HomeTabProps) {
                   height: '100%'
                 }}
               >
-                {games.map((game, index) => {
+                {sortedGames.map((game, index) => {
                   const isActive = index === currentIndex;
 
                   return (
@@ -280,6 +313,21 @@ export function HomeTab({ games }: HomeTabProps) {
                           sizes="256px"
                           className="object-cover transition-transform duration-300 hover:scale-110"
                         />
+                        
+                        {/* Triangle Star Badge - Top Left Corner */}
+                        {game.badges?.star && (
+                          <div className="absolute top-2 left-2">
+                            <Star 
+                              className="text-yellow-400"
+                              style={{
+                                width: '20px',
+                                height: '20px',
+                              }}
+                              fill="currentColor"
+                            />
+                          </div>
+                        )}
+                        
                         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-2 sm:p-2.5 md:p-3">
                           <h4 className="text-xs sm:text-sm text-white line-clamp-1">{game.title}</h4>
                         </div>
@@ -322,6 +370,9 @@ export function HomeTab({ games }: HomeTabProps) {
                   border: `1px solid ${THEME_BORDER}`,
                   background: `linear-gradient(180deg, ${THEME_TINT} 0%, ${THEME_COMP_TINT} 100%)`,
                 }}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                onWheel={handleWheel}
               >
                 <div className="relative aspect-video w-full overflow-hidden">
                   <Image
@@ -336,9 +387,10 @@ export function HomeTab({ games }: HomeTabProps) {
                     <div className="flex items-start justify-between gap-2 sm:gap-3 md:gap-4">
                       <div className="flex-1">
                         {currentGame.status && (
-                          <div className="mb-2 sm:mb-2.5 md:mb-3 flex items-center gap-1.5 sm:gap-2 text-white/90">
-                            <CheckCircle className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4" />
-                            <span className="text-xs sm:text-sm">{currentGame.status}</span>
+                          <div className="mb-2 sm:mb-2.5 md:mb-3">
+                            <span className="px-3 py-1 rounded text-xs uppercase font-bold bg-black/50 text-white border border-white/30">
+                              {currentGame.status}
+                            </span>
                           </div>
                         )}
                         {(currentGame.startDate || currentGame.lastDate) && (
@@ -448,6 +500,12 @@ export function HomeTab({ games }: HomeTabProps) {
                       </div>
 
                       <div className="flex items-center gap-2 mb-2">
+                        {/* Star Badge */}
+                        {currentGame.badges?.star && (
+                          <div className="flex items-center gap-1.5">
+                            <Star className="h-5 w-5 text-yellow-400" fill="currentColor" />
+                          </div>
+                        )}
                         <h2 className="text-2xl sm:text-3xl font-bold text-white leading-tight">{currentGame.title}</h2>
                         {/* Team Size - Icon + Number only */}
                         {(currentGame.badges?.teamSize || currentGame.teamMembers?.length) && (

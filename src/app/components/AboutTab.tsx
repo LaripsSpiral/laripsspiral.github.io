@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Code, Zap, Heart, GraduationCap, User, Trophy, Briefcase, Calendar, Users } from 'lucide-react';
+import { Code, GraduationCap, User, Trophy, Briefcase, Calendar, Users } from 'lucide-react';
 import {
   ThemeCard,
   ThemeCardHeader,
@@ -17,10 +17,6 @@ import {
   THEME_FONT_PRIMARY,
   THEME_CATEGORY_SKILLS_BG,
   THEME_CATEGORY_SKILLS_TEXT,
-  THEME_CATEGORY_STRENGTHS_BG,
-  THEME_CATEGORY_STRENGTHS_TEXT,
-  THEME_CATEGORY_INTERESTS_BG,
-  THEME_CATEGORY_INTERESTS_TEXT,
   THEME_CATEGORY_EDUCATION_BG,
   THEME_CATEGORY_EDUCATION_TEXT,
   THEME_CATEGORY_EXPERIENCE_BG,
@@ -115,7 +111,28 @@ export function AboutTab() {
                 </div>
                 <div>
                   <h3 className="mb-2 sm:mb-3 md:mb-4 text-sm font-bold uppercase" style={{ color: THEME_PRIMARY, letterSpacing: '0.05em', fontFamily: THEME_FONT_PRIMARY }}>
-                    Tools:
+                    Game Engines:
+                  </h3>
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                    {personalInfo.skills.gameEngines.map((engine) => (
+                      <span
+                        key={engine}
+                        className="rounded-md px-2 py-0.5 sm:px-2.5 sm:py-1 md:px-3 md:py-1 text-sm"
+                        style={{
+                          backgroundColor: THEME_PRIMARY_TINT,
+                          border: `1px solid ${THEME_PRIMARY_BORDER}`,
+                          color: THEME_PRIMARY,
+                          fontFamily: THEME_FONT_PRIMARY,
+                        }}
+                      >
+                        {engine}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <h3 className="mb-2 sm:mb-3 md:mb-4 text-sm font-bold uppercase" style={{ color: THEME_PRIMARY, letterSpacing: '0.05em', fontFamily: THEME_FONT_PRIMARY }}>
+                    Version Controls:
                   </h3>
                   <div className="flex flex-wrap gap-1.5 sm:gap-2">
                     {personalInfo.skills.tools.map((tool) => (
@@ -137,43 +154,6 @@ export function AboutTab() {
               </div>
             </ThemeCardBody>
           </ThemeCard>
-
-          {/* STRENGTHS and INTERESTS - Side by side on small screens */}
-          <div className="flex flex-row items-stretch gap-3 sm:gap-4 lg:flex-col lg:gap-6">
-            {/* STRENGTHS */}
-            <ThemeCard className="flex-1 lg:flex-none flex flex-col">
-              <ThemeCardHeader style={{ backgroundColor: THEME_CATEGORY_STRENGTHS_BG }}>
-                <div className="flex items-center gap-2">
-                  <Zap className="h-4 w-4" style={{ color: THEME_CATEGORY_STRENGTHS_TEXT }} />
-                  <ThemeTitle style={{ color: THEME_CATEGORY_STRENGTHS_TEXT, fontSize: '0.875rem', fontWeight: '700' }}>STRENGTHS</ThemeTitle>
-                </div>
-              </ThemeCardHeader>
-              <ThemeCardBody style={{ backgroundColor: 'rgba(255, 87, 34, 0.05)' }}>
-                <div>
-                  {personalInfo.strengths.map((strength) => (
-                    <ThemeDetail key={strength}>{strength}</ThemeDetail>
-                  ))}
-                </div>
-              </ThemeCardBody>
-            </ThemeCard>
-
-            {/* INTERESTS */}
-            <ThemeCard className="flex-1 lg:flex-none flex flex-col">
-              <ThemeCardHeader style={{ backgroundColor: THEME_CATEGORY_INTERESTS_BG }}>
-                <div className="flex items-center gap-2">
-                  <Heart className="h-4 w-4" style={{ color: THEME_CATEGORY_INTERESTS_TEXT }} />
-                  <ThemeTitle style={{ color: THEME_CATEGORY_INTERESTS_TEXT, fontSize: '0.875rem', fontWeight: '700' }}>INTERESTS</ThemeTitle>
-                </div>
-              </ThemeCardHeader>
-              <ThemeCardBody style={{ backgroundColor: 'rgba(0, 188, 212, 0.05)' }}>
-                <div>
-                  {personalInfo.interests.map((interest) => (
-                    <ThemeDetail key={interest}>{interest}</ThemeDetail>
-                  ))}
-                </div>
-              </ThemeCardBody>
-            </ThemeCard>
-          </div>
 
           {/* EDUCATION */}
           <ThemeCard>
@@ -199,7 +179,6 @@ export function AboutTab() {
                   >
                     Bangkok University
                   </a>
-                  {' 3\'rd year'}
                 </ThemeHeading>
                 <div>
                   <ThemeDetail>{personalInfo.education.degree}</ThemeDetail>
@@ -413,12 +392,12 @@ export function AboutTab() {
                                 sortedPositions.forEach((pos, idx) => {
                                   const linkData = linkMap.get(pos)!;
                                   
-                                  // Add text before the link
+                                  // Add text before link
                                   if (pos > lastIndex) {
                                     elements.push(text.substring(lastIndex, pos));
                                   }
                                   
-                                  // Add the link
+                                  // Add link
                                   elements.push(
                                     <a
                                       key={`link-${idx}`}
@@ -446,6 +425,11 @@ export function AboutTab() {
                               project.title
                             )}
                           </ThemeHeading>
+                          {project.about && (
+                            <p className="text-sm text-gray-300 mb-2" style={{ fontFamily: THEME_FONT_PRIMARY }}>
+                              {project.about}
+                            </p>
+                          )}
                           {project.responsibilities.length > 0 && (
                             <ul className="mt-1 space-y-0.5 sm:space-y-1">
                               {project.responsibilities.map((resp, respIndex) => {
@@ -546,6 +530,11 @@ export function AboutTab() {
                                       subProject.title
                                     )}
                                   </ThemeHeading>
+                                  {subProject.about && (
+                                    <p className="text-sm text-gray-300 mb-2" style={{ fontFamily: THEME_FONT_PRIMARY }}>
+                                      {subProject.about}
+                                    </p>
+                                  )}
                                   <ul className="mt-1 space-y-0.5 sm:space-y-1">
                                     {subProject.responsibilities.map((resp, respIndex) => {
                                       const dentsuLink = 'https://www.facebook.com/dentsuCreativeTH';

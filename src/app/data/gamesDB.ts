@@ -2,6 +2,108 @@ import { Game, FeatureDetailItem } from '@/app/components/GameCard';
 import { i } from 'framer-motion/client';
 
 export const games: Game[] = [
+  {title: 'School of Survival',
+    description: 'Practice survival strategies for helping students to learning in an immerses realistic school setting where an emergency situation.',
+    imageUrl: '/projects/SchoolOfSurvival/Yoorod_Cover.png',
+    wallpaper: '/projects/SchoolOfSurvival/gamepreviews/Yoorod_Preview2.png',
+    genres: ['Simulation'],
+    playModes: ['Multiplayer'],
+    othertags: [],
+    platforms: ['Roblox'],
+    tools: ['Roblox Studio'],
+    role: 'Programmer',
+    roleDetails:
+      'Implemented core gameplay systems of run hide fight concept and quick time event with IK animation in realtime cutscene, with collaboration with Dentsu Creative Thailand.',
+    status: 'Released',
+    startDate: '1 Oct 2023',
+    lastDate: '1 Apr 2025',
+    featureDetails: [
+      {
+        topic: 'Hide Objectives',
+        details: [
+          'Implemented checklist objectives in hide situation for safety in emergency situation.',
+        ],
+        media: {
+          type: 'youtube',
+          url: 'https://youtu.be/Vgk775w87bM?si=fMgoXxcjcFsfp_Zm',
+          title: 'Hide Objectives',
+        },
+      },
+      {
+        topic: 'Hiding Mechanic',
+        details: [
+          'Implemented a safe area for hiding in hide situation.',
+        ],
+        media: {
+          type: 'youtube',
+          url: 'https://youtu.be/r_1jCm2WmOY?si=4MNxwGmTwes0VtHB',
+          title: 'Hiding Mechanic',
+        },
+      },
+      {
+        topic: 'Fight Quick Time Event',
+        details: [
+          'Implemented a quick time event for fight in situation of encounter using IK animation in realtime cutscene.'
+        ],
+        media: {
+          type: 'youtube',
+          url: 'https://youtu.be/54Q6QtvfWWQ?si=Cz5WYhQi0C9LT88R',
+          title: 'Fight Quick Time Event',
+        },
+      },
+    ] as FeatureDetailItem[],
+    awards: [
+      {
+        title: 'ADPEOPLE 2024 (8 Awards)',
+        link: 'https://bu.ac.th/en/featured-stories/1645',
+        cover: '/projects/SchoolOfSurvival/awards/ADPEOPLE_2024.png',
+      },
+      {
+        title: 'ADFEST 2025 (1 Award)',
+        link: 'https://www.facebook.com/permalink.php/?story_fbid=122163891134304926&id=61559147805158',
+        cover: '/projects/SchoolOfSurvival/awards/ADFEST_2025.png',
+      },
+    ] as (string | { title: string; link?: string; cover?: string })[],
+    client: 'CoSI | Center of Specialty Innovation (Bangkok University)',
+    teamMembers: [
+      { name: 'Jirawat Damung', role: 'Programmer' },
+      { name: 'Sirasit Tumvijit', role: 'Programmer' },
+      { name: 'Thanapong Pensuwarn', role: 'Team Leader, Art' },
+    ],
+    media: [
+      {
+        type: 'youtube',
+        url: 'https://youtu.be/YG4v2UuGFVs?si=v63k3Tjs2tcXq-WH',
+        title: 'School Of Survival Trailer',
+      },
+      {
+        type: 'youtube',
+        url: 'https://www.youtube.com/watch?v=MkZd_YYGaBA',
+        title: 'School Of Survival Gameplay',
+      },
+      {
+        type: 'image',
+        url: '/projects/SchoolOfSurvival/gamepreviews/Yoorod_Preview1.png',
+        title: 'School Of Survival Screenshot 1',
+      },
+      {
+        type: 'image',
+        url: '/projects/SchoolOfSurvival/gamepreviews/Yoorod_Preview2.png',
+        title: 'School Of Survival Screenshot 2',
+      },
+    ],
+    badges: {
+      star: true,
+      school: true,
+      teamSize: 3,
+      client: 'CoSI | Center of Specialty Innovation (Bangkok University)',
+      clientLink: 'https://cosi.bu.ac.th/',
+      collaboration: 'Dentsu Creative Thailand',
+      collaborationLink: 'https://www.facebook.com/dentsuCreativeTH',
+    },
+    gameLink: 'https://www.roblox.com/games/16880223610/School-of-Survival',
+    websiteLink: 'https://yoorodwittaya.com/',
+  },
   {title: 'Augus Lost Without You',
     description:
       'The story of a cat named Augus, a magic-lover searching for his owner. After a tragic accident with a truck, he awakens in a fantasy world of his own memories, still determined to find his way back to his owner.',
@@ -320,108 +422,6 @@ export const games: Game[] = [
       teamSize: 8,
     },
     gameLink: 'https://laripsspiral.itch.io/micetrix',
-  },
-  {title: 'School of Survival',
-    description: 'Practice survival strategies for helping students to learning in an immerses realistic school setting where an emergency situation.',
-    imageUrl: '/projects/SchoolOfSurvival/Yoorod_Cover.png',
-    wallpaper: '/projects/SchoolOfSurvival/gamepreviews/Yoorod_Preview2.png',
-    genres: ['Simulation'],
-    playModes: ['Multiplayer'],
-    othertags: [],
-    platforms: ['Roblox'],
-    tools: ['Roblox Studio'],
-    role: 'Programmer',
-    roleDetails:
-      'Implemented core gameplay systems, hacking mechanics and character interaction with path navigation.',
-    status: 'Released',
-    startDate: '1 Oct 2023',
-    lastDate: '1 Apr 2025',
-    featureDetails: [
-      {
-        topic: 'Hide Objectives',
-        details: [
-          'Implemented checklist objectives in hide situation for safety in emergency situation.',
-        ],
-        media: {
-          type: 'youtube',
-          url: 'https://youtu.be/Vgk775w87bM?si=fMgoXxcjcFsfp_Zm',
-          title: 'Hide Objectives',
-        },
-      },
-      {
-        topic: 'Hiding Mechanic',
-        details: [
-          'Implemented a safe area for hiding in hide situation.',
-        ],
-        media: {
-          type: 'youtube',
-          url: 'https://youtu.be/r_1jCm2WmOY?si=4MNxwGmTwes0VtHB',
-          title: 'Hiding Mechanic',
-        },
-      },
-      {
-        topic: 'Fight Quick Time Event',
-        details: [
-          'Implemented a quick time event for fight in situation of encounter using IK animation in realtime cutscene.'
-        ],
-        media: {
-          type: 'youtube',
-          url: 'https://youtu.be/54Q6QtvfWWQ?si=Cz5WYhQi0C9LT88R',
-          title: 'Fight Quick Time Event',
-        },
-      },
-    ] as FeatureDetailItem[],
-    awards: [
-      {
-        title: 'ADPEOPLE 2024 (8 Awards)',
-        link: 'https://bu.ac.th/en/featured-stories/1645',
-        cover: '/projects/SchoolOfSurvival/awards/ADPEOPLE_2024.png',
-      },
-      {
-        title: 'ADFEST 2025 (1 Award)',
-        link: 'https://www.facebook.com/permalink.php/?story_fbid=122163891134304926&id=61559147805158',
-        cover: '/projects/SchoolOfSurvival/awards/ADFEST_2025.png',
-      },
-    ] as (string | { title: string; link?: string; cover?: string })[],
-    client: 'CoSI | Center of Specialty Innovation (Bangkok University)',
-    teamMembers: [
-      { name: 'Jirawat Damung', role: 'Programmer' },
-      { name: 'Sirasit Tumvijit', role: 'Programmer' },
-      { name: 'Thanapong Pensuwarn', role: 'Team Leader, Art' },
-    ],
-    media: [
-      {
-        type: 'youtube',
-        url: 'https://youtu.be/YG4v2UuGFVs?si=v63k3Tjs2tcXq-WH',
-        title: 'School Of Survival Trailer',
-      },
-      {
-        type: 'youtube',
-        url: 'https://www.youtube.com/watch?v=MkZd_YYGaBA',
-        title: 'School Of Survival Gameplay',
-      },
-      {
-        type: 'image',
-        url: '/projects/SchoolOfSurvival/gamepreviews/Yoorod_Preview1.png',
-        title: 'School Of Survival Screenshot 1',
-      },
-      {
-        type: 'image',
-        url: '/projects/SchoolOfSurvival/gamepreviews/Yoorod_Preview2.png',
-        title: 'School Of Survival Screenshot 2',
-      },
-    ],
-    badges: {
-      star: true,
-      school: true,
-      teamSize: 3,
-      client: 'CoSI | Center of Specialty Innovation (Bangkok University)',
-      clientLink: 'https://cosi.bu.ac.th/',
-      collaboration: 'Dentsu Creative Thailand',
-      collaborationLink: 'https://www.facebook.com/dentsuCreativeTH',
-    },
-    gameLink: 'https://www.roblox.com/games/16880223610/School-of-Survival',
-    websiteLink: 'https://yoorodwittaya.com/',
   },
 ];
 

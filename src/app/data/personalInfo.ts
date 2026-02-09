@@ -4,10 +4,9 @@ export interface PersonalInfo {
   languages: string[];
   skills: {
     programming: string[];
+    gameEngines: string[];
     tools: string[];
   };
-  strengths: string[];
-  interests: string[];
   education: {
     period: string;
     university: string;
@@ -33,6 +32,7 @@ export interface PersonalInfo {
     period: string;
     projects: Array<{
       title: string;
+      about?: string;
       titleLinks?: Array<{
         text: string;
         link: string;
@@ -40,6 +40,7 @@ export interface PersonalInfo {
       responsibilities: string[];
       subProjects?: Array<{
         title: string;
+        about?: string;
         titleLinks?: Array<{
           text: string;
           link: string;
@@ -56,18 +57,17 @@ export const personalInfo: PersonalInfo = {
   languages: ['Thai', 'English'],
   skills: {
     programming: ['C#', 'C', 'Python'],
-    tools: ['Unity', 'Unreal', 'Github'],
+    gameEngines: ['Unity', 'Unreal'],
+    tools: ['GitHub'],
   },
-  strengths: ['Responsibility', 'Quick Learner', 'Resourceful', 'Proactive Developer'],
-  interests: ['Creative Ideas', 'Optimizations', 'Netcode for Entity & DOTS (Learning)'],
   education: {
-    period: 'June/2023 - Ongoing',
-    university: "Bangkok University 3'rd year",
-    degree: "Bachelor's Degree in Information Technology",
-    major: 'Majoring in Game and Interactive Media',
+    period: 'June/2023 - Present',
+    university: "Bangkok University",
+    degree: "Bachelor of Science",
+    major: 'Major in Games and Interactive Media',
   },
   professionalSummary:
-    'As a **Unity Game Programmer**, I bring hands-on experience in **research, rapid prototyping**, and **collaborative development**, with a strong focus on **optimization**. My approach combines **responsibility** and **problem-solving skills** with a highly **receptive** mindset, enabling me to work effectively within team environments and deliver high-quality game experiences.',
+    'Unity Game Programmer with hands-on experience in VR, multiplayer systems, AI behavior, and performance optimization. Experienced in rapid prototyping, collaborative development, and projects for education and healthcare simulations.',
   achievements: [
     {
       title: 'School of Survival | อยู่รอดวิทยา (CoSI x Dentsu Creative Thailand)',
@@ -97,8 +97,10 @@ export const personalInfo: PersonalInfo = {
       projects: [
         {
           title: 'Roblox School of Survival (Programmer):',
+          about: 'Practice survival strategies for students to learning in an immerses realistic school setting where an emergency situation.',
           titleLinks: [
             { text: 'Roblox School of Survival | อยู่รอดวิทยา', link: 'https://yoorodwittaya.com/' },
+            { text: 'Roblox Game', link: 'https://www.roblox.com/games/16880223610/School-of-Survival' },
           ],
           responsibilities: [
             "Collaborated with 'Dentsu Creative Thailand' in development.",
@@ -108,6 +110,10 @@ export const personalInfo: PersonalInfo = {
         },
         {
           title: 'Unity Project Medicals Mobile AR (Optimizer):',
+          about: 'Optimized performance and compatibility for mobile.',
+          titleLinks: [
+            { text: 'Medical AR Project', link: 'https://cosi.bu.ac.th' },
+          ],
           responsibilities: [
             'Optimized performance and compatibility for mobile.',
             'Reduced garbage collection, optimized texture and mesh sizes.',
@@ -120,12 +126,20 @@ export const personalInfo: PersonalInfo = {
           subProjects: [
             {
               title: 'Unity Medicals VR & Mobile:',
+              about: "Created 'Training Simulation' for nurses by focusing on 'Patient Screening' and 'Medication Dispensing'.",
+              titleLinks: [
+                { text: 'Medical VR Training', link: 'https://cosi.bu.ac.th' },
+              ],
               responsibilities: [
                 "Created 'Training Simulation' for nurses by focusing on 'Patient Screening' and 'Medication Dispensing'.",
               ],
             },
             {
               title: 'Unity Medicals VR Multiplayer (Netcode):',
+              about: 'Therapy Session for observe and diagnose.',
+              titleLinks: [
+                { text: 'Medical VR Multiplayer', link: 'https://cosi.bu.ac.th' },
+              ],
               responsibilities: [
                 "Implemented matchmaking to queue patients and send host lobby invitations.",
                 'Implemented webcam streaming via texture-to-JPG encoding, optimized by reducing resolution and chunking data for transmission limits.',
