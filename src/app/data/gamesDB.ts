@@ -1,4 +1,5 @@
 import { Game, FeatureDetailItem } from '@/app/components/GameCard';
+import { i } from 'framer-motion/client';
 
 export const games: Game[] = [
   {title: 'Augus Lost Without You',
@@ -56,8 +57,8 @@ export const games: Game[] = [
           'While enraged, the character becomes immune to stun. All parameters (gauge size, stun duration, and enrage duration) are fully configurable.',
         ],
         media: {
-          type: 'video',
-          url: '/projects/AugusLostWithoutYou/features/Augus_feature_stun.mp4',
+          type: 'youtube',
+          url: 'https://youtu.be/M06eBRbnNUY',
           title: 'Stun & Enrage System',
         },
       },
@@ -81,8 +82,8 @@ export const games: Game[] = [
           'Implemented phase-based boss behavior using the Dynamic Action system, allowing for unique action sets and behavior shifts across different health thresholds or phases.',
         ],
         media: {
-          type: 'video',
-          url: '/projects/AugusLostWithoutYou/features/Augus_feature_boss.mp4',
+          type: 'youtube',
+          url: 'https://youtu.be/sUEFQxqothk',
           title: 'Boss Phases',
         },
       },
@@ -99,15 +100,13 @@ export const games: Game[] = [
     ],
     media: [
       {
-        type: 'video',
-        url: '/projects/AugusLostWithoutYou/gamepreviews/Augus_trailer.mp4',
-        thumbnail: '/projects/AugusLostWithoutYou/gamepreviews/Augus_triler_thumpnail.jpg',
+        type: 'youtube',
+        url: 'https://youtu.be/wVn3l43QRs8',
         title: 'Trailer',
       },
       {
-        type: 'video',
-        url: '/projects/AugusLostWithoutYou/gamepreviews/Augus_gameplay.mp4',
-        thumbnail: '/projects/AugusLostWithoutYou/AugusLostWithoutYou_cover.jpg',
+        type: 'youtube',
+        url: 'https://youtu.be/sx26HipkoVQ',
         title: 'Gameplay',
       },
     ],
@@ -115,6 +114,7 @@ export const games: Game[] = [
       school: true,
       teamSize: 6,
     },
+    gameLink: 'https://myeboy-loues.itch.io/augus',
   },
   {title: 'TINY TUNA',
     description:
@@ -244,7 +244,7 @@ export const games: Game[] = [
       teamSize: 8,
       star: true,
     },
-    itchLink: 'https://laripsspiral.itch.io/tiny-tuna',
+    gameLink: 'https://laripsspiral.itch.io/tiny-tuna',
   },
   {title: 'MiceTrix',
     description: 'You play as a hacker with the mission to help The Lab Rat, known as "Mice," escape from of the matrix-like world.',
@@ -319,7 +319,7 @@ export const games: Game[] = [
       school: true,
       teamSize: 8,
     },
-    itchLink: 'https://laripsspiral.itch.io/micetrix',
+    gameLink: 'https://laripsspiral.itch.io/micetrix',
   },
   {title: 'School of Survival',
     description: 'Practice survival strategies for helping students to learning in an immerses realistic school setting where an emergency situation.',
@@ -420,7 +420,7 @@ export const games: Game[] = [
       collaboration: 'Dentsu Creative Thailand',
       collaborationLink: 'https://www.facebook.com/dentsuCreativeTH',
     },
-    itchLink: 'https://www.roblox.com/games/16880223610/School-of-Survival',
+    gameLink: 'https://www.roblox.com/games/16880223610/School-of-Survival',
     websiteLink: 'https://yoorodwittaya.com/',
   },
 ];

@@ -60,7 +60,7 @@ export interface Game {
     collaboration?: string;
     collaborationLink?: string;
   };
-  itchLink?: string;
+  gameLink?: string;
   websiteLink?: string;
 }
 

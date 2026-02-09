@@ -701,21 +701,23 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
               <h2 className="mb-4 text-2xl font-bold text-white">Links</h2>
               <div className="flex flex-wrap gap-3">
                 {/* Game Platform Link */}
-                {game.itchLink && (
+                {game.gameLink && (
                   <a
-                    href={game.itchLink}
+                    href={game.gameLink}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`inline-flex items-center gap-2 px-4 py-2 font-bold rounded transition-colors ${
-                      game.itchLink.includes('roblox.com') 
+                      game.gameLink.includes('roblox.com') 
                         ? 'bg-[#00b0ff] hover:bg-[#0091ea] text-white' 
                         : 'bg-[#fa5c5c] hover:bg-[#ff7878] text-white'
                     }`}
                   >
-                    {game.itchLink.includes('roblox.com') ? (
+                    {game.gameLink.includes('roblox.com') ? (
                       <>Roblox</>
+                    ) : game.gameLink.includes('itch.io') ? (
+                      <>Itch.io</>
                     ) : (
-                      <>itch.io</>
+                      <>Play Now</>
                     )}
                   </a>
                 )}
