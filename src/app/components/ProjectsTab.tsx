@@ -184,20 +184,20 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
             placeholder="Search projects..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full rounded-lg border bg-[#0d1117] py-3 pl-12 pr-4 text-gray-300 placeholder-gray-500 transition-colors focus:outline-none"
+            className="w-full rounded-lg border bg-[#0d1117] py-3 pl-12 pr-4 text-gray-300 placeholder-gray-500 transition-colors focus:outline-none font-body"
             style={{ borderColor: THEME_PRIMARY_BORDER }}
           />
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center gap-2 text-gray-300">
+          <div className="flex items-center gap-2 text-gray-300 font-subheader">
             <SortAsc className="h-5 w-5" />
             <span>Status:</span>
           </div>
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="rounded-lg border bg-[#0d1117] px-4 py-3 text-sm text-gray-300 transition-colors focus:outline-none"
+            className="rounded-lg border bg-[#0d1117] px-4 py-3 text-sm text-gray-300 transition-colors focus:outline-none font-body"
             style={{ borderColor: THEME_PRIMARY_BORDER }}
           >
             <option value="all">All Status</option>
@@ -205,14 +205,14 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
             <option value="Prototype">Prototype</option>
           </select>
           
-          <div className="flex items-center gap-2 text-gray-300">
+          <div className="flex items-center gap-2 text-gray-300 font-subheader">
             <SortAsc className="h-5 w-5" />
             <span>Sort:</span>
           </div>
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="rounded-lg border bg-[#0d1117] px-4 py-3 text-sm text-gray-300 transition-colors focus:outline-none"
+            className="rounded-lg border bg-[#0d1117] px-4 py-3 text-sm text-gray-300 transition-colors focus:outline-none font-body"
             style={{ borderColor: THEME_PRIMARY_BORDER }}
           >
             <option value="name">Name (A-Z)</option>
@@ -231,7 +231,7 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
           <div className="flex items-center justify-between">
             <button
               onClick={() => setIsFilterCollapsed(!isFilterCollapsed)}
-              className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors"
+              className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors font-subheader"
             >
               <SortAsc className="h-5 w-5" />
               <span>Filter by Tags:</span>
@@ -244,7 +244,7 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
             {selectedTags.length > 0 && (
               <button
                 onClick={clearAllTags}
-                className="flex items-center gap-1 rounded-md px-2 py-1 text-xs text-gray-400 hover:text-white hover:bg-gray-700 transition-colors"
+                className="flex items-center gap-1 rounded-md px-2 py-1 text-xs text-gray-400 hover:text-white hover:bg-gray-700 transition-colors font-caption"
               >
                 <X className="h-3 w-3" />
                 Clear All
@@ -257,20 +257,20 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
               {Object.entries(availableTags).map(([categoryKey, category]) => (
                 Object.keys(category.tags).length > 0 && (
                   <div key={categoryKey}>
-                    <h4 className="mb-2 text-sm font-medium text-gray-400">{category.name}</h4>
+                    <h4 className="mb-2 text-sm font-medium text-gray-400 font-subheader">{category.name}</h4>
                     <div className="flex flex-wrap gap-2">
                       {Object.entries(category.tags).map(([tag, count]) => (
                         <button
                           key={tag}
                           onClick={() => toggleTag(tag)}
-                          className={`inline-flex items-center gap-1 rounded-full border px-3 py-1 text-sm transition-colors ${
+                          className={`inline-flex items-center gap-1 rounded-full border px-3 py-1 text-sm transition-colors font-body ${
                             selectedTags.includes(tag)
                               ? 'bg-blue-600 border-blue-500 text-white'
                               : 'bg-gray-800 border-gray-600 text-gray-300 hover:bg-gray-700 hover:border-gray-500'
                           }`}
                         >
                           {tag}
-                          <span className="text-xs opacity-70">({count})</span>
+                          <span className="text-xs opacity-70 font-caption">({count})</span>
                         </button>
                       ))}
                     </div>
@@ -282,7 +282,7 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
         </div>
       </div>
 
-      <div className="mb-6 text-sm text-gray-400">
+      <div className="mb-6 text-sm text-gray-400 font-caption">
         Showing {filteredAndSortedGames.length}{' '}
         {filteredAndSortedGames.length === 1 ? 'game' : 'games'}
         {statusFilter !== 'all' && ` with status "${statusFilter}"`}
@@ -296,8 +296,8 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
             statusGames.length > 0 && (
               <div key={status}>
                 <div className="mb-4 flex items-center gap-3">
-                  <h2 className="text-xl font-bold text-white">{status}</h2>
-                  <span className="rounded-full bg-gray-700 px-2 py-1 text-xs text-gray-300">
+                  <h2 className="text-xl font-bold text-white font-header">{status}</h2>
+                  <span className="rounded-full bg-gray-700 px-2 py-1 text-xs text-gray-300 font-caption">
                     {statusGames.length}
                   </span>
                 </div>

@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Star, Calendar, Trophy, GraduationCap, Users, Handshake, Building2, ArrowRight, CheckCircle } from 'lucide-react';
+import { Star, Calendar, Trophy, GraduationCap, Users, Handshake, Building2, ArrowRight, CheckCircle, Clock } from 'lucide-react';
 import { Game } from './GameCard';
 import { createSlug } from '@/app/lib/project/slug';
 import {
@@ -33,16 +33,16 @@ export function HomeTab({ games }: HomeTabProps) {
   const resumeAutoPlayRef = useRef<NodeJS.Timeout | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
-  
+
   // Track screen size for responsive scroll-snap
   useEffect(() => {
     const checkScreenSize = () => {
       setIsLargeScreen(window.innerWidth >= 1024);
     };
-    
+
     checkScreenSize();
     window.addEventListener('resize', checkScreenSize);
-    
+
     return () => {
       window.removeEventListener('resize', checkScreenSize);
     };
@@ -62,10 +62,10 @@ export function HomeTab({ games }: HomeTabProps) {
         clearTimeout(resumeAutoPlayRef.current);
         resumeAutoPlayRef.current = null;
       }
-      
+
       // Reset progress when starting
       setProgress(0);
-      
+
       // Create new interval with current duration
       intervalRef.current = setInterval(() => {
         setCurrentIndex((prev) => (prev + 1) % games.length);
@@ -94,11 +94,11 @@ export function HomeTab({ games }: HomeTabProps) {
 
     // Reset progress when currentIndex changes
     setProgress(0);
-    
+
     if (isAutoPlaying && games.length > 0) {
       const updateInterval = 50; // Update every 50ms for smooth animation
       const increment = (100 / AUTO_SCROLL_DURATION) * updateInterval;
-      
+
       progressIntervalRef.current = setInterval(() => {
         setProgress((prev) => {
           if (prev >= 100) {
@@ -126,7 +126,7 @@ export function HomeTab({ games }: HomeTabProps) {
     if (resumeAutoPlayRef.current) {
       clearTimeout(resumeAutoPlayRef.current);
     }
-    
+
     // Set new timer to resume auto-play after 10 seconds
     resumeAutoPlayRef.current = setTimeout(() => {
       setIsAutoPlaying(true);
@@ -237,17 +237,17 @@ export function HomeTab({ games }: HomeTabProps) {
           <div className="flex flex-col lg:flex-row gap-3 sm:gap-4 md:gap-6 lg:h-[515px]">
             {/* Left Side - Sub Preview Carousel (Vertical on large, Horizontal on small) */}
             <div className="lg:w-64 flex-shrink-0 relative lg:order-1 order-2">
-              <div 
+              <div
                 ref={scrollContainerRef}
-                className="flex lg:flex-col flex-row gap-2 sm:gap-3 md:gap-4 lg:overflow-y-auto overflow-x-auto lg:overflow-x-hidden scrollbar-hide scroll-smooth lg:max-h-[600px] lg:pr-2 lg:pl-2 lg:pt-2 lg:pb-20 lg:justify-start pr-1 sm:pr-2 pl-1 sm:pl-2 pt-1 sm:pt-2 pb-1 sm:pb-2" 
-                style={{ 
+                className="flex lg:flex-col flex-row gap-2 sm:gap-3 md:gap-4 lg:overflow-y-auto overflow-x-auto lg:overflow-x-hidden scrollbar-hide scroll-smooth lg:max-h-[600px] lg:pr-2 lg:pl-2 lg:pt-2 lg:pb-20 lg:justify-start pr-1 sm:pr-2 pl-1 sm:pl-2 pt-1 sm:pt-2 pb-1 sm:pb-2"
+                style={{
                   scrollSnapType: isLargeScreen ? 'y mandatory' : 'x mandatory',
                   height: '100%'
                 }}
               >
                 {games.map((game, index) => {
                   const isActive = index === currentIndex;
-                  
+
                   return (
                     <div
                       key={game.title}
@@ -257,12 +257,11 @@ export function HomeTab({ games }: HomeTabProps) {
                       onClick={() => {
                         handleProjectClick(index);
                       }}
-                      className={`flex-shrink-0 cursor-pointer transition-all duration-300 ${
-                        isActive
-                          ? 'scale-105'
-                          : 'opacity-60 hover:opacity-100 hover:scale-[1.02]'
-                      }`}
-                      style={{ 
+                      className={`flex-shrink-0 cursor-pointer transition-all duration-300 ${isActive
+                        ? 'scale-105'
+                        : 'opacity-60 hover:opacity-100 hover:scale-[1.02]'
+                        }`}
+                      style={{
                         scrollSnapAlign: 'center'
                       }}
                     >
@@ -295,7 +294,7 @@ export function HomeTab({ games }: HomeTabProps) {
                   );
                 })}
               </div>
-              
+
               {/* View More Button - Floating at bottom on large, static on small */}
               <div className="lg:absolute lg:bottom-0 lg:left-0 lg:right-0 lg:pt-4 lg:pr-2 lg:pointer-events-none relative pt-2 sm:pt-3 md:pt-4 pointer-events-auto">
                 <div className="lg:bg-gradient-to-t lg:from-[#0a0d11] lg:via-[#0a0d11]/95 lg:to-transparent lg:pointer-events-auto pointer-events-auto" style={{ height: 'fit-content' }}>
@@ -316,7 +315,7 @@ export function HomeTab({ games }: HomeTabProps) {
 
             {/* Right Side - Main Preview */}
             <div className="flex-1 lg:order-2 order-1">
-              <Link 
+              <Link
                 href={`/projects/${createSlug(currentGame.title)}`}
                 className="group relative overflow-hidden rounded-xl shadow-2xl transition-transform duration-300 cursor-pointer block"
                 style={{
@@ -333,7 +332,7 @@ export function HomeTab({ games }: HomeTabProps) {
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
 
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-2 sm:p-3 md:p-4 pt-6 sm:pt-8 md:pt-10">
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-2 sm:p-3 md:p-4 pt-6 sm:pt-8 md:pt-10 transition-opacity duration-300 group-hover:opacity-0">
                     <div className="flex items-start justify-between gap-2 sm:gap-3 md:gap-4">
                       <div className="flex-1">
                         {currentGame.status && (
@@ -346,7 +345,7 @@ export function HomeTab({ games }: HomeTabProps) {
                           <div className="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-2.5 md:mb-3 text-white/90">
                             <Calendar className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4" />
                             <span className="text-xs sm:text-sm">
-                              {currentGame.lastDate 
+                              {currentGame.lastDate
                                 ? `${currentGame.startDate || ''}${currentGame.startDate ? ' to ' : ''}${currentGame.lastDate}`
                                 : currentGame.startDate || currentGame.lastDate}
                             </span>
@@ -354,14 +353,14 @@ export function HomeTab({ games }: HomeTabProps) {
                         )}
 
                         <h2 className="mb-2 sm:mb-2.5 md:mb-3 text-white text-base sm:text-lg md:text-xl lg:text-2xl font-bold">{currentGame.title}</h2>
-                        
+
                         {currentGame.badges?.partner && (
                           <div className="mb-2 sm:mb-2.5 md:mb-3 flex items-center gap-1.5 sm:gap-2 text-white/70">
                             <Handshake className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4" />
                             <span className="text-xs sm:text-sm">{currentGame.badges.partner}</span>
                           </div>
                         )}
-                        
+
                         <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 md:gap-3">
                           {(currentGame.client || currentGame.badges?.school) && (
                             <div className="flex items-center gap-1.5 sm:gap-2 text-white/70">
@@ -385,7 +384,7 @@ export function HomeTab({ games }: HomeTabProps) {
                   </div>
 
                   {currentGame.badges && (
-                    <div className="absolute bottom-0 right-0 flex flex-row items-center justify-end gap-1 sm:gap-1.5 md:gap-2 p-1 sm:p-1.5 md:p-2">
+                    <div className="absolute bottom-0 right-0 flex flex-row items-center justify-end gap-1 sm:gap-1.5 md:gap-2 p-1 sm:p-1.5 md:p-2 transition-opacity duration-300 group-hover:opacity-0">
                       {currentGame.badges.star && (
                         <ThemeBadge tone="star" className="px-2 py-1 sm:px-2.5 sm:py-1.25 md:px-3 md:py-1.5">
                           <Star className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4" fill="currentColor" />
@@ -404,8 +403,136 @@ export function HomeTab({ games }: HomeTabProps) {
                     </div>
                   )}
                 </div>
+
+
+                {/* Hover Details Overlay */}
+                <div className="absolute inset-0 bg-zinc-950/85 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-300 p-6 sm:p-8 flex flex-col justify-end">
+                  <div className="space-y-4">
+                    {/* Header: Title, Status, Date */}
+                    <div>
+                      <div className="flex flex-wrap items-center gap-3 mb-2">
+                        {/* Status - Badge Style */}
+                        {currentGame.status && (
+                          <span className="px-2 py-0.5 rounded text-[10px] uppercase font-bold bg-white/10 text-white/90 border border-white/10">
+                            {currentGame.status}
+                          </span>
+                        )}
+                        {/* Date Range - Plain Text */}
+                        {(currentGame.startDate || currentGame.lastDate) && (
+                          <div className="flex items-center gap-1.5 text-xs text-white/70">
+                            <Calendar className="h-3 w-3" />
+                            <span>
+                              {currentGame.lastDate
+                                ? `${currentGame.startDate || ''}${currentGame.startDate ? ' - ' : ''}${currentGame.lastDate}`
+                                : currentGame.startDate || currentGame.lastDate}
+                            </span>
+                          </div>
+                        )}
+                        {/* Duration - Plain Text */}
+                        {(currentGame.startDate && currentGame.lastDate) && (() => {
+                          const start = new Date(currentGame.startDate);
+                          const end = new Date(currentGame.lastDate);
+                          const months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+                          const years = Math.floor(months / 12);
+                          const remainingMonths = months % 12;
+                          const durationText = years > 0
+                            ? `${years} ${years === 1 ? 'year' : 'years'}${remainingMonths > 0 ? ` ${remainingMonths} ${remainingMonths === 1 ? 'month' : 'months'}` : ''}`
+                            : `${remainingMonths} ${remainingMonths === 1 ? 'month' : 'months'}`;
+                          return (
+                            <div className="flex items-center gap-1.5 text-xs text-white/70">
+                              <Clock className="h-3 w-3" />
+                              <span>{durationText}</span>
+                            </div>
+                          );
+                        })()}
+                      </div>
+
+                      <div className="flex items-center gap-2 mb-2">
+                        <h2 className="text-2xl sm:text-3xl font-bold text-white leading-tight">{currentGame.title}</h2>
+                        {/* Team Size - Icon + Number only */}
+                        {(currentGame.badges?.teamSize || currentGame.teamMembers?.length) && (
+                          <div className="flex items-center gap-1.5 text-white/70">
+                            <Users className="h-5 w-5" />
+                            <span className="text-base font-medium">
+                              {currentGame.badges?.teamSize || currentGame.teamMembers?.length}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Meta Info Grid */}
+                      <div className="grid grid-cols-1 gap-3 text-sm text-gray-300">
+
+                        {/* About Project Section */}
+                        {currentGame.description && (
+                          <div>
+                            <div className="flex items-center gap-2 mb-1.5">
+                              <div className="h-3 w-0.5 rounded-full" style={{ backgroundColor: THEME_PRIMARY }} />
+                              <h3 className="text-xs font-bold text-white uppercase tracking-wider">About Project</h3>
+                            </div>
+                            <div className="pl-3.5">
+                              <p className="text-xs text-gray-300 leading-relaxed">
+                                {currentGame.description}
+                              </p>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Project For Info - No Header */}
+                        {(currentGame.client || currentGame.badges?.school || currentGame.badges?.partner || currentGame.badges?.collaboration) && (
+                          <div className="flex flex-wrap items-center gap-2 text-sm text-gray-300">
+                            {(currentGame.client || currentGame.badges?.school || currentGame.badges?.partner) && (
+                              <>
+                                <Building2 className="h-4 w-4 text-white/70" />
+                                <span>
+                                  <span className="text-white font-medium">
+                                    {currentGame.badges?.school || currentGame.badges?.partner || currentGame.client === 'Academic Project'
+                                      ? 'Bangkok University'
+                                      : currentGame.client}
+                                  </span>
+                                </span>
+                              </>
+                            )}
+                            {currentGame.badges?.collaboration && (
+                              <>
+                                <span className="text-white/50">•</span>
+                                <Handshake className="h-4 w-4 text-white/70" />
+                                <span>
+                                  <span className="text-white font-medium">{currentGame.badges.collaboration}</span>
+                                </span>
+                              </>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="h-px bg-white/10 w-full" />
+
+                    {/* Role & Position - Full Width */}
+                    {(currentGame.role || currentGame.roleDetails) && (
+                      <div className="w-full">
+                        <div className="flex items-center gap-2 mb-1.5">
+                          <Users className="h-4 w-4" style={{ color: THEME_PRIMARY }} />
+                          <h3 className="text-sm font-bold text-white uppercase tracking-wider">Role & Position</h3>
+                        </div>
+
+                        <div className="space-y-1 pl-6">
+                          {currentGame.role && (
+                            <p className="text-sm font-medium text-white">{currentGame.role}</p>
+                          )}
+                          {currentGame.roleDetails && (
+                            <p className="text-xs text-gray-400 leading-relaxed font-light">
+                              {currentGame.roleDetails}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </Link>
-              
+
               {/* Auto-scroll Progress Bar */}
               <div className="mt-3 sm:mt-4 md:mt-6">
                 <div

@@ -13,9 +13,9 @@ export const THEME_NOTIFICATION_TEXT = '#ffffff';
 
 // Typography
 export const THEME_FONT_PRIMARY =
-  "var(--font-poppins), 'Poppins', 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif";
+  "var(--font-inter), 'Inter', 'Poppins', 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif";
 export const THEME_FONT_MONO =
-  "var(--font-jetbrains-mono), 'JetBrains Mono', 'SFMono-Regular', 'Consolas', 'Liberation Mono', monospace";
+  "var(--font-jetbrains-mono), 'JetBrains Mono', 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace";
 
 // Badges
 export const THEME_BADGE_TEXT = THEME_PRIMARY;

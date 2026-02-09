@@ -924,7 +924,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                 )}
               </div>
               
-              <p className="text-gray-200 leading-relaxed whitespace-pre-line text-xs sm:text-sm md:text-sm">{game.description}</p>
+              <p className="text-gray-200 leading-relaxed whitespace-pre-line text-xs sm:text-sm md:text-sm font-body">{game.description}</p>
             </div>
 
             {/* Tags */}
