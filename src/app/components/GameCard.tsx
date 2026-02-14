@@ -68,9 +68,10 @@ interface GameCardProps {
   game: Game;
   onClick?: () => void;
   isSelected?: boolean;
+  view?: 'overview' | 'all';
 }
 
-export function GameCard({ game, onClick, isSelected = false }: GameCardProps) {
+export function GameCard({ game, onClick, isSelected = false, view = 'overview' }: GameCardProps) {
   const slug = createSlug(game.title);
 
   const handleClick = (e: React.MouseEvent) => {
@@ -81,7 +82,7 @@ export function GameCard({ game, onClick, isSelected = false }: GameCardProps) {
   };
 
   return (
-    <Link href={`/projects/${slug}`} className="block">
+    <Link href={`/projects/${slug}${view === 'all' ? '?view=all' : ''}`} className="block">
       <div
         className="group relative cursor-pointer overflow-hidden rounded-lg bg-gray-900 shadow-lg transition-transform duration-300 hover:shadow-2xl"
         onClick={handleClick}
