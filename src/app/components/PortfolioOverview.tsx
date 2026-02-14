@@ -325,8 +325,8 @@ export function PortfolioOverview({ games }: PortfolioOverviewProps) {
                                   </div>
                                 </div>
                               )}
-
-                              {game.tools && game.tools.length > 0 && (
+                            </div>
+                            {game.tools && game.tools.length > 0 && (
                                 <div>
                                   <p className="text-xs text-gray-400 uppercase tracking-wide mb-2">Technologies</p>
                                   <div className="flex flex-wrap gap-2">
@@ -350,7 +350,6 @@ export function PortfolioOverview({ games }: PortfolioOverviewProps) {
                                 </div>
                               )}
 
-                            </div>
                           </div>
                           
                             <div className="flex gap-3 justify-start">
