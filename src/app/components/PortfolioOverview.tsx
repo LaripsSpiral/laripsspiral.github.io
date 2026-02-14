@@ -256,6 +256,9 @@ export function PortfolioOverview({ games }: PortfolioOverviewProps) {
                                   <Users className="h-5 w-5" style={{ color: THEME_PRIMARY }} />
                                   <div>
                                     <p className="text-xs text-white font-medium">{game.role}</p>
+                                    {game.badges?.teamSize && (
+                                      <p className="text-xs text-gray-400">Team Size: {game.badges.teamSize}</p>
+                                    )}
                                   </div>
                                 </div>
                               )}
