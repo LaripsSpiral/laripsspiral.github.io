@@ -701,21 +701,23 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
               <h2 className="mb-4 text-2xl font-bold text-white">Links</h2>
               <div className="flex flex-wrap gap-3">
                 {/* Game Platform Link */}
-                {game.itchLink && (
+                {game.gameLink && (
                   <a
-                    href={game.itchLink}
+                    href={game.gameLink}
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`inline-flex items-center gap-2 px-4 py-2 font-bold rounded transition-colors ${
-                      game.itchLink.includes('roblox.com') 
+                      game.gameLink.includes('roblox.com') 
                         ? 'bg-[#00b0ff] hover:bg-[#0091ea] text-white' 
                         : 'bg-[#fa5c5c] hover:bg-[#ff7878] text-white'
                     }`}
                   >
-                    {game.itchLink.includes('roblox.com') ? (
+                    {game.gameLink.includes('roblox.com') ? (
                       <>Roblox</>
+                    ) : game.gameLink.includes('itch.io') ? (
+                      <>Itch.io</>
                     ) : (
-                      <>itch.io</>
+                      <>Play Now</>
                     )}
                   </a>
                 )}
@@ -899,7 +901,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
               <h3 className="mb-3 text-base sm:text-lg md:text-xl font-semibold text-white">About Project</h3>
               
               {/* Status, Dates, and Duration */}
-              <div className="mb-4 flex flex-wrap items-center gap-3 sm:gap-x-3 lg:gap-x-4">
+              <div className="mb-4 space-y-2">
                 {game.status && (
                   <div className="flex items-center gap-2 text-gray-200 text-xs sm:text-sm">
                     <CheckCircle className="h-4 w-4" />
@@ -924,7 +926,7 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                 )}
               </div>
               
-              <p className="text-gray-200 leading-relaxed whitespace-pre-line text-xs sm:text-sm md:text-sm">{game.description}</p>
+              <p className="text-gray-200 leading-relaxed whitespace-pre-line text-xs sm:text-sm md:text-sm font-body">{game.description}</p>
             </div>
 
             {/* Tags */}
@@ -1078,9 +1080,9 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
                 style={{ backgroundColor: THEME_PANEL_BG, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
               >
                 <h3 className="mb-4 text-base sm:text-lg md:text-xl font-semibold text-white">
-                  {game.badges?.school || game.client === 'Academic Project'
-                    ? 'Project for'
-                    : 'Working for'}
+                  {game.client === 'Coursework'
+                    ? 'Developed for'
+                    : 'Developed at'}
                 </h3>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-orange-400">

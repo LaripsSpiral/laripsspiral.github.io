@@ -9,7 +9,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-poppins);
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-jetbrains-mono);
 }
 
@@ -22,7 +22,7 @@
 
 html {
   font-size: 16px;
-  font-family: var(--font-poppins), 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: var(--font-inter), var(--font-poppins), -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
 
 body {
@@ -31,6 +31,153 @@ body {
   font-size: 1rem;
   font-family: inherit;
 }
+
+/* Universal font utilities */
+.font-universal {
+  font-family: var(--font-inter), var(--font-poppins), -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.6;
+}
+
+/* Typography hierarchy with strict weights */
+.font-header {
+  font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+.font-subheader {
+  font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+}
+
+.font-body {
+  font-family: var(--font-poppins), 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+
+.font-body-medium {
+  font-family: var(--font-poppins), 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+
+.font-body-semibold {
+  font-family: var(--font-poppins), 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+
+.font-body-bold {
+  font-family: var(--font-poppins), 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+}
+
+.font-caption {
+  font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  line-height: 1.4;
+  letter-spacing: 0.025em;
+}
+
+.font-caption-medium {
+  font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.4;
+  letter-spacing: 0.025em;
+}
+
+.font-caption-semibold {
+  font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 1.4;
+  letter-spacing: 0.025em;
+}
+
+.font-mono-universal {
+  font-family: var(--font-jetbrains-mono), 'JetBrains Mono', 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+.font-mono-medium {
+  font-family: var(--font-jetbrains-mono), 'JetBrains Mono', 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+.font-mono-semibold {
+  font-family: var(--font-jetbrains-mono), 'JetBrains Mono', 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+/* Strict weight utilities */
+.font-thin { font-weight: 300 !important; }
+.font-light { font-weight: 300 !important; }
+.font-normal { font-weight: 400 !important; }
+.font-medium { font-weight: 500 !important; }
+.font-semibold { font-weight: 600 !important; }
+.font-bold { font-weight: 700 !important; }
+.font-black { font-weight: 900 !important; }
+
+/* Style utilities */
+.font-italic { font-style: italic !important; }
+.font-uppercase { text-transform: uppercase !important; }
+.font-lowercase { text-transform: lowercase !important; }
+.font-capitalize { text-transform: capitalize !important; }
+.font-no-underline { text-decoration: none !important; }
+.font-underline { text-decoration: underline !important; }
+.font-line-through { text-decoration: line-through !important; }
+
+/* Size utilities */
+.font-xs { font-size: 0.75rem !important; }
+.font-sm { font-size: 0.875rem !important; }
+.font-base { font-size: 1rem !important; }
+.font-lg { font-size: 1.125rem !important; }
+.font-xl { font-size: 1.25rem !important; }
+.font-2xl { font-size: 1.5rem !important; }
+.font-3xl { font-size: 1.875rem !important; }
+.font-4xl { font-size: 2.25rem !important; }
+.font-5xl { font-size: 3rem !important; }
+
+/* Spacing utilities */
+.font-tight { line-height: 1.25 !important; }
+.font-snug { line-height: 1.375 !important; }
+.font-normal { line-height: 1.5 !important; }
+.font-relaxed { line-height: 1.625 !important; }
+.font-loose { line-height: 2 !important; }
+
+/* Alignment utilities */
+.font-left { text-align: left !important; }
+.font-center { text-align: center !important; }
+.font-right { text-align: right !important; }
+.font-justify { text-align: justify !important; }
 
 .perspective-1000 {
   perspective: 1000px;

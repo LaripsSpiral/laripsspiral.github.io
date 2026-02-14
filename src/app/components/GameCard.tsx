@@ -60,7 +60,7 @@ export interface Game {
     collaboration?: string;
     collaborationLink?: string;
   };
-  itchLink?: string;
+  gameLink?: string;
   websiteLink?: string;
 }
 
@@ -68,120 +68,124 @@ interface GameCardProps {
   game: Game;
   onClick?: () => void;
   isSelected?: boolean;
+  view?: 'overview' | 'all';
 }
 
-export function GameCard({ game, onClick, isSelected = false }: GameCardProps) {
+export function GameCard({ game, onClick, isSelected = false, view = 'overview' }: GameCardProps) {
   const slug = createSlug(game.title);
-  
+
   const handleClick = (e: React.MouseEvent) => {
     if (onClick) {
       e.preventDefault();
       onClick();
     }
   };
-  
+
   return (
-    <Link href={`/projects/${slug}`} className="block">
+    <Link href={`/projects/${slug}${view === 'all' ? '?view=all' : ''}`} className="block">
       <div
         className="group relative cursor-pointer overflow-hidden rounded-lg bg-gray-900 shadow-lg transition-transform duration-300 hover:shadow-2xl"
         onClick={handleClick}
         style={{ fontFamily: THEME_FONT_PRIMARY }}
       >
-      <div className="relative h-64 w-full overflow-hidden">
-        <Image
-          src={game.imageUrl}
-          alt={game.title}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className={`object-cover transition-all duration-300 group-hover:scale-105 ${
-            !isSelected ? 'grayscale group-hover:grayscale-0' : ''
-          }`}
-        />
+        <div className="relative h-64 w-full overflow-hidden">
+          <Image
+            src={game.imageUrl}
+            alt={game.title}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className={`object-cover transition-all duration-300 group-hover:scale-105 ${!isSelected ? 'grayscale group-hover:grayscale-0' : ''
+              }`}
+          />
 
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6 pt-12">
-          <div className="flex items-end justify-between gap-4">
-            <div className="flex-1 mb-2.5 -ml-2">
-              {game.status && (
-                <div className="mb-2 flex items-center gap-2 text-white/90">
-                  <CheckCircle className="h-4 w-4" />
-                  <span className="text-sm">{game.status}</span>
-                </div>
-              )}
-              {(game.startDate || game.lastDate) && (
-                <div className="mb-2 flex items-center gap-2 text-white/90">
-                  <Calendar className="h-4 w-4" />
-                  <span className="text-sm">
-                    {game.lastDate 
-                      ? `${game.startDate || ''}${game.startDate ? ' to ' : ''}${game.lastDate}`
-                      : game.startDate || game.lastDate}
-                  </span>
-                </div>
-              )}
-
-              <h3 className="text-white">{game.title}</h3>
-              
-              {game.badges?.partner && (
-                <div className="mt-2 flex items-center gap-2 text-white/70 text-xs">
-                  <Handshake className="h-3 w-3" />
-                  <span>{game.badges.partner}</span>
-                </div>
-              )}
-              
-              <div className="mt-2 flex items-center gap-3 flex-wrap">
-                {(game.client || game.badges?.school) && (
-                  <div className="flex items-center gap-2 text-white/70 text-xs">
-                    <Building2 className="h-3 w-3" />
-                    <span>
-                      {game.badges?.school || game.client === 'Academic Project'
-                        ? 'Bangkok University'
-                        : game.client}
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6 pt-12">
+            <div className="flex items-end justify-between gap-4">
+              <div className="flex-1 mb-2.5 -ml-2">
+                {game.status && (
+                  <div className="mb-2">
+                    <span className="px-3 py-1 rounded text-xs uppercase font-bold bg-black/50 text-white border border-white/30">
+                      {game.status}
                     </span>
                   </div>
                 )}
-                {game.role && (
-                  <div className="flex items-center gap-2 text-white/70 text-xs">
-                    <Users className="h-3 w-3" />
-                    <span>{game.role}</span>
+                {(game.startDate || game.lastDate) && (
+                  <div className="mb-2 flex items-center gap-2 text-white/90">
+                    <Calendar className="h-4 w-4" />
+                    <span className="text-sm font-caption">
+                      {game.lastDate
+                        ? `${game.startDate || ''}${game.startDate ? ' to ' : ''}${game.lastDate}`
+                        : game.startDate || game.lastDate}
+                    </span>
                   </div>
                 )}
+
+                <h3 className="text-white font-header">{game.title}</h3>
+
+                <div className="relative flex-1 max-w-md">
+                </div>
+
+                {game.badges?.partner && (
+                  <div className="mt-2 flex items-center gap-2 text-white/70 text-xs">
+                    <Handshake className="h-3 w-3" />
+                    <span>{game.badges.partner}</span>
+                  </div>
+                )}
+
+                <div className="mt-2 flex items-center gap-3 flex-wrap">
+                  {(game.client || game.badges?.school) && (
+                    <div className="flex items-center gap-2 text-white/70 text-xs">
+                      <Building2 className="h-3 w-3" />
+                      <span>
+                        {game.badges?.school || game.client === 'Academic Project'
+                          ? 'Bangkok University'
+                          : game.client}
+                      </span>
+                    </div>
+                  )}
+                  {game.role && (
+                    <div className="flex items-center gap-2 text-white/70 text-xs">
+                      <Users className="h-3 w-3" />
+                      <span>{game.role}</span>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        {game.badges && (
+          <div className="absolute bottom-0 right-0 flex flex-row items-center justify-end gap-2 p-2">
+            {game.badges.star && (
+              <ThemeBadge tone="star">
+                <Star className="h-3 w-3" fill="currentColor" />
+              </ThemeBadge>
+            )}
+            {game.badges.trophy && (
+              <ThemeBadge tone="trophy">
+                <Trophy className="h-3 w-3" />
+              </ThemeBadge>
+            )}
+            {game.badges.school && (
+              <ThemeBadge tone="school">
+                <GraduationCap className="h-3 w-3" />
+              </ThemeBadge>
+            )}
+            {game.badges.client && (
+              <ThemeBadge tone="partner">
+                <Building2 className="h-3 w-3" />
+                {game.badges.client.split(' | ')[0]}
+              </ThemeBadge>
+            )}
+            {game.badges.collaboration && (
+              <ThemeBadge tone="team">
+                <Handshake className="h-3 w-3" />
+                {game.badges.collaboration.split(' ')[0]}
+              </ThemeBadge>
+            )}
+          </div>
+        )}
       </div>
-      
-      {game.badges && (
-        <div className="absolute bottom-0 right-0 flex flex-row items-center justify-end gap-2 p-2">
-          {game.badges.star && (
-            <ThemeBadge tone="star">
-              <Star className="h-3 w-3" fill="currentColor" />
-            </ThemeBadge>
-          )}
-          {game.badges.trophy && (
-            <ThemeBadge tone="trophy">
-              <Trophy className="h-3 w-3" />
-            </ThemeBadge>
-          )}
-          {game.badges.school && (
-            <ThemeBadge tone="school">
-              <GraduationCap className="h-3 w-3" />
-            </ThemeBadge>
-          )}
-          {game.badges.client && (
-            <ThemeBadge tone="partner">
-              <Building2 className="h-3 w-3" />
-              {game.badges.client.split(' | ')[0]}
-            </ThemeBadge>
-          )}
-          {game.badges.collaboration && (
-            <ThemeBadge tone="team">
-              <Handshake className="h-3 w-3" />
-              {game.badges.collaboration.split(' ')[0]}
-            </ThemeBadge>
-          )}
-        </div>
-      )}
-    </div>
     </Link>
   );
 }

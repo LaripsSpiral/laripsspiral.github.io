@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { Gamepad2, Github, Linkedin, Mail } from 'lucide-react';
 import { TabNavigation } from './TabNavigation';
 import {
@@ -153,7 +153,9 @@ export function PageLayout({ children, transparentBackground = false }: PageLayo
           </div>
         </header>
 
-        <TabNavigation />
+        <Suspense fallback={null}>
+          <TabNavigation />
+        </Suspense>
       </div>
 
       {children}
