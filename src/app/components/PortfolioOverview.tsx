@@ -150,25 +150,27 @@ export function PortfolioOverview({ games }: PortfolioOverviewProps) {
                   <div className="p-6 sm:p-8">
                     <div className="grid gap-6 lg:grid-cols-12 lg:items-start">
                       <div className="lg:col-span-5 space-y-3">
-                        <div className="relative aspect-video overflow-hidden rounded-xl border bg-black/5" style={{ borderColor: `${THEME_PRIMARY}20` }}>
-                          <Image
-                            src={game.imageUrl}
-                            alt={game.title}
-                            fill
-                            sizes="(max-width: 1024px) 100vw, 40vw"
-                            className="object-cover"
-                          />
+                        <Link href={`/projects/${createSlug(game.title)}?view=all`}>
+                          <div className="relative aspect-video overflow-hidden rounded-xl border bg-black/5 cursor-pointer hover:bg-black/10 transition-colors" style={{ borderColor: `${THEME_PRIMARY}20` }}>
+                            <Image
+                              src={game.imageUrl}
+                              alt={game.title}
+                              fill
+                              sizes="(max-width: 1024px) 100vw, 40vw"
+                              className="object-cover"
+                            />
 
-                          {game.status && (
-                            <div className="absolute top-3 right-3">
-                              <span
-                                className="px-3 py-1 rounded-full text-xs font-bold bg-black/60 text-white border border-white/30 backdrop-blur-sm"
-                              >
-                                {game.status}
-                              </span>
-                            </div>
-                          )}
-                        </div>
+                            {game.status && (
+                              <div className="absolute top-3 right-3">
+                                <span
+                                  className="px-3 py-1 rounded-full text-xs font-bold bg-black/60 text-white border border-white/30 backdrop-blur-sm"
+                                >
+                                  {game.status}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        </Link>
 
                         {featureMedia.length > 0 && (
                           <div className="rounded-xl border p-3 bg-black/5" style={{ borderColor: `${THEME_PRIMARY}20` }}>
