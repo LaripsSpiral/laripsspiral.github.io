@@ -25,23 +25,42 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
 
   // Update URL when search or sort changes
   useEffect(() => {
-    const params = new URLSearchParams();
-    if (searchQuery.trim()) {
-      params.set('q', searchQuery.trim());
+    const params = new URLSearchParams(searchParams.toString());
+
+    const trimmedQuery = searchQuery.trim();
+    if (trimmedQuery) {
+      params.set('q', trimmedQuery);
+    } else {
+      params.delete('q');
     }
+
     if (sortBy !== 'name') {
       params.set('sort', sortBy);
+    } else {
+      params.delete('sort');
     }
+
     if (statusFilter !== 'all') {
       params.set('status', statusFilter);
+    } else {
+      params.delete('status');
     }
+
     if (selectedTags.length > 0) {
       params.set('tags', selectedTags.join(','));
+    } else {
+      params.delete('tags');
     }
-    
-    const newUrl = params.toString() ? `${pathname}?${params.toString()}` : pathname;
-    router.replace(newUrl, { scroll: false });
-  }, [searchQuery, sortBy, statusFilter, selectedTags, pathname, router]);
+
+    const nextQueryString = params.toString();
+    const nextUrl = nextQueryString ? `${pathname}?${nextQueryString}` : pathname;
+    const currentQueryString = searchParams.toString();
+    const currentUrl = currentQueryString ? `${pathname}?${currentQueryString}` : pathname;
+
+    if (nextUrl !== currentUrl) {
+      router.replace(nextUrl, { scroll: false });
+    }
+  }, [searchQuery, sortBy, statusFilter, selectedTags, pathname, router, searchParams]);
 
   const filteredAndSortedGames = useMemo(() => {
     let filtered = games;

@@ -1,8 +1,10 @@
+
 'use client';
 
 import { useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { Calendar, Clock, Users, Target, ExternalLink, ArrowRight, Github, Play, X } from 'lucide-react';
 import { Game, FeatureDetailItem } from './GameCard';
 import { createSlug } from '@/app/lib/project/slug';
@@ -26,8 +28,14 @@ interface ProjectOverviewProps {
 }
 
 export function ProjectOverview({ game }: ProjectOverviewProps) {
+  const searchParams = useSearchParams();
   const [showAllFeatures, setShowAllFeatures] = useState(false);
   const [selectedMedia, setSelectedMedia] = useState<FeatureDetailItem['media'] | null>(null);
+
+  const returnView = searchParams.get('returnView');
+  const view = searchParams.get('view');
+  const backView = returnView || view;
+  const backToProjectsHref = backView && backView !== 'overview' ? `/projects?view=${encodeURIComponent(backView)}` : '/projects';
 
   const getYouTubeVideoId = (url: string): string | null => {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -119,16 +127,21 @@ export function ProjectOverview({ game }: ProjectOverviewProps) {
     <div className="mx-auto max-w-7xl px-2 sm:px-4 md:px-6 pt-4 sm:pt-6 pb-4 sm:pb-6 lg:px-8" style={{ fontFamily: THEME_FONT_PRIMARY }}>
       {/* Header */}
       <div className="mb-6 sm:mb-8">
-        <div className="flex items-center gap-4 mb-4">
-          <Link
-            href="/projects"
-            className="flex items-center gap-2 text-sm transition-colors hover:text-white"
-            style={{ color: THEME_PRIMARY }}
-          >
-            <ArrowRight className="h-4 w-4 rotate-180" />
-            Back to Projects
-          </Link>
-        </div>
+        <nav
+          className="mb-4 border-b backdrop-blur-sm"
+          style={{ borderColor: THEME_PRIMARY_BORDER, backgroundColor: 'rgba(10,13,17,0.7)' }}
+        >
+          <div className="px-2 sm:px-4 md:px-6 lg:px-8">
+            <Link
+              href={backToProjectsHref}
+              className="relative inline-flex items-center gap-2 py-3 text-sm transition-colors text-gray-400 hover:text-gray-200"
+              style={{ color: THEME_PRIMARY }}
+            >
+              <ArrowRight className="h-4 w-4 rotate-180" />
+              Back to Projects
+            </Link>
+          </div>
+        </nav>
         
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
           <div className="lg:w-1/3 space-y-4">

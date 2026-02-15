@@ -19,6 +19,7 @@ import {
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 import { differenceInDays, differenceInMonths, differenceInYears, parse, isValid, addYears, addMonths } from 'date-fns';
 import { Game, FeatureDetailItem } from './GameCard';
 import {
@@ -263,6 +264,7 @@ const calculateDuration = (startDate?: string, lastDate?: string): string => {
 };
 
 export function GameDetailPage({ game }: GameDetailPageProps) {
+  const searchParams = useSearchParams();
   const [selectedMediaIndex, setSelectedMediaIndex] = useState<number | null>(null);
   const [mainMediaIndex, setMainMediaIndex] = useState<number>(0);
   const [isVideoPlaying, setIsVideoPlaying] = useState<boolean>(false);
@@ -288,6 +290,11 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
     }
   }, [mainMediaIndex]);
 
+  const returnView = searchParams.get('returnView');
+  const view = searchParams.get('view');
+  const backView = returnView || view;
+  const backToProjectsHref = backView && backView !== 'overview' ? `/projects?view=${encodeURIComponent(backView)}` : '/projects';
+
   return (
     <div className="relative min-h-screen" style={game.wallpaper ? { background: 'transparent' } : undefined}>
       {/* Background Wallpaper */}
@@ -311,20 +318,21 @@ export function GameDetailPage({ game }: GameDetailPageProps) {
       <div style={game.wallpaper ? { position: 'relative', zIndex: 2 } : undefined}>
         <PageLayout transparentBackground={!!game.wallpaper}>
         {/* Back Button */}
-        <div
-          className="sticky top-0 z-10 backdrop-blur-sm"
-          style={{ backgroundColor: 'rgba(10,13,17,0.9)', borderBottom: `1px solid ${THEME_PRIMARY_BORDER}` }}
+        <nav
+          className="sticky top-0 z-10 border-b backdrop-blur-sm"
+          style={{ borderColor: THEME_PRIMARY_BORDER, backgroundColor: 'rgba(10,13,17,0.7)', fontFamily: THEME_FONT_PRIMARY }}
         >
-          <div className="mx-auto max-w-7xl px-4 md:px-8 py-4" style={{ fontFamily: THEME_FONT_PRIMARY }}>
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <Link
-              href="/projects"
-              className="inline-flex items-center gap-2 text-gray-300 transition-colors hover:text-white"
+              href={backToProjectsHref}
+              className="relative inline-flex items-center gap-2 py-3 transition-colors text-gray-400 hover:text-gray-200"
+              style={{ color: THEME_PRIMARY }}
             >
               <ArrowLeft className="h-5 w-5" />
               <span>Back to Projects</span>
             </Link>
           </div>
-        </div>
+        </nav>
 
         <div className="min-h-screen relative z-10">
         {/* Main Content - Steam Style Layout */}

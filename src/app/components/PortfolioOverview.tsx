@@ -150,7 +150,7 @@ export function PortfolioOverview({ games }: PortfolioOverviewProps) {
                   <div className="p-6 sm:p-8">
                     <div className="grid gap-6 lg:grid-cols-12 lg:items-start">
                       <div className="lg:col-span-5 space-y-3">
-                        <Link href={`/projects/${createSlug(game.title)}?view=all`}>
+                        <Link href={`/projects/${createSlug(game.title)}?view=all&returnView=overview`}>
                           <div className="relative aspect-video overflow-hidden rounded-xl border bg-black/5 cursor-pointer hover:bg-black/10 transition-colors" style={{ borderColor: `${THEME_PRIMARY}20` }}>
                             <Image
                               src={game.imageUrl}
@@ -359,7 +359,7 @@ export function PortfolioOverview({ games }: PortfolioOverviewProps) {
                           
                             <div className="flex gap-3 justify-start">
                               <Link
-                                href={`/projects/${createSlug(game.title)}?view=all`}
+                                href={`/projects/${createSlug(game.title)}?view=all&returnView=overview`}
                                 className="flex items-center gap-2 px-4 py-2 rounded-md font-medium transition-all transform hover:scale-105 bg-gray-200 text-gray-900 hover:bg-gray-300 text-sm"
                               >
                                 <div className="relative w-3.5 h-3.5">
