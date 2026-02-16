@@ -2,7 +2,7 @@
 
 import { Calendar } from 'lucide-react';
 import { differenceInDays, differenceInMonths, differenceInYears, parse, isValid, addYears, addMonths } from 'date-fns';
-import { THEME_PRIMARY } from '../theme/palette';
+import { THEME_PRIMARY } from '@/app/theme/palette';
 
 interface CalendarDisplayProps {
     startDate?: string;
@@ -16,7 +16,7 @@ interface CalendarDisplayProps {
 }
 
 // Helper function to calculate duration between dates using date-fns
-// Extracted from GameDetailPage.tsx
+// Extracted from ProjectDetailPage.tsx
 const calculateDuration = (startDate?: string, lastDate?: string): string => {
     if (!startDate || !lastDate) return '';
 

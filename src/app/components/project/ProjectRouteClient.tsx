@@ -3,14 +3,12 @@
 import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { games } from '@/app/data/gamesDB';
-import { Projects } from '@/app/data/projectDB';
 import { createSlug } from '@/app/lib/project/slug';
-import { GameDetailPage } from '@/app/components/GameDetailPage';
-import { ProjectOverview } from '@/app/components/ProjectOverview';
-import { PageLayout } from '@/app/components/PageLayout';
-import ProjectInspect from '@/app/components/ProjectInspect';
+import { ProjectDetailPage } from '@/app/components/project/ProjectDetailPage';
+import { ProjectSummary } from '@/app/components/project/ProjectSummary';
+import { PageLayout } from '@/app/components/layout/PageLayout';
 
-function ProjectPageClientInner({ slug }: { slug: string }) {
+function ProjectRouteClientInner({ slug }: { slug: string }) {
   const searchParams = useSearchParams();
   const view = searchParams.get('view') || 'overview';
 
@@ -19,22 +17,12 @@ function ProjectPageClientInner({ slug }: { slug: string }) {
   const game = games.find((g) => createSlug(g.title) === normalizedSlug);
   if (game) {
     if (view === 'all') {
-      return <GameDetailPage game={game} />;
+      return <ProjectDetailPage game={game} />;
     }
     return (
       <PageLayout>
-        <ProjectOverview game={game} />
+        <ProjectSummary game={game} />
       </PageLayout>
-    );
-  }
-
-  const project = Projects.find((p) => p.slug === normalizedSlug);
-  if (project) {
-    return (
-      <div className="container mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4">Project: {project.title}</h1>
-        <ProjectInspect {...project} />
-      </div>
     );
   }
 
@@ -54,10 +42,10 @@ function ProjectPageClientInner({ slug }: { slug: string }) {
   );
 }
 
-export function ProjectPageClient({ slug }: { slug: string }) {
+export function ProjectRouteClient({ slug }: { slug: string }) {
   return (
     <Suspense fallback={null}>
-      <ProjectPageClientInner slug={slug} />
+      <ProjectRouteClientInner slug={slug} />
     </Suspense>
   );
 }

@@ -1,95 +1,27 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Calendar, Users, Target, ExternalLink, Play, X, GraduationCap, Handshake, Building2 } from 'lucide-react';
+import { Users, ExternalLink, Play, Handshake, Building2 } from 'lucide-react';
 import { createSlug } from '@/app/lib/project/slug';
-import { FeatureDetailItem, Game } from './GameCard';
+import { getYouTubeThumbnail } from '@/app/lib/youtube';
+import { FeatureDetailItem, Game } from './ProjectCard';
+import { MediaOverlay, OverlayMedia } from '@/app/components/ui/MediaOverlay';
 import {
   THEME_PRIMARY,
   THEME_PRIMARY_BORDER,
   THEME_PRIMARY_TINT,
   THEME_FONT_PRIMARY,
-} from '../theme/palette';
-import { CalendarDisplay } from './CalendarDisplay';
+} from '@/app/theme/palette';
+import { CalendarDisplay } from '@/app/components/ui/CalendarDisplay';
 
-interface PortfolioOverviewProps {
+interface ProjectPortfolioProps {
   games: Game[];
 }
 
-export function PortfolioOverview({ games }: PortfolioOverviewProps) {
-  const [selectedMedia, setSelectedMedia] = useState<FeatureDetailItem['media'] | null>(null);
-
-
-
-  const getYouTubeVideoId = (url: string): string | null => {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
-    return (match && match[2].length === 11) ? match[2] : null;
-  };
-
-  const getYouTubeEmbedUrl = (url: string): string | null => {
-    const videoId = getYouTubeVideoId(url);
-    if (!videoId) return null;
-    return `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`;
-  };
-
-  const getYouTubeThumbnail = (url: string): string | null => {
-    const videoId = getYouTubeVideoId(url);
-    if (!videoId) return null;
-    return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-  };
-
-  const onCloseOverlay = () => setSelectedMedia(null);
-
-  const overlay = useMemo(() => {
-    if (!selectedMedia) return null;
-    const type = selectedMedia.type;
-
-    if (type === 'image' || type === 'gif') {
-      return (
-        <div className="relative w-[min(1100px,96vw)] h-[min(720px,80vh)]">
-          <Image
-            src={selectedMedia.url}
-            alt={selectedMedia.title || 'Media'}
-            fill
-            sizes="(max-width: 1100px) 96vw, 1100px"
-            className="object-contain"
-            priority
-          />
-        </div>
-      );
-    }
-
-    if (type === 'video') {
-      return (
-        <video
-          src={selectedMedia.url}
-          controls
-          controlsList="nodownload"
-          className="max-h-[80vh] max-w-[96vw] rounded-lg bg-black"
-        />
-      );
-    }
-
-    if (type === 'youtube') {
-      const embedUrl = getYouTubeEmbedUrl(selectedMedia.url);
-      return (
-        <div className="relative w-[min(1100px,96vw)] aspect-video rounded-lg overflow-hidden bg-black">
-          <iframe
-            src={embedUrl || ''}
-            className="absolute inset-0 w-full h-full"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            title={selectedMedia.title || 'YouTube video'}
-          />
-        </div>
-      );
-    }
-
-    return null;
-  }, [selectedMedia]);
+export function ProjectPortfolio({ games }: ProjectPortfolioProps) {
+  const [selectedMedia, setSelectedMedia] = useState<OverlayMedia | null>(null);
 
   if (!games || games.length === 0) {
     return (
@@ -410,31 +342,7 @@ export function PortfolioOverview({ games }: PortfolioOverviewProps) {
         </div>
       </div>
 
-      {selectedMedia && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4"
-          style={{ backgroundColor: 'rgba(0,0,0,0.75)' }}
-          onClick={onCloseOverlay}
-          role="dialog"
-          aria-modal="true"
-        >
-          <div
-            className="relative"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              type="button"
-              className="absolute -top-3 -right-3 rounded-full p-2 text-white border"
-              style={{ backgroundColor: 'rgba(0,0,0,0.7)', borderColor: `${THEME_PRIMARY}40` }}
-              onClick={onCloseOverlay}
-              aria-label="Close"
-            >
-              <X className="h-5 w-5" />
-            </button>
-            {overlay}
-          </div>
-        </div>
-      )}
+      <MediaOverlay media={selectedMedia} onClose={() => setSelectedMedia(null)} />
     </div>
   );
 }

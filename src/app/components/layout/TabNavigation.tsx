@@ -2,12 +2,12 @@
 
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { THEME_PRIMARY, THEME_PRIMARY_BORDER, THEME_FONT_PRIMARY } from '../theme/palette';
+import { THEME_PRIMARY, THEME_PRIMARY_BORDER, THEME_FONT_PRIMARY } from '@/app/theme/palette';
 
 export function TabNavigation() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  
+
   const tabs = [
     { id: 'home', label: 'Home', href: '/home' },
     { id: 'about', label: 'About Me', href: '/about' },
@@ -38,9 +38,8 @@ export function TabNavigation() {
                 <Link
                   key={tab.id}
                   href={tab.href}
-                  className={`relative py-4 transition-colors ${
-                    active ? 'text-white' : 'text-gray-400 hover:text-gray-200'
-                  }`}
+                  className={`relative py-4 transition-colors ${active ? 'text-white' : 'text-gray-400 hover:text-gray-200'
+                    }`}
                   style={{ color: active ? THEME_PRIMARY : undefined }}
                 >
                   {tab.label}
@@ -67,9 +66,8 @@ export function TabNavigation() {
             <div className="flex gap-8">
               <Link
                 href="/projects"
-                className={`relative py-3 transition-colors ${
-                  currentView === 'overview' ? 'text-white' : 'text-gray-400 hover:text-gray-200'
-                }`}
+                className={`relative py-3 transition-colors ${currentView === 'overview' ? 'text-white' : 'text-gray-400 hover:text-gray-200'
+                  }`}
                 style={{ color: currentView === 'overview' ? THEME_PRIMARY : undefined }}
               >
                 Overview
@@ -82,9 +80,8 @@ export function TabNavigation() {
               </Link>
               <Link
                 href="/projects?view=all"
-                className={`relative py-3 transition-colors ${
-                  currentView === 'all' ? 'text-white' : 'text-gray-400 hover:text-gray-200'
-                }`}
+                className={`relative py-3 transition-colors ${currentView === 'all' ? 'text-white' : 'text-gray-400 hover:text-gray-200'
+                  }`}
                 style={{ color: currentView === 'all' ? THEME_PRIMARY : undefined }}
               >
                 All Details

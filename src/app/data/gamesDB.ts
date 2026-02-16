@@ -1,8 +1,8 @@
-import { Game, FeatureDetailItem } from '@/app/components/GameCard';
-import { i } from 'framer-motion/client';
+import { Game, FeatureDetailItem } from '@/app/components/project/ProjectCard';
 
 export const games: Game[] = [
-  {title: 'School of Survival',
+  {
+    title: 'School of Survival',
     description: 'Practice survival strategies for helping students to learning in an immerses realistic school setting where an emergency situation.',
     imageUrl: '/projects/SchoolOfSurvival/Yoorod_Cover.png',
     wallpaper: '/projects/SchoolOfSurvival/gamepreviews/Yoorod_Preview2.png',
@@ -104,7 +104,8 @@ export const games: Game[] = [
     gameLink: 'https://www.roblox.com/games/16880223610/School-of-Survival',
     websiteLink: 'https://yoorodwittaya.com/',
   },
-  {title: 'Augus Lost Without You',
+  {
+    title: 'Augus Lost Without You',
     description:
       'The story of a cat named Augus, a magic-lover searching for his owner. After a tragic accident with a truck, he awakens in a fantasy world of his own memories, still determined to find his way back to his owner.',
     imageUrl: '/projects/AugusLostWithoutYou/AugusLostWithoutYou_cover.jpg',
@@ -218,7 +219,8 @@ export const games: Game[] = [
     },
     gameLink: 'https://myeboy-loues.itch.io/augus',
   },
-  {title: 'TINY TUNA',
+  {
+    title: 'TINY TUNA',
     description:
       'You are born as a Bluefin Tuna that must live in a cruel ocean. You must eat smaller fish in order to grow, and you also have to avoid larger animals and dangerous predators. Your objective is survival for the sake of breeding.',
     imageUrl: '/projects/tinytuna/tinytunacover.png',
@@ -348,7 +350,8 @@ export const games: Game[] = [
     },
     gameLink: 'https://laripsspiral.itch.io/tiny-tuna',
   },
-  {title: 'MiceTrix',
+  {
+    title: 'MiceTrix',
     description: 'You play as a hacker with the mission to help The Lab Rat, known as "Mice," escape from of the matrix-like world.',
     imageUrl: '/projects/MiceTrix/MiceTrix_Cover.png',
     wallpaper: '',

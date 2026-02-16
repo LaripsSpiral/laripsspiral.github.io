@@ -12,7 +12,7 @@ import {
   THEME_FONT_PRIMARY,
   THEME_NOTIFICATION_BG,
   THEME_NOTIFICATION_BORDER,
-} from '../theme/palette';
+} from '@/app/theme/palette';
 
 interface PageLayoutProps {
   children: React.ReactNode;

@@ -1,6 +1,6 @@
 'use client';
 
-import { PageLayout } from '@/app/components/PageLayout';
+import { PageLayout } from '@/app/components/layout/PageLayout';
 import { HomeTab } from '@/app/components/HomeTab';
 import { games } from '@/app/data/gamesDB';
 
