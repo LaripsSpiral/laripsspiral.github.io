@@ -6,6 +6,7 @@ import { Calendar, Star, Trophy, GraduationCap, Users, Handshake, Building2, Che
 import { createSlug } from '@/app/lib/project/slug';
 import { ThemeBadge } from './ThemeBox';
 import { THEME_FONT_PRIMARY } from '../theme/palette';
+import { CalendarDisplay } from './CalendarDisplay';
 
 export interface GameMedia {
   type: 'video' | 'image' | 'gif' | 'youtube';
@@ -108,18 +109,19 @@ export function GameCard({ game, onClick, isSelected = false, view = 'overview' 
                     </span>
                   </div>
                 )}
-                {(game.startDate || game.lastDate) && (
-                  <div className="mb-2 flex items-center gap-2 text-white/90">
-                    <Calendar className="h-4 w-4" />
-                    <span className="text-sm font-caption">
-                      {game.lastDate
-                        ? `${game.startDate || ''}${game.startDate ? ' to ' : ''}${game.lastDate}`
-                        : game.startDate || game.lastDate}
-                    </span>
-                  </div>
-                )}
+                <CalendarDisplay
+                  startDate={game.startDate}
+                  endDate={game.lastDate}
+                  className="mb-2 text-white/90 font-caption"
+                  scale={0.9}
+                  showDuration={true}
+                  variant="stacked"
+                />
 
-                <h3 className="text-white font-header">{game.title}</h3>
+                <div className="flex items-center gap-2 mb-1">
+                  {game.badges?.star && <Star className="h-4 w-4 text-yellow-400 flex-shrink-0" fill="currentColor" />}
+                  <h3 className="text-white font-header leading-tight">{game.title}</h3>
+                </div>
 
                 <div className="relative flex-1 max-w-md">
                 </div>
@@ -131,14 +133,22 @@ export function GameCard({ game, onClick, isSelected = false, view = 'overview' 
                   </div>
                 )}
 
-                <div className="mt-2 flex items-center gap-3 flex-wrap">
+                <div className="mt-0.5 flex items-center gap-1 flex-wrap">
                   {(game.client || game.badges?.school) && (
-                    <div className="flex items-center gap-2 text-white/70 text-xs">
-                      <Building2 className="h-3 w-3" />
-                      <span>
-                        {game.badges?.school || game.client === 'Academic Project'
+                    <div className="flex items-center gap-2 text-white/70 text-xs w-full">
+                      <Building2 className="h-3 w-3 text-orange-400 flex-shrink-0" />
+                      <span className="truncate w-full">
+                        {game.client === 'Coursework'
                           ? 'Bangkok University'
-                          : game.client}
+                          : game.client || 'Bangkok University'}
+                      </span>
+                    </div>
+                  )}
+                  {game.badges?.collaboration && (
+                    <div className="flex items-center gap-2 text-white/70 text-xs w-full">
+                      <Handshake className="h-3 w-3 text-blue-400 flex-shrink-0" />
+                      <span className="truncate w-full">
+                        {game.badges.collaboration}
                       </span>
                     </div>
                   )}
@@ -154,37 +164,7 @@ export function GameCard({ game, onClick, isSelected = false, view = 'overview' 
           </div>
         </div>
 
-        {game.badges && (
-          <div className="absolute bottom-0 right-0 flex flex-row items-center justify-end gap-2 p-2">
-            {game.badges.star && (
-              <ThemeBadge tone="star">
-                <Star className="h-3 w-3" fill="currentColor" />
-              </ThemeBadge>
-            )}
-            {game.badges.trophy && (
-              <ThemeBadge tone="trophy">
-                <Trophy className="h-3 w-3" />
-              </ThemeBadge>
-            )}
-            {game.badges.school && (
-              <ThemeBadge tone="school">
-                <GraduationCap className="h-3 w-3" />
-              </ThemeBadge>
-            )}
-            {game.badges.client && (
-              <ThemeBadge tone="partner">
-                <Building2 className="h-3 w-3" />
-                {game.badges.client.split(' | ')[0]}
-              </ThemeBadge>
-            )}
-            {game.badges.collaboration && (
-              <ThemeBadge tone="team">
-                <Handshake className="h-3 w-3" />
-                {game.badges.collaboration.split(' ')[0]}
-              </ThemeBadge>
-            )}
-          </div>
-        )}
+
       </div>
     </Link>
   );

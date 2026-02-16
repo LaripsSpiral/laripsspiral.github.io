@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Calendar, Users, Target, ExternalLink, Play, X, GraduationCap, Handshake } from 'lucide-react';
+import { Calendar, Users, Target, ExternalLink, Play, X, GraduationCap, Handshake, Building2 } from 'lucide-react';
 import { createSlug } from '@/app/lib/project/slug';
 import { FeatureDetailItem, Game } from './GameCard';
 import {
@@ -12,6 +12,7 @@ import {
   THEME_PRIMARY_TINT,
   THEME_FONT_PRIMARY,
 } from '../theme/palette';
+import { CalendarDisplay } from './CalendarDisplay';
 
 interface PortfolioOverviewProps {
   games: Game[];
@@ -20,21 +21,7 @@ interface PortfolioOverviewProps {
 export function PortfolioOverview({ games }: PortfolioOverviewProps) {
   const [selectedMedia, setSelectedMedia] = useState<FeatureDetailItem['media'] | null>(null);
 
-  const calculateDuration = (startDate: string, endDate: string): string => {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    const months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
-    const years = Math.floor(months / 12);
-    const remainingMonths = months % 12;
-    
-    if (years > 0 && remainingMonths > 0) {
-      return `${years} year${years > 1 ? 's' : ''} ${remainingMonths} month${remainingMonths > 1 ? 's' : ''}`;
-    } else if (years > 0) {
-      return `${years} year${years > 1 ? 's' : ''}`;
-    } else {
-      return `${months} month${months > 1 ? 's' : ''}`;
-    }
-  };
+
 
   const getYouTubeVideoId = (url: string): string | null => {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -116,7 +103,7 @@ export function PortfolioOverview({ games }: PortfolioOverviewProps) {
     <div className="min-h-screen relative overflow-hidden" style={{ fontFamily: THEME_FONT_PRIMARY }}>
       {/* Background with gradient and blur */}
       <div className="absolute inset-0">
-        <div 
+        <div
           className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-teal-900/20"
           style={{
             background: `radial-gradient(circle at 30% 20%, ${THEME_PRIMARY_TINT} 0%, transparent 50%), 
@@ -265,42 +252,61 @@ export function PortfolioOverview({ games }: PortfolioOverviewProps) {
                                 </div>
                               )}
 
-                              {game.startDate && (
-                                <div className="flex items-center gap-3">
-                                  <Calendar className="h-5 w-5" style={{ color: THEME_PRIMARY }} />
-                                  <div>
-                                    <p className="text-xs text-white font-medium">
-                                      {game.startDate} - {game.lastDate || 'Present'}
-                                    </p>
-                                    {game.lastDate && (
-                                      <p className="text-xs text-gray-400">
-                                        Duration: {calculateDuration(game.startDate, game.lastDate)}
-                                      </p>
-                                    )}
-                                  </div>
-                                </div>
-                              )}
+                              <CalendarDisplay
+                                startDate={game.startDate}
+                                endDate={game.lastDate}
+                                showDuration={true}
+                                variant="stacked"
+                                className="items-start text-white"
+                                iconColor={THEME_PRIMARY}
+                              />
 
-                              {game.badges?.school && (
+                              {(game.client || game.badges?.school) && (
                                 <div className="flex items-center gap-3">
-                                  <GraduationCap className="h-5 w-5 text-blue-400" />
+                                  <Building2 className="h-5 w-5 text-orange-400 flex-shrink-0" />
                                   <div>
                                     <p className="text-xs text-white font-medium">Developed at</p>
-                                    <p className="text-xs text-gray-400">
-                                      {game.badges.school ? 'Bangkok University' : game.client || 'Independent'}
-                                    </p>
+                                    {(() => {
+                                      const text = game.client === 'Coursework' ? 'Bangkok University' : (game.client || 'Bangkok University');
+                                      const link = game.badges?.clientLink || (text === 'Bangkok University' ? 'https://www.bu.ac.th/' : undefined);
+
+                                      if (link) {
+                                        return (
+                                          <a
+                                            href={link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-xs text-gray-400 hover:text-white transition-colors underline underline-offset-4 decoration-white/40 hover:decoration-white/70"
+                                          >
+                                            {text}
+                                          </a>
+                                        );
+                                      }
+                                      return <p className="text-xs text-gray-400">{text}</p>;
+                                    })()}
                                   </div>
                                 </div>
                               )}
 
                               {game.badges?.collaboration && (
                                 <div className="flex items-center gap-3">
-                                  <Handshake className="h-5 w-5 text-purple-400" />
+                                  <Handshake className="h-5 w-5 text-blue-400 flex-shrink-0" />
                                   <div>
                                     <p className="text-xs text-white font-medium">Collaboration</p>
-                                    <p className="text-xs text-gray-400">
-                                      {game.badges.collaboration}
-                                    </p>
+                                    {game.badges.collaborationLink ? (
+                                      <a
+                                        href={game.badges.collaborationLink}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-xs text-gray-400 hover:text-white transition-colors underline underline-offset-4 decoration-white/40 hover:decoration-white/70"
+                                      >
+                                        {game.badges.collaboration}
+                                      </a>
+                                    ) : (
+                                      <p className="text-xs text-gray-400">
+                                        {game.badges.collaboration}
+                                      </p>
+                                    )}
                                   </div>
                                 </div>
                               )}
@@ -332,67 +338,67 @@ export function PortfolioOverview({ games }: PortfolioOverviewProps) {
                               )}
                             </div>
                             {game.tools && game.tools.length > 0 && (
-                                <div>
-                                  <p className="text-xs text-gray-400 uppercase tracking-wide mb-2">Technologies</p>
-                                  <div className="flex flex-wrap gap-2">
-                                    {game.tools.slice(0, 10).map((tool, index) => (
-                                      <span
-                                        key={index}
-                                        className="px-3 py-1 rounded-full text-sm font-medium"
-                                        style={{
-                                          backgroundColor: `${THEME_PRIMARY}20`,
-                                          border: `1px solid ${THEME_PRIMARY}`,
-                                          color: THEME_PRIMARY,
-                                        }}
-                                      >
-                                        {tool}
-                                      </span>
-                                    ))}
-                                    {game.tools.length > 10 && (
-                                      <span className="text-gray-400 text-sm">+{game.tools.length - 10} more</span>
-                                    )}
-                                  </div>
+                              <div>
+                                <p className="text-xs text-gray-400 uppercase tracking-wide mb-2">Technologies</p>
+                                <div className="flex flex-wrap gap-2">
+                                  {game.tools.slice(0, 10).map((tool, index) => (
+                                    <span
+                                      key={index}
+                                      className="px-3 py-1 rounded-full text-sm font-medium"
+                                      style={{
+                                        backgroundColor: `${THEME_PRIMARY}20`,
+                                        border: `1px solid ${THEME_PRIMARY}`,
+                                        color: THEME_PRIMARY,
+                                      }}
+                                    >
+                                      {tool}
+                                    </span>
+                                  ))}
+                                  {game.tools.length > 10 && (
+                                    <span className="text-gray-400 text-sm">+{game.tools.length - 10} more</span>
+                                  )}
                                 </div>
-                              )}
+                              </div>
+                            )}
 
                           </div>
-                          
-                            <div className="flex gap-3 justify-start">
-                              <Link
-                                href={`/projects/${createSlug(game.title)}?view=all&returnView=overview`}
-                                className="flex items-center gap-2 px-4 py-2 rounded-md font-medium transition-all transform hover:scale-105 bg-gray-200 text-gray-900 hover:bg-gray-300 text-sm"
+
+                          <div className="flex gap-3 justify-start">
+                            <Link
+                              href={`/projects/${createSlug(game.title)}?view=all&returnView=overview`}
+                              className="flex items-center gap-2 px-4 py-2 rounded-md font-medium transition-all transform hover:scale-105 bg-gray-200 text-gray-900 hover:bg-gray-300 text-sm"
+                            >
+                              <div className="relative w-3.5 h-3.5">
+                                <div className="absolute inset-0 rounded-full border-2 border-gray-600"></div>
+                                <div className="absolute inset-1 rounded-full border border-gray-400"></div>
+                              </div>
+                              Details
+                            </Link>
+
+                            {game.gameLink && (
+                              <a
+                                href={game.gameLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 px-4 py-2 rounded-md font-medium border transition-all transform hover:scale-105 bg-gray-800 text-white border-gray-600 hover:bg-gray-700 text-sm"
                               >
-                                <div className="relative w-3.5 h-3.5">
-                                  <div className="absolute inset-0 rounded-full border-2 border-gray-600"></div>
-                                  <div className="absolute inset-1 rounded-full border border-gray-400"></div>
-                                </div>
-                                Details
-                              </Link>
+                                <Play className="h-3.5 w-3.5" />
+                                Play
+                              </a>
+                            )}
 
-                              {game.gameLink && (
-                                <a
-                                  href={game.gameLink}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="flex items-center gap-2 px-4 py-2 rounded-md font-medium border transition-all transform hover:scale-105 bg-gray-800 text-white border-gray-600 hover:bg-gray-700 text-sm"
-                                >
-                                  <Play className="h-3.5 w-3.5" />
-                                  Play
-                                </a>
-                              )}
-
-                              {game.websiteLink && (
-                                <a
-                                  href={game.websiteLink}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="flex items-center gap-2 px-4 py-2 rounded-md font-medium border transition-all transform hover:scale-105 bg-gray-800 text-white border-gray-600 hover:bg-gray-700 text-sm"
-                                >
-                                  <ExternalLink className="h-3.5 w-3.5" />
-                                  Website
-                                </a>
-                              )}
-                            </div>
+                            {game.websiteLink && (
+                              <a
+                                href={game.websiteLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 px-4 py-2 rounded-md font-medium border transition-all transform hover:scale-105 bg-gray-800 text-white border-gray-600 hover:bg-gray-700 text-sm"
+                              >
+                                <ExternalLink className="h-3.5 w-3.5" />
+                                Website
+                              </a>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>

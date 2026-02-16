@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Star, Calendar, Trophy, GraduationCap, Users, Handshake, Building2, ArrowRight, CheckCircle, Clock } from 'lucide-react';
 import { Game } from './GameCard';
+import { CalendarDisplay } from './CalendarDisplay';
 import { createSlug } from '@/app/lib/project/slug';
 import {
   THEME_PRIMARY,
@@ -162,7 +163,7 @@ export function HomeTab({ games }: HomeTabProps) {
 
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault();
-    
+
     if (e.deltaY > 0) {
       // Scroll down - next preview
       setCurrentIndex((prev) => (prev + 1) % sortedGames.length);
@@ -170,7 +171,7 @@ export function HomeTab({ games }: HomeTabProps) {
       // Scroll up - previous preview
       setCurrentIndex((prev) => (prev - 1 + sortedGames.length) % sortedGames.length);
     }
-    
+
     setProgress(0);
   };
 
@@ -313,11 +314,11 @@ export function HomeTab({ games }: HomeTabProps) {
                           sizes="256px"
                           className="object-cover transition-transform duration-300 hover:scale-110"
                         />
-                        
+
                         {/* Triangle Star Badge - Top Left Corner */}
                         {game.badges?.star && (
                           <div className="absolute top-2 left-2">
-                            <Star 
+                            <Star
                               className="text-yellow-400"
                               style={{
                                 width: '20px',
@@ -327,7 +328,7 @@ export function HomeTab({ games }: HomeTabProps) {
                             />
                           </div>
                         )}
-                        
+
                         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-2 sm:p-2.5 md:p-3">
                           <h4 className="text-xs sm:text-sm text-white line-clamp-1">{game.title}</h4>
                         </div>
@@ -364,7 +365,7 @@ export function HomeTab({ games }: HomeTabProps) {
             {/* Right Side - Main Preview */}
             <div className="flex-1 lg:order-2 order-1">
               <Link
-                href={`/projects/${createSlug(currentGame.title)}`}
+                href={`/projects/${createSlug(currentGame.title)}?view=all&returnTo=home`}
                 className="group relative overflow-hidden rounded-xl shadow-2xl transition-transform duration-300 cursor-pointer block"
                 style={{
                   border: `1px solid ${THEME_BORDER}`,
@@ -393,16 +394,12 @@ export function HomeTab({ games }: HomeTabProps) {
                             </span>
                           </div>
                         )}
-                        {(currentGame.startDate || currentGame.lastDate) && (
-                          <div className="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-2.5 md:mb-3 text-white/90">
-                            <Calendar className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4" />
-                            <span className="text-xs sm:text-sm">
-                              {currentGame.lastDate
-                                ? `${currentGame.startDate || ''}${currentGame.startDate ? ' to ' : ''}${currentGame.lastDate}`
-                                : currentGame.startDate || currentGame.lastDate}
-                            </span>
-                          </div>
-                        )}
+                        <CalendarDisplay
+                          startDate={currentGame.startDate}
+                          endDate={currentGame.lastDate}
+                          className="mb-2 sm:mb-2.5 md:mb-3 text-white/90"
+                          scale={0.8}
+                        />
 
                         <h2 className="mb-2 sm:mb-2.5 md:mb-3 text-white text-base sm:text-lg md:text-xl lg:text-2xl font-bold">{currentGame.title}</h2>
 
@@ -416,11 +413,11 @@ export function HomeTab({ games }: HomeTabProps) {
                         <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 md:gap-3">
                           {(currentGame.client || currentGame.badges?.school) && (
                             <div className="flex items-center gap-1.5 sm:gap-2 text-white/70">
-                              <Building2 className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4" />
+                              <Building2 className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 text-orange-400" />
                               <span className="text-xs sm:text-sm">
-                                {currentGame.badges?.school || currentGame.client === 'Academic Project'
+                                {currentGame.client === 'Coursework'
                                   ? 'Bangkok University'
-                                  : currentGame.client}
+                                  : currentGame.client || 'Bangkok University'}
                               </span>
                             </div>
                           )}
@@ -442,16 +439,6 @@ export function HomeTab({ games }: HomeTabProps) {
                           <Star className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4" fill="currentColor" />
                         </ThemeBadge>
                       )}
-                      {currentGame.badges.trophy && (
-                        <ThemeBadge tone="trophy" className="px-2 py-1 sm:px-2.5 sm:py-1.25 md:px-3 md:py-1.5">
-                          <Trophy className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4" />
-                        </ThemeBadge>
-                      )}
-                      {currentGame.badges.school && (
-                        <ThemeBadge tone="school" className="px-2 py-1 sm:px-2.5 sm:py-1.25 md:px-3 md:py-1.5">
-                          <GraduationCap className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4" />
-                        </ThemeBadge>
-                      )}
                     </div>
                   )}
                 </div>
@@ -469,34 +456,14 @@ export function HomeTab({ games }: HomeTabProps) {
                             {currentGame.status}
                           </span>
                         )}
-                        {/* Date Range - Plain Text */}
-                        {(currentGame.startDate || currentGame.lastDate) && (
-                          <div className="flex items-center gap-1.5 text-xs text-white/70">
-                            <Calendar className="h-3 w-3" />
-                            <span>
-                              {currentGame.lastDate
-                                ? `${currentGame.startDate || ''}${currentGame.startDate ? ' - ' : ''}${currentGame.lastDate}`
-                                : currentGame.startDate || currentGame.lastDate}
-                            </span>
-                          </div>
-                        )}
-                        {/* Duration - Plain Text */}
-                        {(currentGame.startDate && currentGame.lastDate) && (() => {
-                          const start = new Date(currentGame.startDate);
-                          const end = new Date(currentGame.lastDate);
-                          const months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
-                          const years = Math.floor(months / 12);
-                          const remainingMonths = months % 12;
-                          const durationText = years > 0
-                            ? `${years} ${years === 1 ? 'year' : 'years'}${remainingMonths > 0 ? ` ${remainingMonths} ${remainingMonths === 1 ? 'month' : 'months'}` : ''}`
-                            : `${remainingMonths} ${remainingMonths === 1 ? 'month' : 'months'}`;
-                          return (
-                            <div className="flex items-center gap-1.5 text-xs text-white/70">
-                              <Clock className="h-3 w-3" />
-                              <span>{durationText}</span>
-                            </div>
-                          );
-                        })()}
+                        {/* Date Range & Duration */}
+                        <CalendarDisplay
+                          startDate={currentGame.startDate}
+                          endDate={currentGame.lastDate}
+                          showDuration={true}
+                          className="text-white/70"
+                          scale={0.6}
+                        />
                       </div>
 
                       <div className="flex items-center gap-2 mb-2">
@@ -540,25 +507,20 @@ export function HomeTab({ games }: HomeTabProps) {
                         {(currentGame.client || currentGame.badges?.school || currentGame.badges?.partner || currentGame.badges?.collaboration) && (
                           <div className="flex flex-wrap items-center gap-2 text-sm text-gray-300">
                             {(currentGame.client || currentGame.badges?.school || currentGame.badges?.partner) && (
-                              <>
-                                <Building2 className="h-4 w-4 text-white/70" />
-                                <span>
-                                  <span className="text-white font-medium">
-                                    {currentGame.badges?.school || currentGame.badges?.partner || currentGame.client === 'Academic Project'
-                                      ? 'Bangkok University'
-                                      : currentGame.client}
-                                  </span>
+                              <div className="flex items-center gap-1.5">
+                                <Building2 className="h-4 w-4 text-orange-400 flex-shrink-0" />
+                                <span className="text-white font-medium">
+                                  {currentGame.client === 'Coursework'
+                                    ? 'Bangkok University'
+                                    : currentGame.client || 'Bangkok University'}
                                 </span>
-                              </>
+                              </div>
                             )}
                             {currentGame.badges?.collaboration && (
-                              <>
-                                <span className="text-white/50">•</span>
-                                <Handshake className="h-4 w-4 text-white/70" />
-                                <span>
-                                  <span className="text-white font-medium">{currentGame.badges.collaboration}</span>
-                                </span>
-                              </>
+                              <div className="flex items-center gap-1.5 ml-3">
+                                <Handshake className="h-4 w-4 text-blue-400 flex-shrink-0" />
+                                <span className="text-white font-medium">{currentGame.badges.collaboration}</span>
+                              </div>
                             )}
                           </div>
                         )}
