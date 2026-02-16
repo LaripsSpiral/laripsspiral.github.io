@@ -32,6 +32,7 @@ export interface PersonalInfo {
     period: string;
     projects: Array<{
       title: string;
+      period?: string;
       about?: string;
       titleLinks?: Array<{
         text: string;
@@ -40,6 +41,7 @@ export interface PersonalInfo {
       responsibilities: string[];
       subProjects?: Array<{
         title: string;
+        period?: string;
         about?: string;
         titleLinks?: Array<{
           text: string;
@@ -62,8 +64,8 @@ export const personalInfo: PersonalInfo = {
   },
   education: {
     period: 'June/2023 - Present',
-    university: "Bangkok University",
-    degree: "Bachelor of Science",
+    university: 'Bangkok University (School of Information Technology and Innovation)',
+    degree: 'Bachelor of Science',
     major: 'Major in Games and Interactive Media',
   },
   professionalSummary:
@@ -92,12 +94,12 @@ export const personalInfo: PersonalInfo = {
     {
       company: 'CoSI | Center of Specialty Innovation',
       companyLink: 'https://cosi.bu.ac.th',
-      position: 'Research Assistant',
+      position: 'Research Assistant | Game Developer',
       period: 'Oct/2023 - Apr/2025 (1 year 7 months)',
       projects: [
         {
-          title: 'Roblox School of Survival (Programmer):',
-          about: 'Practice survival strategies for students to learning in an immerses realistic school setting where an emergency situation.',
+          title: 'Roblox School of Survival (Game Programmer):',
+          about: 'Practice survival strategies for students to learn in an immersive realistic school setting, was exhibited at more than 8 events.',
           titleLinks: [
             { text: 'Roblox School of Survival | อยู่รอดวิทยา', link: 'https://yoorodwittaya.com/' },
             { text: 'Roblox Game', link: 'https://www.roblox.com/games/16880223610/School-of-Survival' },
@@ -141,15 +143,15 @@ export const personalInfo: PersonalInfo = {
                 { text: 'Medical VR Multiplayer', link: 'https://cosi.bu.ac.th' },
               ],
               responsibilities: [
-                "Implemented matchmaking to queue patients and send host lobby invitations.",
-                'Implemented webcam streaming via texture-to-JPG encoding, optimized by reducing resolution and chunking data for transmission limits.',
+                'Implemented real-time webcam streaming over network by encoding frames to JPG textures.',
+                'Improved performance by reducing resolution and chunking data to meet transmission limits.',
                 'Implemented networked physics and state synchronization for consistent avatar and environment states across clients.',
               ],
             },
           ],
         },
       ],
-    },
+    }
   ],
 };
 

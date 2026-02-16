@@ -234,7 +234,7 @@ export function AboutTab() {
                           const text = achievement.title;
                           const elements: React.ReactNode[] = [];
                           const linkMap = new Map<number, { text: string; link: string; length: number }>();
-                          
+
                           // Find all link positions
                           achievement.titleLinks.forEach((linkItem) => {
                             const index = text.indexOf(linkItem.text);
@@ -246,19 +246,19 @@ export function AboutTab() {
                               });
                             }
                           });
-                          
+
                           // Sort by position
                           const sortedPositions = Array.from(linkMap.keys()).sort((a, b) => a - b);
-                          
+
                           let lastIndex = 0;
                           sortedPositions.forEach((pos, idx) => {
                             const linkData = linkMap.get(pos)!;
-                            
+
                             // Add text before the link
                             if (pos > lastIndex) {
                               elements.push(text.substring(lastIndex, pos));
                             }
-                            
+
                             // Add the link
                             elements.push(
                               <a
@@ -272,15 +272,15 @@ export function AboutTab() {
                                 {linkData.text}
                               </a>
                             );
-                            
+
                             lastIndex = pos + linkData.length;
                           });
-                          
+
                           // Add remaining text
                           if (lastIndex < text.length) {
                             elements.push(text.substring(lastIndex));
                           }
-                          
+
                           return elements.length > 0 ? elements : achievement.title;
                         })()
                       ) : (
@@ -372,7 +372,7 @@ export function AboutTab() {
                                 const text = project.title;
                                 const elements: React.ReactNode[] = [];
                                 const linkMap = new Map<number, { text: string; link: string; length: number }>();
-                                
+
                                 // Find all link positions
                                 project.titleLinks.forEach((linkItem) => {
                                   const index = text.indexOf(linkItem.text);
@@ -384,19 +384,19 @@ export function AboutTab() {
                                     });
                                   }
                                 });
-                                
+
                                 // Sort by position
                                 const sortedPositions = Array.from(linkMap.keys()).sort((a, b) => a - b);
-                                
+
                                 let lastIndex = 0;
                                 sortedPositions.forEach((pos, idx) => {
                                   const linkData = linkMap.get(pos)!;
-                                  
+
                                   // Add text before link
                                   if (pos > lastIndex) {
                                     elements.push(text.substring(lastIndex, pos));
                                   }
-                                  
+
                                   // Add link
                                   elements.push(
                                     <a
@@ -410,21 +410,27 @@ export function AboutTab() {
                                       {linkData.text}
                                     </a>
                                   );
-                                  
+
                                   lastIndex = pos + linkData.length;
                                 });
-                                
+
                                 // Add remaining text
                                 if (lastIndex < text.length) {
                                   elements.push(text.substring(lastIndex));
                                 }
-                                
+
                                 return elements.length > 0 ? elements : project.title;
                               })()
                             ) : (
                               project.title
                             )}
                           </ThemeHeading>
+                          {project.period && (
+                            <div className="flex items-center gap-1.5 mb-1 text-gray-400">
+                              <Calendar className="h-3 w-3" />
+                              <p className="text-xs">{project.period}</p>
+                            </div>
+                          )}
                           {project.about && (
                             <p className="text-sm text-gray-300 mb-2" style={{ fontFamily: THEME_FONT_PRIMARY }}>
                               {project.about}
@@ -436,7 +442,7 @@ export function AboutTab() {
                                 const dentsuLink = 'https://www.facebook.com/dentsuCreativeTH';
                                 const dentsuText = "Dentsu Creative Thailand";
                                 const hasDentsu = resp.includes(dentsuText);
-                                
+
                                 return (
                                   <li key={respIndex} className="text-sm text-gray-400" style={{ fontFamily: THEME_FONT_PRIMARY }}>
                                     <span style={{ color: THEME_PRIMARY }}>•</span>{' '}
@@ -477,7 +483,7 @@ export function AboutTab() {
                                         const text = subProject.title;
                                         const elements: React.ReactNode[] = [];
                                         const linkMap = new Map<number, { text: string; link: string; length: number }>();
-                                        
+
                                         // Find all link positions
                                         subProject.titleLinks.forEach((linkItem) => {
                                           const index = text.indexOf(linkItem.text);
@@ -489,19 +495,19 @@ export function AboutTab() {
                                             });
                                           }
                                         });
-                                        
+
                                         // Sort by position
                                         const sortedPositions = Array.from(linkMap.keys()).sort((a, b) => a - b);
-                                        
+
                                         let lastIndex = 0;
                                         sortedPositions.forEach((pos, idx) => {
                                           const linkData = linkMap.get(pos)!;
-                                          
+
                                           // Add text before the link
                                           if (pos > lastIndex) {
                                             elements.push(text.substring(lastIndex, pos));
                                           }
-                                          
+
                                           // Add the link
                                           elements.push(
                                             <a
@@ -515,21 +521,27 @@ export function AboutTab() {
                                               {linkData.text}
                                             </a>
                                           );
-                                          
+
                                           lastIndex = pos + linkData.length;
                                         });
-                                        
+
                                         // Add remaining text
                                         if (lastIndex < text.length) {
                                           elements.push(text.substring(lastIndex));
                                         }
-                                        
+
                                         return elements.length > 0 ? elements : subProject.title;
                                       })()
                                     ) : (
                                       subProject.title
                                     )}
                                   </ThemeHeading>
+                                  {subProject.period && (
+                                    <div className="flex items-center gap-1.5 mb-1 text-gray-400">
+                                      <Calendar className="h-3 w-3" />
+                                      <p className="text-xs">{subProject.period}</p>
+                                    </div>
+                                  )}
                                   {subProject.about && (
                                     <p className="text-sm text-gray-300 mb-2" style={{ fontFamily: THEME_FONT_PRIMARY }}>
                                       {subProject.about}
@@ -540,7 +552,7 @@ export function AboutTab() {
                                       const dentsuLink = 'https://www.facebook.com/dentsuCreativeTH';
                                       const dentsuText = "Dentsu Creative Thailand";
                                       const hasDentsu = resp.includes(dentsuText);
-                                      
+
                                       return (
                                         <li key={respIndex} className="text-sm text-gray-400">
                                           <span style={{ color: THEME_PRIMARY }}>•</span>{' '}
