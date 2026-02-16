@@ -3,9 +3,9 @@
 import { useMemo, useState, useEffect } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { Search, SortAsc, Check, X, ChevronDown, ChevronUp } from 'lucide-react';
-import { Game, GameCard } from './GameCard';
-import { PortfolioOverview } from './PortfolioOverview';
-import { THEME_PRIMARY_BORDER, THEME_PRIMARY, THEME_FONT_PRIMARY } from '../theme/palette';
+import { Game, ProjectCard } from './ProjectCard';
+import { ProjectPortfolio } from './ProjectPortfolio';
+import { THEME_PRIMARY_BORDER, THEME_PRIMARY, THEME_FONT_PRIMARY } from '@/app/theme/palette';
 
 interface ProjectsTabProps {
   games: Game[];
@@ -15,7 +15,7 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  
+
   const [searchQuery, setSearchQuery] = useState<string>(searchParams.get('q') || '');
   const [sortBy, setSortBy] = useState<string>(searchParams.get('sort') || 'name');
   const [statusFilter, setStatusFilter] = useState<string>(searchParams.get('status') || 'all');
@@ -72,8 +72,8 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
 
     // Filter by tags
     if (selectedTags.length > 0) {
-      filtered = filtered.filter((game) => 
-        selectedTags.some(tag => 
+      filtered = filtered.filter((game) =>
+        selectedTags.some(tag =>
           game.genres?.includes(tag) ||
           game.playModes?.includes(tag) ||
           game.platforms?.includes(tag) ||
@@ -119,15 +119,15 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
   // Group games by status
   const gamesByStatus = useMemo(() => {
     const groups: { [key: string]: Game[] } = {};
-    
+
     // Define status order
     const statusOrder = ['Released', 'Prototype'];
-    
+
     // Initialize groups
     statusOrder.forEach(status => {
       groups[status] = [];
     });
-    
+
     // Group games
     filteredAndSortedGames.forEach(game => {
       const status = game.status || 'Prototype';
@@ -137,7 +137,7 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
         groups['Prototype'].push(game);
       }
     });
-    
+
     return groups;
   }, [filteredAndSortedGames]);
 
@@ -184,8 +184,8 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
   }, [games]);
 
   const toggleTag = (tag: string) => {
-    setSelectedTags(prev => 
-      prev.includes(tag) 
+    setSelectedTags(prev =>
+      prev.includes(tag)
         ? prev.filter(t => t !== tag)
         : [...prev, tag]
     );
@@ -198,7 +198,7 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
   return (
     <>
       {activeSubTab === 'overview' ? (
-        <PortfolioOverview games={filteredAndSortedGames} />
+        <ProjectPortfolio games={filteredAndSortedGames} />
       ) : (
         <div className="mx-auto max-w-7xl px-4 pt-6 pb-6 sm:px-6 lg:px-8" style={{ fontFamily: THEME_FONT_PRIMARY }}>
           <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -234,7 +234,7 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
           </div>
 
           {/* Tags Filter */}
-          <div 
+          <div
             className="mb-6 rounded-lg border"
             style={{ backgroundColor: '#0d1117', borderColor: THEME_PRIMARY_BORDER }}
           >
@@ -262,7 +262,7 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
                   </button>
                 )}
               </div>
-              
+
               {!isFilterCollapsed && (
                 <div className="mt-4 space-y-4">
                   {Object.entries(availableTags).map(([categoryKey, category]) => (
@@ -274,11 +274,10 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
                             <button
                               key={tag}
                               onClick={() => toggleTag(tag)}
-                              className={`inline-flex items-center gap-1 rounded-full border px-3 py-1 text-sm transition-colors font-body ${
-                                selectedTags.includes(tag)
-                                  ? 'bg-blue-600 border-blue-500 text-white'
-                                  : 'bg-gray-800 border-gray-600 text-gray-300 hover:bg-gray-700 hover:border-gray-500'
-                              }`}
+                              className={`inline-flex items-center gap-1 rounded-full border px-3 py-1 text-sm transition-colors font-body ${selectedTags.includes(tag)
+                                ? 'bg-blue-600 border-blue-500 text-white'
+                                : 'bg-gray-800 border-gray-600 text-gray-300 hover:bg-gray-700 hover:border-gray-500'
+                                }`}
                             >
                               {tag}
                               <span className="text-xs opacity-70 font-caption">({count})</span>
@@ -314,7 +313,7 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
                     </div>
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                       {statusGames.map((game) => (
-                        <GameCard key={game.title} game={game} view={activeSubTab as 'overview' | 'all'} />
+                        <ProjectCard key={game.title} game={game} view={activeSubTab as 'overview' | 'all'} />
                       ))}
                     </div>
                   </div>
@@ -325,7 +324,7 @@ export function ProjectsTab({ games }: ProjectsTabProps) {
             // Show filtered results (not grouped)
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
               {filteredAndSortedGames.map((game) => (
-                <GameCard key={game.title} game={game} view={activeSubTab as 'overview' | 'all'} />
+                <ProjectCard key={game.title} game={game} view={activeSubTab as 'overview' | 'all'} />
               ))}
             </div>
           )}

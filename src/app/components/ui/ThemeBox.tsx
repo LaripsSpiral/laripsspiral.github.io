@@ -14,7 +14,7 @@ import {
   THEME_BADGE_TROPHY_BG,
   THEME_BADGE_SCHOOL_TEXT,
   THEME_BADGE_SCHOOL_BG,
-} from '../theme/palette';
+} from '@/app/theme/palette';
 
 type BoxProps = {
   as?: ElementType;
@@ -25,13 +25,13 @@ type BoxProps = {
 
 type BadgeProps = BoxProps & {
   tone?:
-    | 'primary'
-    | 'muted'
-    | 'star'
-    | 'trophy'
-    | 'school'
-    | 'team'
-    | 'partner';
+  | 'primary'
+  | 'muted'
+  | 'star'
+  | 'trophy'
+  | 'school'
+  | 'team'
+  | 'partner';
   pill?: boolean;
 };
 

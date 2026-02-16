@@ -1,19 +1,21 @@
 
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { Calendar, Clock, Users, Target, ExternalLink, ArrowRight, Github, Play, X } from 'lucide-react';
-import { Game, FeatureDetailItem } from './GameCard';
+import { Calendar, Users, Target, ExternalLink, ArrowRight, Play } from 'lucide-react';
+import { Game, FeatureDetailItem } from './ProjectCard';
 import { createSlug } from '@/app/lib/project/slug';
+import { getYouTubeThumbnail } from '@/app/lib/youtube';
+import { MediaOverlay, OverlayMedia } from '@/app/components/ui/MediaOverlay';
 import {
   ThemeCard,
   ThemeCardHeader,
   ThemeCardBody,
   ThemeTitle,
-} from './ThemeBox';
+} from '@/app/components/ui/ThemeBox';
 import {
   THEME_PRIMARY,
   THEME_PRIMARY_BORDER,
@@ -21,39 +23,21 @@ import {
   THEME_FONT_PRIMARY,
   THEME_CATEGORY_SKILLS_BG,
   THEME_CATEGORY_SKILLS_TEXT,
-} from '../theme/palette';
+} from '@/app/theme/palette';
 
-interface ProjectOverviewProps {
+interface ProjectSummaryProps {
   game: Game;
 }
 
-export function ProjectOverview({ game }: ProjectOverviewProps) {
+export function ProjectSummary({ game }: ProjectSummaryProps) {
   const searchParams = useSearchParams();
   const [showAllFeatures, setShowAllFeatures] = useState(false);
-  const [selectedMedia, setSelectedMedia] = useState<FeatureDetailItem['media'] | null>(null);
+  const [selectedMedia, setSelectedMedia] = useState<OverlayMedia | null>(null);
 
   const returnView = searchParams.get('returnView');
   const view = searchParams.get('view');
   const backView = returnView || view;
   const backToProjectsHref = backView && backView !== 'overview' ? `/projects?view=${encodeURIComponent(backView)}` : '/projects';
-
-  const getYouTubeVideoId = (url: string): string | null => {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
-    return (match && match[2].length === 11) ? match[2] : null;
-  };
-
-  const getYouTubeThumbnail = (url: string): string | null => {
-    const videoId = getYouTubeVideoId(url);
-    if (!videoId) return null;
-    return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-  };
-
-  const getYouTubeEmbedUrl = (url: string): string | null => {
-    const videoId = getYouTubeVideoId(url);
-    if (!videoId) return null;
-    return `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`;
-  };
 
   // Convert featureDetails to features array for display
   const features = game.featureDetails?.map((item): { title: string; description: string } => {
@@ -72,56 +56,6 @@ export function ProjectOverview({ game }: ProjectOverviewProps) {
     .split(/\r?\n|\.|;|•|\u2022/g)
     .map((s) => s.trim())
     .filter(Boolean);
-
-  const onCloseOverlay = () => setSelectedMedia(null);
-
-  const overlay = useMemo(() => {
-    if (!selectedMedia) return null;
-    const type = selectedMedia.type;
-
-    if (type === 'image' || type === 'gif') {
-      return (
-        <div className="relative w-[min(1100px,96vw)] h-[min(720px,80vh)]">
-          <Image
-            src={selectedMedia.url}
-            alt={selectedMedia.title || 'Media'}
-            fill
-            sizes="(max-width: 1100px) 96vw, 1100px"
-            className="object-contain"
-            priority
-          />
-        </div>
-      );
-    }
-
-    if (type === 'video') {
-      return (
-        <video
-          src={selectedMedia.url}
-          controls
-          controlsList="nodownload"
-          className="max-h-[80vh] max-w-[96vw] rounded-lg bg-black"
-        />
-      );
-    }
-
-    if (type === 'youtube') {
-      const embedUrl = getYouTubeEmbedUrl(selectedMedia.url);
-      return (
-        <div className="relative w-[min(1100px,96vw)] aspect-video rounded-lg overflow-hidden bg-black">
-          <iframe
-            src={embedUrl || ''}
-            className="absolute inset-0 w-full h-full"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            title={selectedMedia.title || 'YouTube video'}
-          />
-        </div>
-      );
-    }
-
-    return null;
-  }, [selectedMedia]);
 
   return (
     <div className="mx-auto max-w-7xl px-2 sm:px-4 md:px-6 pt-4 sm:pt-6 pb-4 sm:pb-6 lg:px-8" style={{ fontFamily: THEME_FONT_PRIMARY }}>
@@ -142,7 +76,7 @@ export function ProjectOverview({ game }: ProjectOverviewProps) {
             </Link>
           </div>
         </nav>
-        
+
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
           <div className="lg:w-1/3 space-y-4">
             <div className="relative aspect-video rounded-lg overflow-hidden">
@@ -210,7 +144,7 @@ export function ProjectOverview({ game }: ProjectOverviewProps) {
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
               {game.title}
             </h1>
-            
+
             <p className="text-base sm:text-lg text-gray-300 mb-6 leading-relaxed">
               {game.description}
             </p>
@@ -226,7 +160,7 @@ export function ProjectOverview({ game }: ProjectOverviewProps) {
                   </div>
                 </div>
               )}
-              
+
               {game.startDate && (
                 <div className="flex items-center gap-3">
                   <Calendar className="h-5 w-5" style={{ color: THEME_PRIMARY }} />
@@ -281,7 +215,7 @@ export function ProjectOverview({ game }: ProjectOverviewProps) {
                 <Target className="h-4 w-4" />
                 View Full Details
               </Link>
-              
+
               {game.gameLink && (
                 <a
                   href={game.gameLink}
@@ -303,7 +237,7 @@ export function ProjectOverview({ game }: ProjectOverviewProps) {
                   Play Game
                 </a>
               )}
-              
+
               {game.websiteLink && (
                 <a
                   href={game.websiteLink}
@@ -362,9 +296,9 @@ export function ProjectOverview({ game }: ProjectOverviewProps) {
             <div className="grid gap-3 sm:gap-4">
               {(showAllFeatures ? features : features.slice(0, 3)).map((feature, index: number) => (
                 <div key={index} className="flex items-start gap-3">
-                  <div 
-                    className="mt-1 h-2 w-2 rounded-full flex-shrink-0" 
-                    style={{ backgroundColor: THEME_PRIMARY }} 
+                  <div
+                    className="mt-1 h-2 w-2 rounded-full flex-shrink-0"
+                    style={{ backgroundColor: THEME_PRIMARY }}
                   />
                   <div>
                     <h4 className="text-sm font-semibold text-white mb-1">{feature.title}</h4>
@@ -375,7 +309,7 @@ export function ProjectOverview({ game }: ProjectOverviewProps) {
                 </div>
               ))}
             </div>
-            
+
             {features.length > 3 && (
               <div className="mt-4 pt-4 border-t" style={{ borderColor: THEME_PRIMARY_BORDER }}>
                 <button
@@ -449,31 +383,7 @@ export function ProjectOverview({ game }: ProjectOverviewProps) {
         )}
       </div>
 
-      {selectedMedia && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4"
-          style={{ backgroundColor: 'rgba(0,0,0,0.75)' }}
-          onClick={onCloseOverlay}
-          role="dialog"
-          aria-modal="true"
-        >
-          <div
-            className="relative"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              type="button"
-              className="absolute -top-3 -right-3 rounded-full p-2 text-white border"
-              style={{ backgroundColor: 'rgba(0,0,0,0.7)', borderColor: `${THEME_PRIMARY}40` }}
-              onClick={onCloseOverlay}
-              aria-label="Close"
-            >
-              <X className="h-5 w-5" />
-            </button>
-            {overlay}
-          </div>
-        </div>
-      )}
+      <MediaOverlay media={selectedMedia} onClose={() => setSelectedMedia(null)} />
     </div>
   );
 }

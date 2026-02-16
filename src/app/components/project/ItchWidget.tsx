@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import {
   THEME_PRIMARY_BORDER,
   THEME_PANEL_BG,
-} from '../theme/palette';
+} from '@/app/theme/palette';
 
 interface ItchWidgetProps {
   embedId: string;
@@ -40,8 +40,8 @@ export function ItchWidget({ embedId, gameUrl, gameName, authorName }: ItchWidge
         />
       ) : (
         <div className="w-[208px] sm:w-full mx-auto h-[167px] flex items-center justify-center">
-          <a 
-            href={gameUrl} 
+          <a
+            href={gameUrl}
             className="text-sm text-gray-300 hover:text-white transition-colors"
             target="_blank"
             rel="noopener noreferrer"

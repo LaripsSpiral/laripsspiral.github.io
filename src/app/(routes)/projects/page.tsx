@@ -1,8 +1,8 @@
 'use client';
 
 import { Suspense } from 'react';
-import { PageLayout } from '@/app/components/PageLayout';
-import { ProjectsTab } from '@/app/components/ProjectsTab';
+import { PageLayout } from '@/app/components/layout/PageLayout';
+import { ProjectsTab } from '@/app/components/project/ProjectsTab';
 import { games } from '@/app/data/gamesDB';
 
 function ProjectsTabFallback() {

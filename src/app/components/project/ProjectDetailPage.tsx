@@ -20,63 +20,27 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
-import { Game, FeatureDetailItem } from './GameCard';
+import { Game, FeatureDetailItem } from './ProjectCard';
 import {
   ThemeHeading,
   ThemeDetail,
-} from './ThemeBox';
-import { CalendarDisplay } from './CalendarDisplay';
-import { PageLayout } from './PageLayout';
+} from '@/app/components/ui/ThemeBox';
+import { CalendarDisplay } from '@/app/components/ui/CalendarDisplay';
+import { PageLayout } from '@/app/components/layout/PageLayout';
+import { getYouTubeVideoId, getYouTubeEmbedUrl, getYouTubeThumbnail } from '@/app/lib/youtube';
 import {
   THEME_PRIMARY_BORDER,
   THEME_PRIMARY,
   THEME_PANEL_BG,
   THEME_FONT_PRIMARY,
-} from '../theme/palette';
+} from '@/app/theme/palette';
 
-interface GameDetailPageProps {
+interface ProjectDetailPageProps {
   game: Game;
 }
 
-// Helper function to extract YouTube video ID from URL
-const getYouTubeVideoId = (url: string): string | null => {
-  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-  const match = url.match(regExp);
-  return (match && match[2].length === 11) ? match[2] : null;
-};
 
-// Helper function to get YouTube embed URL
-const getYouTubeEmbedUrl = (url: string): string | null => {
-  const videoId = getYouTubeVideoId(url);
-  if (!videoId) return null;
 
-  // Extract timestamp if present
-  const timeMatch = url.match(/[?&]t=(\d+)/);
-  const startTime = timeMatch ? timeMatch[1] : '';
-
-  // Build query parameters
-  const params = new URLSearchParams();
-  if (startTime) {
-    params.append('start', startTime);
-  }
-  // Hide related videos from other channels (only shows videos from same channel)
-  params.append('rel', '0');
-  // Reduce YouTube branding
-  params.append('modestbranding', '1');
-  // Hide video annotations
-  params.append('iv_load_policy', '3');
-  // Disable keyboard controls (prevents some UI elements)
-  params.append('disablekb', '1');
-
-  return `https://www.youtube.com/embed/${videoId}?${params.toString()}`;
-};
-
-// Helper function to get YouTube thumbnail URL
-const getYouTubeThumbnail = (url: string): string | null => {
-  const videoId = getYouTubeVideoId(url);
-  if (!videoId) return null;
-  return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-};
 
 // Generate example mockups when media is missing
 const generateMockupMedia = (game: Game) => {
@@ -171,7 +135,7 @@ function FeatureVideo({
 }
 
 
-export function GameDetailPage({ game }: GameDetailPageProps) {
+export function ProjectDetailPage({ game }: ProjectDetailPageProps) {
   const searchParams = useSearchParams();
   const [selectedMediaIndex, setSelectedMediaIndex] = useState<number | null>(null);
   const [mainMediaIndex, setMainMediaIndex] = useState<number>(0);

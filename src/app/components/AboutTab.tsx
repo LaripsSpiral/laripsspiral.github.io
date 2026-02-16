@@ -9,7 +9,7 @@ import {
   ThemeTitle,
   ThemeHeading,
   ThemeDetail,
-} from './ThemeBox';
+} from './ui/ThemeBox';
 import {
   THEME_PRIMARY,
   THEME_PRIMARY_BORDER,
@@ -25,8 +25,8 @@ import {
   THEME_CATEGORY_ACHIEVEMENTS_TEXT,
   THEME_CATEGORY_SUMMARY_BG,
   THEME_CATEGORY_SUMMARY_TEXT,
-} from '../theme/palette';
-import { personalInfo } from '../data/personalInfo';
+} from '@/app/theme/palette';
+import { personalInfo } from '@/app/data/personalInfo';
 
 export function AboutTab() {
   return (

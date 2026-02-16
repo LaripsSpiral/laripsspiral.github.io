@@ -4,8 +4,8 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Star, Calendar, Trophy, GraduationCap, Users, Handshake, Building2, ArrowRight, CheckCircle, Clock } from 'lucide-react';
-import { Game } from './GameCard';
-import { CalendarDisplay } from './CalendarDisplay';
+import { Game } from './project/ProjectCard';
+import { CalendarDisplay } from './ui/CalendarDisplay';
 import { createSlug } from '@/app/lib/project/slug';
 import {
   THEME_PRIMARY,
@@ -13,9 +13,9 @@ import {
   THEME_PRIMARY_TINT as THEME_TINT,
   THEME_COMPLEMENT_TINT as THEME_COMP_TINT,
   THEME_FONT_PRIMARY,
-} from '../theme/palette';
-import { ThemeBadge } from './ThemeBox';
-import { personalInfo } from '../data/personalInfo';
+} from '@/app/theme/palette';
+import { ThemeBadge } from './ui/ThemeBox';
+import { personalInfo } from '@/app/data/personalInfo';
 
 interface HomeTabProps {
   games: Game[];

@@ -4,9 +4,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Calendar, Star, Trophy, GraduationCap, Users, Handshake, Building2, CheckCircle, Globe, ExternalLink } from 'lucide-react';
 import { createSlug } from '@/app/lib/project/slug';
-import { ThemeBadge } from './ThemeBox';
-import { THEME_FONT_PRIMARY } from '../theme/palette';
-import { CalendarDisplay } from './CalendarDisplay';
+import { ThemeBadge } from '@/app/components/ui/ThemeBox';
+import { THEME_FONT_PRIMARY } from '@/app/theme/palette';
+import { CalendarDisplay } from '@/app/components/ui/CalendarDisplay';
 
 export interface GameMedia {
   type: 'video' | 'image' | 'gif' | 'youtube';
@@ -65,14 +65,14 @@ export interface Game {
   websiteLink?: string;
 }
 
-interface GameCardProps {
+interface ProjectCardProps {
   game: Game;
   onClick?: () => void;
   isSelected?: boolean;
   view?: 'overview' | 'all';
 }
 
-export function GameCard({ game, onClick, isSelected = false, view = 'overview' }: GameCardProps) {
+export function ProjectCard({ game, onClick, isSelected = false, view = 'overview' }: ProjectCardProps) {
   const slug = createSlug(game.title);
 
   const handleClick = (e: React.MouseEvent) => {
