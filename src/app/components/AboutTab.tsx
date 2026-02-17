@@ -42,20 +42,12 @@ export function AboutTab() {
               border: `2px solid ${THEME_PRIMARY_BORDER}`,
             }}
           >
-            {/* Placeholder - replace with actual image */}
-            <div className="flex h-full w-full items-center justify-center bg-gray-800">
-              <span className="text-lg sm:text-xl md:text-2xl font-bold" style={{ color: THEME_PRIMARY, fontFamily: THEME_FONT_PRIMARY }}>
-                ST
-              </span>
-            </div>
-            {/* Uncomment and add your image path when ready:
             <Image
-              src="/path-to-your-profile-image.jpg"
+              src="/ProfileImage.png"
               alt="Sirasit Tumvijit"
               fill
               className="object-cover"
             />
-            */}
           </div>
           <div className="flex-1 min-w-0 flex items-center justify-between gap-2 sm:gap-3 md:gap-4" style={{ fontFamily: THEME_FONT_PRIMARY }}>
             <div className="flex-1 min-w-0">

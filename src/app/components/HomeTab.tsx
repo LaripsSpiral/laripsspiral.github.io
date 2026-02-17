@@ -209,11 +209,12 @@ export function HomeTab({ games }: HomeTabProps) {
                       border: `2px solid ${THEME_BORDER}`,
                     }}
                   >
-                    <div className="flex h-full w-full items-center justify-center bg-gray-800">
-                      <span className="text-lg sm:text-xl md:text-2xl font-bold" style={{ color: THEME_PRIMARY }}>
-                        ST
-                      </span>
-                    </div>
+                    <Image
+                      src="/ProfileImage.png"
+                      alt="Sirasit Tumvijit"
+                      fill
+                      className="object-cover"
+                    />
                   </div>
                 </div>
 

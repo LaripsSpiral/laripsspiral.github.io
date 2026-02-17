@@ -1,7 +1,8 @@
 'use client';
 
 import { Suspense, useState } from 'react';
-import { Gamepad2, Github, Linkedin, Mail } from 'lucide-react';
+import { Github, Linkedin, Mail } from 'lucide-react';
+import Image from 'next/image';
 import { TabNavigation } from './TabNavigation';
 import {
   THEME_PRIMARY,
@@ -54,10 +55,15 @@ export function PageLayout({ children, transparentBackground = false }: PageLayo
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div
-                  className="rounded-full p-2 hidden sm:block"
-                  style={{ background: THEME_PRIMARY_TINT, border: `1px solid ${THEME_PRIMARY_BORDER}` }}
+                  className="relative h-12 w-12 sm:h-14 sm:w-14 rounded-full overflow-hidden hidden sm:block"
+                  style={{ border: `1px solid ${THEME_PRIMARY_BORDER}` }}
                 >
-                  <Gamepad2 className="h-6 w-6" style={{ color: THEME_PRIMARY }} />
+                  <Image
+                    src="/ProfileImage.png"
+                    alt="Sirasit Tumvijit"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
                 <div style={{ fontFamily: THEME_FONT_PRIMARY }}>
                   <h1 className="text-white">Sirasit Tumvijit</h1>

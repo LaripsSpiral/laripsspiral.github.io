@@ -27,8 +27,8 @@ const jetbrainsMono = JetBrains_Mono({
 const universalFontClasses = `${inter.variable} ${poppins.variable} ${jetbrainsMono.variable}`;
 
 export const metadata: Metadata = {
-  title: "Sirasit Portfolio",
-  description: "Software Developer Portfolio",
+  title: "Sirasit Personal Website",
+  description: "Sirasit Tumvijit - Game Developer Personal Website",
 };
 
 export default function RootLayout({
